@@ -26,6 +26,8 @@ app = Flask("pcrp")
 
 @app.route("/")
 def hello():
-	conference_name = metadata_key.get().name	
-	return render_template(
-		"index.html",conference_name=conference_name)
+	metadata = metadata_key.get()
+	return render_template("index.html",
+		conference_name=metadata.name,
+		registration_deadline=metadata.registration_deadline,
+		submission_deadline=metadata.submission_deadline)

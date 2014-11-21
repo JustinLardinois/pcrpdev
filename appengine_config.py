@@ -21,10 +21,14 @@
 import site
 site.addsitedir("./lib")
 
+import datetime
+
 from google.appengine.ext import ndb
 
 from pcrp.conference import *
 from pcrp.keys import *
 
-conference = Conference(key=metadata_key,name="undefinedCon 2014")
+end_of_time = datetime.datetime(datetime.MAXYEAR,12,12,23,59,59,0)
+conference = Conference(key=metadata_key,name="undefinedCon 2014",
+	submission_deadline=end_of_time,registration_deadline=end_of_time)
 conference.put()

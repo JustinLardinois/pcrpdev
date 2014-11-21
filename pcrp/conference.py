@@ -18,3 +18,5 @@ from google.appengine.ext import ndb
 
 class Conference(ndb.Model):
 	name = ndb.StringProperty();
+	registration_deadline = ndb.DateTimeProperty();
+	submission_deadline = ndb.DateTimeProperty();

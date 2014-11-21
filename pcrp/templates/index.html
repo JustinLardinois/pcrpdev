@@ -23,7 +23,10 @@
 	</head>
 	<body>
 		<h1>{{ conference_name }}</h1>
-		<p>Foo bar foo foo bar.</p>
+		<div id="deadlines">
+			<p>Registration deadline: {{ registration_deadline }}</p>
+			<p>Submission deadline: {{ submission_deadline }}</p>
+		</div>
 	</body>
 </html>
 {%- endautoescape -%}
