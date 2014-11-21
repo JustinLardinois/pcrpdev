@@ -1,3 +1,4 @@
+{#
 # Copyright 2014 Justin Lardinois
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,20 +13,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ###############################################################################
-# pcrp/__init__.py - a component of pCRP
-
-from google.appengine.ext import ndb
-
-from flask import Flask
-from flask import render_template
-
-from conference import *
-from keys import *
-
-app = Flask("pcrp")
-
-@app.route("/")
-def hello():
-	conference_name = metadata_key.get().name	
-	return render_template(
-		"index.html",conference_name=conference_name)
+# pcrp/templates/index.html - a component of pCRP
+-#}
+<!DOCTYPE html>
+{% autoescape true -%}
+<html>
+	<head>
+		<title>{{ conference_name }}</title>
+	</head>
+	<body>
+		<h1>{{ conference_name }}</h1>
+		<p>Foo bar foo foo bar.</p>
+	</body>
+</html>
+{%- endautoescape -%}

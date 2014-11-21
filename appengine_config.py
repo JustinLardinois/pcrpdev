@@ -20,3 +20,11 @@
 
 import site
 site.addsitedir("./lib")
+
+from google.appengine.ext import ndb
+
+from pcrp.conference import *
+from pcrp.keys import *
+
+conference = Conference(key=metadata_key,name="undefinedCon 2014")
+conference.put()
