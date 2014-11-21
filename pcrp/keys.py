@@ -12,19 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ###############################################################################
-# pcrp/__init__.py - a component of pCRP
+# pcrp/keys.py - a component of pCRP
 
 from google.appengine.ext import ndb
 
-from flask import Flask
-
 from conference import *
-from keys import *
 
-app = Flask("pcrp")
-
-@app.route("/")
-def hello():
-	conference_name = metadata_key.get().name
-	
-	return "Hello, World!" + "\n" + conference_name
+metadata_key = ndb.Key(Conference,"Metadata")
