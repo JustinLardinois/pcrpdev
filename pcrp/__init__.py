@@ -14,6 +14,7 @@
 ###############################################################################
 # pcrp/__init__.py - a component of pCRP
 
+from google.appengine.api import users
 from google.appengine.ext import ndb
 
 from flask import Flask
@@ -27,7 +28,11 @@ app = Flask("pcrp")
 @app.route("/")
 def hello():
 	metadata = metadata_key.get()
+	user = users.get_current_user()
 	return render_template("index.html",
 		conference_name=metadata.name,
 		registration_deadline=metadata.registration_deadline,
-		submission_deadline=metadata.submission_deadline)
+		submission_deadline=metadata.submission_deadline,
+		user=user,
+		create_login_url=lambda x: users.create_login_url(x),
+		create_logout_url=lambda x: users.create_logout_url(x))

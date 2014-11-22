@@ -14,10 +14,8 @@
 ###############################################################################
 # appengine_config.py - a component of pCRP
 
-# This script adds the lib/ directory to Python's search path. lib/ is used to
-# store third party libraries, which helps to keep the source tree more
-# organized.
-
+# adds the lib/ directory to Python's search path. lib/ is used to store third
+# party libraries, which helps to keep the source tree more organized.
 import site
 site.addsitedir("./lib")
 
@@ -28,7 +26,11 @@ from google.appengine.ext import ndb
 from pcrp.conference import *
 from pcrp.keys import *
 
+# default time value; should be changed in administrator panel
 end_of_time = datetime.datetime(datetime.MAXYEAR,12,12,23,59,59,0)
+
+# initializes conference metadata so the app initially has something
+# to work with
 conference = Conference(key=metadata_key,name="undefinedCon 2014",
 	submission_deadline=end_of_time,registration_deadline=end_of_time)
 conference.put()

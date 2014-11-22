@@ -27,6 +27,14 @@
 			<p>Registration deadline: {{ registration_deadline }}</p>
 			<p>Submission deadline: {{ submission_deadline }}</p>
 		</div>
+	{%- if user %}
+		<p>
+			Logged in as {{ user.nickname() }}
+			(<a href="{{ create_logout_url(request.path) }}">Log out</a>)
+		</p>
+	{% else %}
+		<p><a href="{{ create_login_url(request.path) }}">Log in</a></p>
+	{% endif -%}
 	</body>
 </html>
 {%- endautoescape -%}

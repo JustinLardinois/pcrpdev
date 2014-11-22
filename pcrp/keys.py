@@ -14,6 +14,8 @@
 ###############################################################################
 # pcrp/keys.py - a component of pCRP
 
+# contains important global keys
+
 from google.appengine.ext import ndb
 
 from conference import *
