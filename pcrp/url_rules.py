@@ -16,7 +16,7 @@
 
 # contains URL rules that are used for routing and request handling
 
-home = "/"
-user_reg = "/user_reg/"
-admin_panel = "/admin/"
-hub = "/hub/"
+home_url        = "/"
+user_reg_url    = "/user_reg/"
+admin_panel_url = "/admin/"
+hub_url         = "/hub/"
