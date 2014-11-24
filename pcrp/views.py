@@ -27,8 +27,9 @@ from pcrp import app
 
 from pcrp.conference import *
 from pcrp.keys import *
+from pcrp.url_rules import *
 
-@app.route("/")
+@app.route(home_url)
 def home_view():
 	metadata = metadata_key.get()
 	user = users.get_current_user()
