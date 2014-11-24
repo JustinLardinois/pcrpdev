@@ -26,7 +26,7 @@ from pcrp.keys import *
 app = Flask("pcrp")
 
 @app.route("/")
-def hello():
+def home_view():
 	metadata = metadata_key.get()
 	user = users.get_current_user()
 	return render_template("index.html",
