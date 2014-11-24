@@ -13,6 +13,7 @@
 # limitations under the License.
 ###############################################################################
 # pcrp/__init__.py - a component of pCRP
+# initial setup for the Flask app
 
 from flask import Flask
 

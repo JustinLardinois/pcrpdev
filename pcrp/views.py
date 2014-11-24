@@ -13,7 +13,6 @@
 # limitations under the License.
 ###############################################################################
 # pcrp/views.py - a component of pCRP
-
 # In the spirit of following Flask conventions, this script contains all the
 # request handlers (known as views) and their routing decorators.
 

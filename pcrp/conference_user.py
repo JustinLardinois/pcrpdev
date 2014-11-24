@@ -12,7 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ###############################################################################
-# pcrp/conference_user.py - class for keeping track of users
+# pcrp/conference_user.py - a component of pCRP
+# class for keeping track of users, since App Engine's native User class
+# is not reliable for long term storage and additional information is needed
 
 from google.appengine.ext import ndb
 

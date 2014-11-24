@@ -13,6 +13,7 @@
 # limitations under the License.
 ###############################################################################
 # main.py - a component of pCRP
+# App Engine harness that hands off execution to pcrp package
 
 from google.appengine.ext.webapp.util import run_wsigi_app
 

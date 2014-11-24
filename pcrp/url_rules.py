@@ -13,7 +13,6 @@
 # limitations under the License.
 ###############################################################################
 # pcrp/url_rules.py - a component of pCRP
-
 # contains URL rules that are used for routing and request handling
 
 home_url        = "/"

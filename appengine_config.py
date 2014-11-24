@@ -13,6 +13,9 @@
 # limitations under the License.
 ###############################################################################
 # appengine_config.py - a component of pCRP
+# App Engine initialization code; due to the nature of App Engine, this is the
+# only place to put code that should only be run once when the app is first
+# deployed.
 
 # adds the lib/ directory to Python's search path. lib/ is used to store third
 # party libraries, which helps to keep the source tree more organized.

@@ -13,9 +13,8 @@
 # limitations under the License.
 ###############################################################################
 # pcrp/conference.py - a component of pCRP
-
-# class that contains conference metadata; initalized once
-# in appengine_config.py
+# class that contains conference metadata; initalized
+# once in appengine_config.py
 
 from google.appengine.ext import ndb
 
