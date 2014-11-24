@@ -24,7 +24,7 @@ import datetime
 from google.appengine.ext import ndb
 
 from pcrp.conference import *
-from pcrp.keys import *
+from pcrp.keys import metadata_key
 
 # default time value; should be changed in administrator panel
 end_of_time = datetime.datetime(datetime.MAXYEAR,12,12,23,59,59,0)

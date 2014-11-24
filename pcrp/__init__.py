@@ -20,8 +20,8 @@ from google.appengine.ext import ndb
 from flask import Flask
 from flask import render_template
 
-from conference import *
-from keys import *
+from pcrp.conference import *
+from pcrp.keys import *
 
 app = Flask("pcrp")
 
