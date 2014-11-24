@@ -13,7 +13,7 @@
 # limitations under the License.
 ###############################################################################
 # pcrp/conference_user.py - a component of pCRP
-# class for keeping track of users, since App Engine's native User class
+# class for keeping track of users, since App Engine's native Users class
 # is not reliable for long term storage and additional information is needed
 
 from google.appengine.ext import ndb

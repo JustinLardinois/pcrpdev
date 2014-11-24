@@ -19,6 +19,7 @@
 from google.appengine.api import users
 from google.appengine.ext import ndb
 
+from flask import redirect
 from flask import render_template
 
 # Yes, a circular import is necessary:
@@ -40,3 +41,9 @@ def home_view():
 		user=user,
 		create_login_url=lambda x: users.create_login_url(x),
 		create_logout_url=lambda x: users.create_logout_url(x))
+
+@app.route(user_reg_url)
+def user_reg_view():
+	user = users.get_current_user()
+	if (not user): return redirect(home_url)
+	return "nickname: " + user.nickname() + "<br>email: " + user.email()
