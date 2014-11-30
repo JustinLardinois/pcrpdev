@@ -14,6 +14,8 @@
 # limitations under the License.
 ###############################################################################
 # pcrp/templates/index.html - a component of pCRP
+#
+# template for home page
 -#}
 <!DOCTYPE html>
 {% autoescape true -%}
@@ -28,16 +30,16 @@
 			<p>Paper submission deadline: {{ submission_deadline }}</p>
 		</div>
 	{%- if user %}
-		<p>
+		<div id="logout">
 			Logged in as {{ user.nickname() }}
 			(<a href="{{ create_logout_url(request.path) }}">Log out</a>)
-		</p>
+		</div>
 	{% else %}
-		<p>
+		<div id="login">
 			<a href="{{ create_login_url(request.path) }}">
 				Log in with Google Accounts
 			</a>
-		</p>
+		</div>
 	{% endif -%}
 	</body>
 </html>
