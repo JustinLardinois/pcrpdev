@@ -34,16 +34,22 @@ from pcrp.url_rules import *
 def home_view():
 	metadata = metadata_key.get()
 	user = users.get_current_user()
-	return render_template("index.html",
+	return render_template(
+		"index.html",
 		conference_name=metadata.name,
 		registration_deadline=metadata.registration_deadline,
 		submission_deadline=metadata.submission_deadline,
 		user=user,
 		create_login_url=lambda x: users.create_login_url(x),
-		create_logout_url=lambda x: users.create_logout_url(x))
+		create_logout_url=lambda x: users.create_logout_url(x)
+		)
 
 @app.route(user_reg_url)
 def user_reg_view():
 	user = users.get_current_user()
 	if (not user): return redirect(home_url)
-	return "nickname: " + user.nickname() + "<br>email: " + user.email()
+	metadata = metadata_key.get()
+	return render_template(
+		"user_reg.html",
+		conference_name=metadata.name
+		)
