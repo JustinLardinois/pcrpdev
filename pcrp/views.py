@@ -27,6 +27,7 @@ from flask import render_template
 from pcrp import app
 
 from pcrp.conference import *
+from pcrp.decorators import *
 from pcrp.keys import *
 from pcrp.url_rules import *
 
@@ -45,9 +46,8 @@ def home_view():
 		)
 
 @app.route(user_reg_url)
+@login_required
 def user_reg_view():
-	user = users.get_current_user()
-	if (not user): return redirect(home_url)
 	metadata = metadata_key.get()
 	return render_template(
 		"user_reg.html",
