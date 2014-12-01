@@ -26,20 +26,43 @@
 	</head>
 	<body>
 		<h1>User Registration</h1>
+		{% if real_name_blank %}
+			<p class="error">Full Name was left blank</p>
+		{% endif -%}
+		{% if email_blank %}
+			<p class="error">Email was left blank</p>
+		{% endif -%}
+		{% if email_invalid %}
+			<p class="error">Invalid email</p>
+		{% endif -%}
+		{% if affiliation_blank %}
+			<p class="error">Affiliation was left blank</p>
+		{% endif -%}
 		<form accept-charset="UTF-8" action="{{ request.path }}"
 			autocomplete="off" method="post">
-
 			<label>
 				<span>Full Name</span>
-				<input type="text" name="real_name">
+				<input type="text" name="real_name"
+					{%- if real_name -%}
+						{{ " " }}value="{{ real_name }}"
+					{%- endif -%}
+				{{ " " }}required>
 			</label>
 			<label>
 				<span>Email</span>
-				<input type="email" name="email">
+				<input type="email" name="email"
+					{%- if email -%}
+						{{ " " }}value="{{ html_escape(email) }}"
+					{%- endif -%}
+				{{ " " }}required>
 			</label>
 			<label>
 				<span>Affiliation</span>
-				<input type="text" name="affiliation">
+				<input type="text" name="affiliation"
+					{%- if affiliation -%}
+						{{ " " }}value="{{ affiliation }}"
+					{%- endif -%}
+				{{ " " }}required>
 			</label>
 			<button type="submit">Register</button>
 		</form>
