@@ -34,6 +34,9 @@ end_of_time = datetime.datetime(datetime.MAXYEAR,12,12,23,59,59,0)
 
 # initializes conference metadata so the app initially has something
 # to work with
-conference = Conference(key=metadata_key,name="undefinedCon 2014",
-	submission_deadline=end_of_time,registration_deadline=end_of_time)
+conference = Conference()
+conference.key=metadata_key
+conference.name="undefinedCon 2014"
+conference.registration_deadline=end_of_time
+conference.submission_deadline=end_of_time
 conference.put()
