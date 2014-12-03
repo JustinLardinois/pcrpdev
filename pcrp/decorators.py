@@ -22,6 +22,7 @@ from google.appengine.api import users
 from flask import redirect
 
 from pcrp.url_rules import *
+from pcrp.util import is_registered_user
 
 # To be prepended to view functions. Redirects user to home page
 # if not logged in. Thanks to the Flask documentation for help:
@@ -29,6 +30,15 @@ from pcrp.url_rules import *
 def login_required(f):
 	@wraps(f)
 	def decorated_function(*args, **kwargs):
-		if (not users.get_current_user()): return redirect(home_url)
+		if (not users.get_current_user()):
+			return redirect(home_url)
+		return f(*args, **kwargs)
+	return decorated_function
+
+def registration_required(f):
+	@wraps(f)
+	def decorated_function(*args, **kwargs):
+		if(not is_registered_user(users.get_current_user().user_id())):
+			return redirect(user_reg_url)
 		return f(*args, **kwargs)
 	return decorated_function

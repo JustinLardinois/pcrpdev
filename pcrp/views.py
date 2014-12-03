@@ -16,7 +16,7 @@
 # In the spirit of following Flask conventions, this script contains all the
 # request handlers (known as views) and their routing decorators.
 
-from xml.sax.saxutils import escape
+from time import sleep
 
 from google.appengine.api import users
 from google.appengine.ext import ndb
@@ -36,15 +36,14 @@ from pcrp.conference_user import *
 from pcrp.decorators import *
 from pcrp.keys import *
 from pcrp.url_rules import *
-
-# function for preventing cross site scripting
-html_escape = lambda x: escape(x,
-				{'"':"&quot;","'":"&#x27;","/":"&#x2F;","\\":"&92;"})
+from pcrp.util import *
 
 @app.route(home_url)
 def home_view():
 	metadata = metadata_key.get()
 	user = users.get_current_user()
+	if(user): return redirect(user_reg_url)
+	
 	return render_template(
 		"index.html",
 		conference_name=metadata.name,
@@ -59,11 +58,15 @@ def home_view():
 @app.route(user_reg_url,methods=["GET"])
 @login_required
 def user_reg_view_get():
+	user = users.get_current_user()
+	if(is_registered_user(user.user_id())):
+		return redirect(hub_url)
+
 	metadata = metadata_key.get()
 	return render_template(
 		"user_reg.html",
 		conference_name=metadata.name,
-		email=users.get_current_user().email(),
+		email=user.email(),
 		html_escape=html_escape
 		)
 
@@ -71,6 +74,10 @@ def user_reg_view_get():
 # and redirects back to the form with errors when incorrect
 @app.route(user_reg_url,methods=["POST"])
 def user_reg_view_post():
+	google_user = users.get_current_user()
+	if(is_registered_user(google_user.user_id())):
+		return redirect(hub_url)
+
 	metadata = metadata_key.get()
 	real_name_blank = False
 	email_blank = False
@@ -105,7 +112,6 @@ def user_reg_view_post():
 
 	if((not real_name_blank) and (not email_blank) 
 		and (not email_invalid) and (not affiliation_blank)):
-		google_user = users.get_current_user()
 		pcrp_user = ConferenceUser()
 		pcrp_user.parent = users_key
 		pcrp_user.nickname = google_user.nickname()
@@ -116,9 +122,17 @@ def user_reg_view_post():
 		pcrp_user.program_committee = False
 		pcrp_user.pc_chair = False
 		pcrp_user.put()
-		return "Success!"
+		sleep(1)
+		# Because it takes a while to write to the datastore, there
+		# is a bug where the user will be redirected back to the
+		# registration page after completing the form. The
+		# registration check on hub_view() fails due to the write
+		# delay, so the one second sleep should alleviate the bug
+		# without annoying users.
+		return redirect(hub_url)
 
-	else: return render_template(
+	else:
+		return render_template(
 			"user_reg.html",
 			conference_name=metadata.name,
 			real_name_blank=real_name_blank,
@@ -130,3 +144,10 @@ def user_reg_view_post():
 			affiliation=affiliation,
 			html_escape=html_escape
 			)
+
+@app.route(hub_url)
+@login_required
+@registration_required
+def hub_view():
+	return ("<a href=\"" + users.create_logout_url(home_url)
+		+ "\">hub hub hub</a>")
