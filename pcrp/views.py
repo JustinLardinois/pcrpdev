@@ -32,6 +32,7 @@ from validate_email import validate_email
 from pcrp import app
 
 from pcrp.conference import *
+from pcrp.conference_user import *
 from pcrp.decorators import *
 from pcrp.keys import *
 from pcrp.url_rules import *
@@ -104,7 +105,19 @@ def user_reg_view_post():
 
 	if((not real_name_blank) and (not email_blank) 
 		and (not email_invalid) and (not affiliation_blank)):
+		google_user = users.get_current_user()
+		pcrp_user = ConferenceUser()
+		pcrp_user.parent = users_key
+		pcrp_user.nickname = google_user.nickname()
+		pcrp_user.email = email
+		pcrp_user.real_name = real_name
+		pcrp_user.affiliation = affiliation
+		pcrp_user.id = google_user.user_id()
+		pcrp_user.program_committee = False
+		pcrp_user.pc_chair = False
+		pcrp_user.put()
 		return "Success!"
+
 	else: return render_template(
 			"user_reg.html",
 			conference_name=metadata.name,

@@ -18,11 +18,11 @@
 
 from google.appengine.ext import ndb
 
-class ConferenceUser(Model.ndb)
+class ConferenceUser(ndb.Model):
 	nickname = ndb.StringProperty();
 	email = ndb.StringProperty();
 	real_name = ndb.StringProperty();
-	affliation = ndb.StringProperty();
+	affiliation = ndb.StringProperty();
 	id = ndb.StringProperty();
 	program_committee = ndb.BooleanProperty();
 	pc_chair = ndb.BooleanProperty();

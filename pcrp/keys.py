@@ -17,6 +17,8 @@
 
 from google.appengine.ext import ndb
 
-from conference import *
+from pcrp.conference import *
+from pcrp.conference_user import *
 
 metadata_key = ndb.Key(Conference,"Metadata")
+users_key    = ndb.Key(ConferenceUser,"Users")
