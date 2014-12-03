@@ -30,18 +30,11 @@
 			<p>Paper registration deadline: {{ registration_deadline }}</p>
 			<p>Paper submission deadline: {{ submission_deadline }}</p>
 		</div>
-	{%- if user %}
-		<div id="logout">
-			Logged in as {{ user.nickname() }}
-			(<a href="{{ create_logout_url(request.path) }}">Log out</a>)
-		</div>
-	{% else %}
 		<div id="login">
 			<a href="{{ create_login_url(request.path) }}">
 				Log in with Google Accounts
 			</a>
 		</div>
-	{% endif -%}
 	</body>
 </html>
 {%- endautoescape -%}
