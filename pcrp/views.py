@@ -71,6 +71,7 @@ def user_reg_view_get():
 # handles a processed form; stores data when submission is correct,
 # and redirects back to the form with errors when incorrect
 @app.route(user_reg_url,methods=["POST"])
+@login_required
 def user_reg_view_post():
 	google_user = users.get_current_user()
 	if(is_registered_user(google_user.user_id())):
