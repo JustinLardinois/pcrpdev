@@ -24,8 +24,7 @@ html_escape = lambda x: escape(x,
 				{'"':"&quot;","'":"&#x27;","/":"&#x2F;","\\":"&92;"})
 
 def is_registered_user(id):
-	query = ConferenceUser.query(ConferenceUser.id == id)
-	if(query.count() > 0): return True
+	if(lookup_user(id)): return True
 	else: return False
 
 def lookup_user(id):
