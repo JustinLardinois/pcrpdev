@@ -150,3 +150,10 @@ def user_reg_view_post():
 def hub_view():
 	return ("<a href=\"" + users.create_logout_url(home_url)
 		+ "\">hub hub hub</a>")
+
+@app.route(admin_panel_url)
+@login_required
+@registration_required
+@admin_only
+def admin_panel_view():
+	return "Admin Panel"

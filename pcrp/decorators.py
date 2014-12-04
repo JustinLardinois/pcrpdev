@@ -42,3 +42,12 @@ def registration_required(f):
 			return redirect(user_reg_url)
 		return f(*args, **kwargs)
 	return decorated_function
+
+def admin_only(f):
+	@wraps(f)
+	def decorated_function(*args, **kwargs):
+		if(not users.is_current_user_admin()):
+			return ("Administrator privilege is required to access this page",
+					403)
+		return f(*args, **kwargs)
+	return decorated_function
