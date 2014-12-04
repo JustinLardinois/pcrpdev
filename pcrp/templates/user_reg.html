@@ -26,6 +26,9 @@
 	</head>
 	<body>
 		<h1>User Registration</h1>
+		<div id="logout">
+			<a href="{{ logout_url }}">log out</a>
+		</div>
 		{% if real_name_blank %}
 			<p class="error">Full Name was left blank</p>
 		{% endif -%}

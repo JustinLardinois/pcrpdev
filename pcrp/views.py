@@ -65,7 +65,8 @@ def user_reg_view_get():
 		"user_reg.html",
 		conference_name=metadata.name,
 		email=user.email(),
-		html_escape=html_escape
+		html_escape=html_escape,
+		logout_url = users.create_logout_url(home_url)
 		)
 
 # handles a processed form; stores data when submission is correct,
@@ -141,7 +142,8 @@ def user_reg_view_post():
 			real_name=real_name,
 			email=email,
 			affiliation=affiliation,
-			html_escape=html_escape
+			html_escape=html_escape,
+			logout_url = users.create_logout_url(home_url)
 			)
 
 @app.route(admin_panel_url)
