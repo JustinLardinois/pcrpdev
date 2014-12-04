@@ -144,16 +144,26 @@ def user_reg_view_post():
 			html_escape=html_escape
 			)
 
+@app.route(admin_panel_url)
+@login_required
+@registration_required
+@admin_only
+def admin_panel_view():
+	metadata = metadata_key.get()
+	user = lookup_user(users.get_current_user().user_id())
+	return render_template(
+		"admin_panel/index.html",
+		conference_name=metadata.name,
+		admin_panel_url=admin_panel_url,
+		admin_panel_metadata_url=admin_panel_metadata_url,
+		admin_panel_users_url=admin_panel_users_url,
+		real_name=user.real_name,
+		logout_url=users.create_logout_url(home_url)
+		)
+
 @app.route(hub_url)
 @login_required
 @registration_required
 def hub_view():
 	return ("<a href=\"" + users.create_logout_url(home_url)
 		+ "\">hub hub hub</a>")
-
-@app.route(admin_panel_url)
-@login_required
-@registration_required
-@admin_only
-def admin_panel_view():
-	return "Admin Panel"

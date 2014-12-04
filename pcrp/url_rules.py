@@ -15,7 +15,9 @@
 # pcrp/url_rules.py - a component of pCRP
 # contains URL rules that are used for routing and request handling
 
-home_url        = "/"
-user_reg_url    = "/user-reg/"
-admin_panel_url = "/admin/"
-hub_url         = "/hub/"
+home_url                 = "/"
+user_reg_url             = "/user-reg/"
+admin_panel_url          = "/admin/"
+admin_panel_metadata_url = "/admin/metadata/"
+admin_panel_users_url    = "/admin/users/"
+hub_url                  = "/hub/"

@@ -1,3 +1,4 @@
+{#
 # Copyright 2014 Justin Lardinois
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,21 +13,29 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ###############################################################################
-# pcrp/util.py - a component of pCRP
-# utility functions
-
-from xml.sax.saxutils import escape
-
-from pcrp.conference_user import *
-
-# function for preventing cross site scripting
-html_escape = lambda x: escape(x,
-				{'"':"&quot;","'":"&#x27;","/":"&#x2F;","\\":"&92;"})
-
-def is_registered_user(id):
-	query = ConferenceUser.query(ConferenceUser.id == id)
-	if(query.count() > 0): return True
-	else: return False
-
-def lookup_user(id):
-	return ConferenceUser.query(ConferenceUser.id == id).get()
+# pcrp/templates/admin_panel/index.html - a component of pCRP
+#
+# template for admin panel
+-#}
+<!DOCTYPE html>
+{%- autoescape true %}
+<html>
+	<head>
+		<title>Admin Panel — {{ conference_name }}</title>
+		<meta charset="UTF-8">
+	</head>
+	<body>
+		<h1>Admin Panel</h1>
+		<div id="logout">
+			Logged in as {{ real_name }}
+			(<a href="{{ logout_url }}">log out</a>)
+			(<a href="{{ admin_panel_url }}">admin panel</a>)
+		</div>
+		<ul>
+			<li><a href="{{ admin_panel_metadata_url }}">Conference
+				Metadata</a></li>
+			<li><a href="{{ admin_panel_users_url }}">Users</a></li>
+		</ul>
+	</body>
+</html>
+{% endautoescape -%}
