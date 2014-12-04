@@ -49,7 +49,7 @@ def home_view():
 		conference_name=metadata.name,
 		registration_deadline=metadata.registration_deadline,
 		submission_deadline=metadata.submission_deadline,
-		create_login_url=lambda x: users.create_login_url(x),
+		login_url=users.create_login_url(user_reg_url),
 		)
 
 # handles when the user requests a "clean" form
