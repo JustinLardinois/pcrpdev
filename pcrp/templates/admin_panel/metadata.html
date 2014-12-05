@@ -1,0 +1,77 @@
+{#
+# Copyright 2014 Justin Lardinois
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+###############################################################################
+# pcrp/templates/admin_panel/index.html - a component of pCRP
+#
+# template for admin panel metadata editor
+-#}
+<!DOCTYPE html>
+{% autoescape true %}
+<html>
+	<head>
+		<title>Conference Metadata — Admin Panel — {{ conference_name }}</title>
+		<meta charset="UTF-8">
+	</head>
+	<body>
+		<h1>Conference Metadata</h1>
+		<div id="logout">
+			Logged in as {{ real_name }}
+			(<a href="{{ logout_url }}">log out</a>)
+			(<a href="{{ admin_panel_url }}">admin panel</a>)
+		</div>
+		{% if registration_deadline_invalid %}
+		<p class="error">Invalid Paper Registration Deadline</p>
+		{% endif -%}
+		<h2>Edit Conference Metadata</h2>
+		<form accept-charset="UTF-8" action="{{ request.path }}"
+			autocomplete="off" method="post">
+			<label for="conference_name">
+				<span>Conference Name</span>
+				<input type="text" name="conference_name"
+					value="{{ conference_name }}">
+			</label>
+			<fieldset>
+				<legend>Paper Registration Deadline</legend>
+				<label for="paper_registration_month">
+					<span>Month</span>
+					<input type="number" name="paper_registration_month"
+						value="{{ paper_registration_month }}">
+				</label>
+				<label for="paper_registration_day">
+					<span>Day</span>
+					<input type="number" name="paper_registration_day"
+						value="{{ paper_registration_day }}">
+				</label>
+				<label for="paper_registration_year">
+					<span>Year</span>
+					<input type="number" name="paper_registration_year"
+						value="{{ paper_registration_year }}">
+				</label>
+				<label for="paper_registration_hour">
+					<span>Hour (24 hour time)</span>
+					<input type="number" name="paper_registration_hour"
+						value="{{ paper_registration_hour }}">
+				</label>
+				<label for="paper_registration_minute">
+					<span>Minute</span>
+					<input type="number" name="paper_registration_minute"
+						value="{{ paper_registration_minute }}">
+				</label>
+			</fieldset>
+			<button type="submit">Save Changes</button>
+		</form>
+	</body>
+</html>
+{% endautoescape %}

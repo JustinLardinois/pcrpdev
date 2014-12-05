@@ -163,6 +163,58 @@ def admin_panel_view():
 		logout_url=users.create_logout_url(home_url)
 		)
 
+@app.route(admin_panel_metadata_url,methods=["GET"])
+@login_required
+@registration_required
+@admin_only
+def admin_panel_metadata_view_get():
+	metadata = metadata_key.get()
+	user = lookup_user(users.get_current_user().user_id())
+	registration_deadline = metadata.registration_deadline
+	return render_template(
+		"admin_panel/metadata.html",
+		conference_name=metadata.name,
+		admin_panel_url=admin_panel_url,
+		logout_url=users.create_logout_url(home_url),
+		registration_deadline_invalid=
+			request.args.get("registration_deadline") == "invalid",
+		paper_registration_month=registration_deadline.strftime("%m"),
+		paper_registration_day=registration_deadline.strftime("%d"),
+		paper_registration_year=registration_deadline.strftime("%Y"),
+		paper_registration_hour=registration_deadline.strftime("%H"),
+		paper_registration_minute=registration_deadline.strftime("%M")
+		)
+
+@app.route(admin_panel_metadata_url,methods=["POST"])
+@login_required
+@registration_required
+@admin_only
+def admin_panel_metadata_view_post():
+	metadata = metadata_key.get()
+	metadata.name = request.form["conference_name"]
+	
+	errors = []
+	paper_registration_deadline = parse_datetime(
+		request.form["paper_registration_month"],
+		request.form["paper_registration_day"],
+		request.form["paper_registration_year"],
+		request.form["paper_registration_hour"],
+		request.form["paper_registration_minute"]
+	)
+	
+	if(paper_registration_deadline == None):
+		errors.append("?registration_deadline=invalid")
+	else:
+		metadata.registration_deadline = paper_registration_deadline
+	
+	metadata.put()
+	try:
+		error_string = reduce((lambda x,y: x + "&" + y),errors)
+	except TypeError:
+		error_string = ""
+	
+	return redirect(admin_panel_metadata_url + error_string)
+
 @app.route(hub_url)
 @login_required
 @registration_required

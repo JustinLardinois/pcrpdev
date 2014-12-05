@@ -15,6 +15,7 @@
 # pcrp/util.py - a component of pCRP
 # utility functions
 
+import datetime
 from xml.sax.saxutils import escape
 
 from pcrp.conference_user import *
@@ -27,5 +28,16 @@ def is_registered_user(id):
 	if(lookup_user(id)): return True
 	else: return False
 
+# returns the ConferenceUser object representing the user with
+# the supplied id
 def lookup_user(id):
 	return ConferenceUser.query(ConferenceUser.id == id).get()
+
+# returns datetime object if argument strings compose a valid
+# date; returns None otherwise
+def parse_datetime(month , day , year , hour , minute):
+	try:
+		return datetime.datetime(int(month),int(day),int(year),
+				int(hour),int(minute))
+	except ValueError:
+		return None
