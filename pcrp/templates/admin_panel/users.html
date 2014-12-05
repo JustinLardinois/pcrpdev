@@ -31,11 +31,36 @@
 			(<a href="{{ logout_url }}">log out</a>)
 			(<a href="{{ admin_panel_url }}">admin panel</a>)
 		</div>
-		<ul>
-		{% for user in conference_users %}
-			<li>{{ user.real_name }}</li>
-		{% endfor %}
-		</ul>
+		<p>Edit User Roles</p>
+		<p>Administrator roles can only be edited on the App Engine
+			Admin Console.</p>
+		<form accept-charset="UTF-8" action="{{ request.path }}"
+			autocomplete="off" method="post">
+			{% for user in conference_users %}
+			<fieldset>
+				<span>Full Name: {{ user.real_name }}</span>
+				<span>Email: {{ user.email }}</span>
+				<span>Affiliation: {{ user.affiliation }}</span>
+				<select name="pc_role_{{ user.id }}">
+					<option value="no_role"
+						{%- if not user.program_committee -%}
+							{{ " selected" }}
+						{%- endif -%}
+					>not on program committee</option>
+					<option value="pc_member"
+						{%- if user.program_committee and (not user.pc_chair) -%}
+							{{ " selected" }}
+						{%- endif -%}
+					>program committee member</option>
+					<option value="pc_chair"
+						{%- if user.program_committee and user.pc_chair -%}
+							{{ " selected" }}
+						{%- endif -%}
+					>program committee chair</option>
+				</select>
+			</fieldset>
+			{% endfor %}
+		</form>
 	</body>
 </html>
 {%- endautoescape %}
