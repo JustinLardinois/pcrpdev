@@ -178,6 +178,7 @@ def admin_panel_metadata_view_get():
 		conference_name=metadata.name,
 		admin_panel_url=admin_panel_url,
 		logout_url=users.create_logout_url(home_url),
+		real_name=user.real_name,
 		
 		registration_deadline_invalid=
 			request.args.get("registration_deadline") == "invalid",
@@ -238,6 +239,23 @@ def admin_panel_metadata_view_post():
 		error_string = ""
 	
 	return redirect(admin_panel_metadata_url + error_string)
+
+@app.route(admin_panel_users_url,methods=["GET"])
+@login_required
+@registration_required
+@admin_only
+def admin_panel_users_view_get():
+	metadata=metadata_key.get()
+	user = lookup_user(users.get_current_user().user_id())
+	conference_users = ConferenceUser.query().fetch()
+	return render_template(
+		"admin_panel/users.html",
+		conference_name=metadata.name,
+		admin_panel_url=admin_panel_url,
+		logout_url=users.create_logout_url(home_url),
+		real_name=user.real_name,
+		conference_users=conference_users,len=len
+		)
 
 @app.route(hub_url)
 @login_required
