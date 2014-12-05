@@ -171,18 +171,29 @@ def admin_panel_metadata_view_get():
 	metadata = metadata_key.get()
 	user = lookup_user(users.get_current_user().user_id())
 	registration_deadline = metadata.registration_deadline
+	submission_deadline = metadata.submission_deadline
+	
 	return render_template(
 		"admin_panel/metadata.html",
 		conference_name=metadata.name,
 		admin_panel_url=admin_panel_url,
 		logout_url=users.create_logout_url(home_url),
+		
 		registration_deadline_invalid=
 			request.args.get("registration_deadline") == "invalid",
 		paper_registration_month=registration_deadline.strftime("%m"),
 		paper_registration_day=registration_deadline.strftime("%d"),
 		paper_registration_year=registration_deadline.strftime("%Y"),
 		paper_registration_hour=registration_deadline.strftime("%H"),
-		paper_registration_minute=registration_deadline.strftime("%M")
+		paper_registration_minute=registration_deadline.strftime("%M"),
+		
+		submission_deadline_invalid=
+			request.args.get("submission_deadline") == "invalid",
+		paper_submission_month=submission_deadline.strftime("%m"),
+		paper_submission_day=submission_deadline.strftime("%d"),
+		paper_submission_year=submission_deadline.strftime("%Y"),
+		paper_submission_hour=submission_deadline.strftime("%H"),
+		paper_submission_minute=submission_deadline.strftime("%M")
 		)
 
 @app.route(admin_panel_metadata_url,methods=["POST"])
@@ -203,13 +214,26 @@ def admin_panel_metadata_view_post():
 	)
 	
 	if(paper_registration_deadline == None):
-		errors.append("?registration_deadline=invalid")
+		errors.append("registration_deadline=invalid")
 	else:
 		metadata.registration_deadline = paper_registration_deadline
+
+	paper_submission_deadline = parse_datetime(
+		request.form["paper_submission_month"],
+		request.form["paper_submission_day"],
+		request.form["paper_submission_year"],
+		request.form["paper_submission_hour"],
+		request.form["paper_submission_minute"]
+	)
 	
+	if(paper_submission_deadline == None):
+		errors.append("submission_deadline=invalid")
+	else:
+		metadata.submission_deadline = paper_submission_deadline
+
 	metadata.put()
 	try:
-		error_string = reduce((lambda x,y: x + "&" + y),errors)
+		error_string = "?" + reduce((lambda x,y: x + "&" + y),errors)
 	except TypeError:
 		error_string = ""
 	

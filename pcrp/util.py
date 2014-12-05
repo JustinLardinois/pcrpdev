@@ -37,7 +37,7 @@ def lookup_user(id):
 # date; returns None otherwise
 def parse_datetime(month , day , year , hour , minute):
 	try:
-		return datetime.datetime(int(month),int(day),int(year),
+		return datetime.datetime(int(year),int(month),int(day),
 				int(hour),int(minute))
 	except ValueError:
 		return None

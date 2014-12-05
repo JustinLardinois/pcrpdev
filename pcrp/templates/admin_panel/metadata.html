@@ -31,9 +31,12 @@
 			(<a href="{{ logout_url }}">log out</a>)
 			(<a href="{{ admin_panel_url }}">admin panel</a>)
 		</div>
-		{% if registration_deadline_invalid %}
+		{%- if registration_deadline_invalid %}
 		<p class="error">Invalid Paper Registration Deadline</p>
-		{% endif -%}
+		{% endif %}
+		{%- if submission_deadline_invalid %}
+		<p class="error">Invalid Paper Submission Deadline</p>
+		{% endif %}
 		<h2>Edit Conference Metadata</h2>
 		<form accept-charset="UTF-8" action="{{ request.path }}"
 			autocomplete="off" method="post">
@@ -68,6 +71,34 @@
 					<span>Minute</span>
 					<input type="number" name="paper_registration_minute"
 						value="{{ paper_registration_minute }}">
+				</label>
+			</fieldset>
+			<fieldset>
+				<legend>Paper Submission Deadline</legend>
+				<label for="paper_submission_month">
+					<span>Month</span>
+					<input type="number" name="paper_submission_month"
+						value="{{ paper_submission_month }}">
+				</label>
+				<label for="paper_submission_day">
+					<span>Day</span>
+					<input type="number" name="paper_submission_day"
+						value="{{ paper_submission_day }}">
+				</label>
+				<label for="paper_submission_year">
+					<span>Year</span>
+					<input type="number" name="paper_submission_year"
+						value="{{ paper_submission_year }}">
+				</label>
+				<label for="paper_submission_hour">
+					<span>Hour (24 hour time)</span>
+					<input type="number" name="paper_submission_hour"
+						value="{{ paper_submission_hour }}">
+				</label>
+				<label for="paper_submission_minute">
+					<span>Minute</span>
+					<input type="number" name="paper_submission_minute"
+						value="{{ paper_submission_minute }}">
 				</label>
 			</fieldset>
 			<button type="submit">Save Changes</button>
