@@ -31,13 +31,16 @@
 			(<a href="{{ logout_url }}">log out</a>)
 			(<a href="{{ admin_panel_url }}">admin panel</a>)
 		</div>
+		<h2>Edit Conference Metadata</h2>
 		{%- if registration_deadline_invalid %}
 		<p class="error">Invalid Paper Registration Deadline</p>
 		{% endif %}
 		{%- if submission_deadline_invalid %}
 		<p class="error">Invalid Paper Submission Deadline</p>
 		{% endif %}
-		<h2>Edit Conference Metadata</h2>
+		{%- if update_success %}
+		<p>Conference Metadata Updated Successfully</p>
+		{% endif %}
 		<form accept-charset="UTF-8" action="{{ request.path }}"
 			autocomplete="off" method="post">
 			<label for="conference_name">

@@ -179,6 +179,7 @@ def admin_panel_metadata_view_get():
 		admin_panel_url=admin_panel_url,
 		logout_url=users.create_logout_url(home_url),
 		real_name=user.real_name,
+		update_success=request.args.get("update") == "success",
 		
 		registration_deadline_invalid=
 			request.args.get("registration_deadline") == "invalid",
@@ -234,11 +235,11 @@ def admin_panel_metadata_view_post():
 
 	metadata.put()
 	try:
-		error_string = "?" + reduce((lambda x,y: x + "&" + y),errors)
+		arg_string = "?" + reduce((lambda x,y: x + "&" + y),errors)
 	except TypeError:
-		error_string = ""
+		arg_string = "?update=success"
 	
-	return redirect(admin_panel_metadata_url + error_string)
+	return redirect(admin_panel_metadata_url + arg_string)
 
 @app.route(admin_panel_users_url,methods=["GET"])
 @login_required
@@ -256,6 +257,13 @@ def admin_panel_users_view_get():
 		real_name=user.real_name,
 		conference_users=conference_users,len=len
 		)
+
+@app.route(admin_panel_users_url,methods=["POST"])
+@login_required
+@registration_required
+@admin_only
+def admin_panel_users_view_post():
+	return "placeholder"
 
 @app.route(hub_url)
 @login_required
