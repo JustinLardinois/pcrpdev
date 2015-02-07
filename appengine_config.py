@@ -36,7 +36,7 @@ end_of_time = datetime.datetime(datetime.MAXYEAR,12,12,23,59,59,0)
 # initializes conference metadata so the app initially has something
 # to work with
 conference = Conference.query().get()
-if(not conference):
+if not conference:
 	conference = Conference()
 	conference.key=metadata_key
 	conference.name="undefinedCon 2014"

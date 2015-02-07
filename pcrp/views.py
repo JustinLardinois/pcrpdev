@@ -43,7 +43,7 @@ from pcrp.util import *
 def home_view():
 	metadata = metadata_key.get()
 	user = users.get_current_user()
-	if(user): return redirect(user_reg_url)
+	if user: return redirect(user_reg_url)
 	
 	return render_template(
 		"index.html",
@@ -58,7 +58,7 @@ def home_view():
 @login_required
 def user_reg_view_get():
 	user = users.get_current_user()
-	if(is_registered_user(user.user_id())):
+	if is_registered_user(user.user_id()):
 		return redirect(hub_url)
 
 	metadata = metadata_key.get()
@@ -76,7 +76,7 @@ def user_reg_view_get():
 @login_required
 def user_reg_view_post():
 	google_user = users.get_current_user()
-	if(is_registered_user(google_user.user_id())):
+	if is_registered_user(google_user.user_id()):
 		return redirect(hub_url)
 
 	metadata = metadata_key.get()
@@ -86,28 +86,28 @@ def user_reg_view_post():
 	affiliation_blank = False
 	
 	real_name = request.form["real_name"]
-	if(real_name == None): real_name_blank = True
+	if real_name == None: real_name_blank = True
 	else:
 		real_name = html_escape(real_name).strip()
-		if(real_name == ""):
+		if real_name == "":
 			real_name = None
 			real_name_blank = True
 	
 	email = request.form["email"]
-	if(email == None): email_blank = True
+	if email == None: email_blank = True
 	else:
 		email = email.strip()
-		if(email == ""):
+		if email == "":
 			email = None
 			email_blank = True
-		elif(not validate_email(email)):
+		elif not validate_email(email):
 			email_invalid = True
 	
 	affiliation = request.form["affiliation"]
-	if(affiliation == None): affiliation_blank = True
+	if affiliation == None: affiliation_blank = True
 	else:
 		affiliation = html_escape(affiliation).strip()
-		if(affiliation == ""):
+		if affiliation == "":
 			affiliation = None
 			affiliation_blank = True
 
@@ -216,7 +216,7 @@ def admin_panel_metadata_view_post():
 		request.form["paper_registration_minute"]
 	)
 	
-	if(paper_registration_deadline == None):
+	if paper_registration_deadline == None:
 		errors.append("registration_deadline=invalid")
 	else:
 		metadata.registration_deadline = paper_registration_deadline
@@ -229,7 +229,7 @@ def admin_panel_metadata_view_post():
 		request.form["paper_submission_minute"]
 	)
 	
-	if(paper_submission_deadline == None):
+	if paper_submission_deadline == None:
 		errors.append("submission_deadline=invalid")
 	else:
 		metadata.submission_deadline = paper_submission_deadline

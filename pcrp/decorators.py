@@ -31,7 +31,7 @@ from pcrp.util import is_registered_user
 def login_required(f):
 	@wraps(f)
 	def decorated_function(*args, **kwargs):
-		if (not users.get_current_user()):
+		if not users.get_current_user():
 			return redirect(home_url)
 		return f(*args, **kwargs)
 	return decorated_function
@@ -39,7 +39,7 @@ def login_required(f):
 def registration_required(f):
 	@wraps(f)
 	def decorated_function(*args, **kwargs):
-		if(not is_registered_user(users.get_current_user().user_id())):
+		if not is_registered_user(users.get_current_user().user_id()):
 			return redirect(user_reg_url)
 		return f(*args, **kwargs)
 	return decorated_function
@@ -47,7 +47,7 @@ def registration_required(f):
 def admin_only(f):
 	@wraps(f)
 	def decorated_function(*args, **kwargs):
-		if(not users.is_current_user_admin()):
+		if not users.is_current_user_admin():
 			return ("Administrator privilege is required to access this page",
 					403)
 		return f(*args, **kwargs)
