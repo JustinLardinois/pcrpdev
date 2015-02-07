@@ -19,7 +19,7 @@
 import datetime
 from xml.sax.saxutils import escape
 
-from pcrp.conference_user import *
+from pcrp.models import ConferenceUser
 
 # function for preventing cross site scripting
 html_escape = lambda x: escape(x,

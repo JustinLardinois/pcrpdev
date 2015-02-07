@@ -13,12 +13,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ###############################################################################
-# pcrp/conference_user.py - a component of pCRP
-# class for keeping track of users, since App Engine's native Users class
-# is not reliable for long term storage and additional information is needed
+# pcrp/models.py - a component of pCRP
+# classes for NDB models
 
 from google.appengine.ext import ndb
 
+# class that contains conference metadata; initalized
+# once in appengine_config.py
+
+class Conference(ndb.Model):
+	name = ndb.StringProperty();
+	registration_deadline = ndb.DateTimeProperty();
+	submission_deadline = ndb.DateTimeProperty();
+
+# class for keeping track of users, since App Engine's native Users class
+# is not reliable for long term storage and additional information is needed
 class ConferenceUser(ndb.Model):
 	nickname = ndb.StringProperty();
 	email = ndb.StringProperty();
@@ -27,4 +36,3 @@ class ConferenceUser(ndb.Model):
 	id = ndb.StringProperty();
 	program_committee = ndb.BooleanProperty();
 	pc_chair = ndb.BooleanProperty();
-	

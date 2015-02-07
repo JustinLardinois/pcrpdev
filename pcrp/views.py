@@ -32,10 +32,9 @@ from validate_email import validate_email
 # http://flask.pocoo.org/docs/0.10/patterns/packages/
 from pcrp import app
 
-from pcrp.conference import *
-from pcrp.conference_user import *
 from pcrp.decorators import *
 from pcrp.keys import *
+from pcrp.models import *
 from pcrp.url_rules import *
 from pcrp.util import *
 
