@@ -256,7 +256,7 @@ def admin_panel_users_view_get():
 		admin_panel_url=admin_panel_url,
 		logout_url=users.create_logout_url(home_url),
 		real_name=user.real_name,
-		conference_users=conference_users,len=len
+		conference_users=conference_users
 		)
 
 @app.route(admin_panel_users_url,methods=["POST"])
