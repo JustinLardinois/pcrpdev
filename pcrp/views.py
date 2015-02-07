@@ -256,7 +256,8 @@ def admin_panel_users_view_get():
 		admin_panel_url=admin_panel_url,
 		logout_url=users.create_logout_url(home_url),
 		real_name=user.real_name,
-		conference_users=conference_users
+		conference_users=conference_users,
+		update_success=request.args.get("update") == "success"
 		)
 
 @app.route(admin_panel_users_url,methods=["POST"])
@@ -264,7 +265,21 @@ def admin_panel_users_view_get():
 @registration_required
 @admin_only
 def admin_panel_users_view_post():
-	return "placeholder"
+	conference_users = ConferenceUser.query().fetch()
+	for user in conference_users:
+		role = request.form["pc_role_" + user.id]
+		if role == "no_role":
+			user.program_committee = False
+			user.pc_chair = False
+		elif role == "pc_member":
+			user.program_committee = True
+			user.pc_chair = False
+		elif role == "pc_chair":
+			user.program_committee = True
+			user.pc_chair = True
+		user.put()
+	sleep(1) # just in case it needs more time to update
+	return redirect(admin_panel_users_url + "?update=success")
 
 @app.route(hub_url)
 @login_required
