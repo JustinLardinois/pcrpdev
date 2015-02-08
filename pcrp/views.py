@@ -293,8 +293,18 @@ def hub_view():
 def paper_view():
 	metadata=metadata_key.get()
 	user = lookup_user(users.get_current_user().user_id())
+	
+	id = request.args.get("id")
+	if id == None or id == "":
+		return ("Invalid request; no paper ID specified",400)
+	elif id == "new":
+		title = ""
+		abstract = ""
+
 	return render_template(
 		"paper.html",
 		conference_name=metadata.name,
-		id=""
+		title=title,
+		abstract=abstract,
+		id=id
 	)
