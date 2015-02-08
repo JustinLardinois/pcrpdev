@@ -26,7 +26,8 @@
 		<meta charset="UTF-8">
 	</head>
 	<body>
-		<h1>{{ conference_name }}</h1>
+		<h1>{% if id == "new" %}New{% else %}Edit{% endif %} Paper —{{ " "
+			}}{{ conference_name }}</h1>
 		
 	</body>
 </html>
