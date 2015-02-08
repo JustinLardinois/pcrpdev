@@ -17,6 +17,7 @@
 # In the spirit of following Flask conventions, this script contains all the
 # request handlers (known as views) and their routing decorators.
 
+import datetime
 from time import sleep
 
 from google.appengine.api import users
@@ -287,19 +288,33 @@ def hub_view():
 	return ("<a href=\"" + users.create_logout_url(home_url)
 		+ "\">hub hub hub</a>")
 
-@app.route(paper_url)
+@app.route(paper_url,methods=["GET"])
 @login_required
 @registration_required
-def paper_view():
+def paper_view_get():
 	metadata=metadata_key.get()
+	registration_deadline = metadata.registration_deadline
+	submission_deadline = metadata.submission_deadline
 	user = lookup_user(users.get_current_user().user_id())
 	
 	id = request.args.get("id")
 	if id == None or id == "":
 		return ("Invalid request; no paper ID specified",400)
 	elif id == "new":
+		if registration_deadline < datetime.datetime.now():
+			return ("Registration deadline has passed",400)
 		title = ""
 		abstract = ""
+		additional_authors = []
+	else:
+		paper = ndb.Key(urlsafe=id).get()
+		if paper:
+			if paper.author.id == user.id:
+				title = paper.title
+				abstract = paper.abstract
+				additional_authors = paper.additional_authors
+			else: return ("You do not own this paper",403)
+		else: return ("Invalid paper ID",400)
 
 	return render_template(
 		"paper.html",
@@ -308,3 +323,44 @@ def paper_view():
 		abstract=abstract,
 		id=id
 	)
+
+@app.route(paper_url,methods=["POST"])
+@login_required
+@registration_required
+def paper_view_post():
+	metadata=metadata_key.get()
+	registration_deadline = metadata.registration_deadline
+	submission_deadline = metadata.submission_deadline
+	user = lookup_user(users.get_current_user().user_id())
+	
+	id = request.form["id"]
+	if id == "new":
+		if registration_deadline < datetime.datetime.now():
+			return redirect(paper_url + "?id=new")
+		paper = Paper()
+		paper.parent = papers_key
+		paper.author = user
+	else:
+		paper = ndb.Key(urlsafe=id).get()
+		if not paper or not paper.author.id == user.id:
+			return redirect(paper_url + "?id=" + id)
+
+	title = request.form["title"]
+	if title != None and title.strip() != "":
+		paper.title = html_escape(request.form["title"].strip())
+	else: paper.title = None
+
+	additional_authors = []
+	for a in request.form.getlist("additional_authors"):
+		if a != None and a.strip() != "":
+			additional_authors.append(html_escape(a.strip()))
+	paper.additional_authors = additional_authors
+
+	abstract = request.form["abstract"]
+	if abstract != None and abstract.strip() != "":
+		paper.abstract = html_escape(abstract.strip())
+	else: paper.abstract = None
+	
+	paper.put()
+	
+	return ""
