@@ -204,7 +204,7 @@ def admin_panel_metadata_view_get():
 @admin_only
 def admin_panel_metadata_view_post():
 	metadata = metadata_key.get()
-	metadata.name = request.form["conference_name"]
+	metadata.name = request.form["conference_name"].strip()
 	
 	errors = []
 	paper_registration_deadline = parse_datetime(
