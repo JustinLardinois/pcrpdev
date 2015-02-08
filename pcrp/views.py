@@ -291,4 +291,10 @@ def hub_view():
 @login_required
 @registration_required
 def paper_view():
-	return "foo"
+	metadata=metadata_key.get()
+	user = lookup_user(users.get_current_user().user_id())
+	return render_template(
+		"paper.html",
+		conference_name=metadata.name,
+		id=""
+	)
