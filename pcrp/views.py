@@ -286,3 +286,9 @@ def admin_panel_users_view_post():
 def hub_view():
 	return ("<a href=\"" + users.create_logout_url(home_url)
 		+ "\">hub hub hub</a>")
+
+@app.route(paper_url)
+@login_required
+@registration_required
+def paper_view():
+	return "foo"

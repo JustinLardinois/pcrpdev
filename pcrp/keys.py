@@ -22,3 +22,4 @@ from pcrp.models import *
 
 metadata_key = ndb.Key(Conference,"Metadata")
 users_key    = ndb.Key(ConferenceUser,"Users")
+papers_key   = ndb.Key(Paper,"Papers")

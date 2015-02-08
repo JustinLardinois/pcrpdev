@@ -36,3 +36,10 @@ class ConferenceUser(ndb.Model):
 	id = ndb.StringProperty()
 	program_committee = ndb.BooleanProperty()
 	pc_chair = ndb.BooleanProperty()
+
+class Paper(ndb.Model):
+	title = ndb.StringProperty()
+	author = ndb.StructuredProperty(ConferenceUser)
+	additional_authors = ndb.StringProperty(repeated=True)
+	abstract = ndb.StringProperty()
+	file = ndb.BlobProperty()
