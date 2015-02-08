@@ -22,17 +22,17 @@ from google.appengine.ext import ndb
 # once in appengine_config.py
 
 class Conference(ndb.Model):
-	name = ndb.StringProperty();
-	registration_deadline = ndb.DateTimeProperty();
-	submission_deadline = ndb.DateTimeProperty();
+	name = ndb.StringProperty()
+	registration_deadline = ndb.DateTimeProperty()
+	submission_deadline = ndb.DateTimeProperty()
 
 # class for keeping track of users, since App Engine's native Users class
 # is not reliable for long term storage and additional information is needed
 class ConferenceUser(ndb.Model):
-	nickname = ndb.StringProperty();
-	email = ndb.StringProperty();
-	real_name = ndb.StringProperty();
-	affiliation = ndb.StringProperty();
-	id = ndb.StringProperty();
-	program_committee = ndb.BooleanProperty();
-	pc_chair = ndb.BooleanProperty();
+	nickname = ndb.StringProperty()
+	email = ndb.StringProperty()
+	real_name = ndb.StringProperty()
+	affiliation = ndb.StringProperty()
+	id = ndb.StringProperty()
+	program_committee = ndb.BooleanProperty()
+	pc_chair = ndb.BooleanProperty()
