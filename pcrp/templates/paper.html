@@ -28,7 +28,26 @@
 	<body>
 		<h1>{% if id == "new" %}New{% else %}Edit{% endif %} Paper —{{ " "
 			}}{{ conference_name }}</h1>
-		
+			<form accept-charset="UTF-8" action="{{ request.path }}"
+			autocomplete="off" method="post">
+				<label for="title">
+					<span>Title</span>
+					<input type="text" name="title" value="{{ title }}">
+				</label>
+				<label for="additional_authors">
+					<span>Additional Authors</span>
+					<input type="text" name="title">
+					<input type="text" name="title">
+					<input type="text" name="title">
+				</label>
+				<label for="abstract">
+					<span>Abstract</span>
+					<textarea name="abstract" cols="90" rows="20">
+						{{- abstract -}}
+					</textarea>
+				</label>
+				<input type="hidden" name="id" value="{{ id }}">
+			</form>
 	</body>
 </html>
 {%- endautoescape %}
