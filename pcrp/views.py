@@ -344,7 +344,7 @@ def paper_view_post():
 	
 	id = request.form["id"]
 	if id == "new":
-		if registration_deadline < datetime.datetime.now():
+		if registration_deadline < datetime.datetime.utcnow():
 			return redirect(paper_url + "?id=new")
 			# delegate errors to GET view
 		paper = Paper()
