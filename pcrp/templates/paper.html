@@ -40,8 +40,8 @@
 					<span>Title</span>
 					<input type="text" name="title" value="{{ title }}">
 				</label>
-				<label for="additional_authors">
-					<span>Additional Authors</span>
+				<fieldset>
+					<legend>Additional Authors</legend>
 					{% for a in additional_authors %}
 						<input type="text" name="additional_authors"
 							value="{{ a }}">
@@ -51,7 +51,7 @@
 							<input type="text" name="additional_authors">
 						{% endfor %}
 					{% endif %}
-				</label>
+				</fieldset>
 				<label for="abstract">
 					<span>Abstract</span>
 					<textarea name="abstract" cols="90" rows="20">
