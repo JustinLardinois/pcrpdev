@@ -304,9 +304,9 @@ def paper_view_get():
 	
 	id = request.args.get("id")
 	if id == None or id == "":
-		return ("Invalid request; no paper ID specified",400)
+		return ("No paper ID specified",400)
 	elif id == "new":
-		if registration_deadline < datetime.datetime.now():
+		if registration_deadline < datetime.datetime.utcnow():
 			return ("Registration deadline has passed",400)
 		title = ""
 		abstract = ""
@@ -326,7 +326,11 @@ def paper_view_get():
 		conference_name=metadata.name,
 		title=title,
 		abstract=abstract,
-		id=id
+		id=id,
+		additional_authors=additional_authors,
+		registration_deadline=registration_deadline,
+		submission_deadline=submission_deadline,
+		update_success=request.args.get("update") == "success"
 	)
 
 @app.route(paper_url,methods=["POST"])
@@ -342,6 +346,7 @@ def paper_view_post():
 	if id == "new":
 		if registration_deadline < datetime.datetime.now():
 			return redirect(paper_url + "?id=new")
+			# delegate errors to GET view
 		paper = Paper()
 		paper.parent = papers_key
 		paper.author = user
@@ -349,6 +354,7 @@ def paper_view_post():
 		paper = ndb.Key(urlsafe=id).get()
 		if not paper or not paper.author.id == user.id:
 			return redirect(paper_url + "?id=" + id)
+			# delegate errors to GET view
 
 	title = request.form["title"]
 	if title != None and title.strip() != "":
@@ -368,4 +374,5 @@ def paper_view_post():
 	
 	paper.put()
 	
-	return ""
+	return redirect(paper_url + "?id=" + paper.key.urlsafe()
+		+ "&update=success")
