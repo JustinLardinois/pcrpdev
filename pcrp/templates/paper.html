@@ -31,9 +31,9 @@
 				{{ registration_deadline }} (UTC)</p>
 			<p>Paper Submission Deadline:
 				{{ submission_deadline }} (UTC)</p>
-			{%- if update_success %}
+			{% if update_success %}
 			<p>Paper Updated Successfully</p>
-			{% endif -%}
+			{% endif %}
 			<form accept-charset="UTF-8" action="{{ request.path }}"
 			autocomplete="off" method="post">
 				<label for="title">
@@ -46,11 +46,11 @@
 					<input type="text" name="additional_authors"
 						value="{{ a }}">
 					{% endfor -%}
-					{%- if (3 - additional_authors|length) > 0 %}
-					{%- for n in range(3 - additional_authors|length) -%}
+					{% if (3 - additional_authors|length) > 0 %}
+					{% for n in range(3 - additional_authors|length) %}
 					<input type="text" name="additional_authors">
-					{% endfor -%}
-					{% endif -%}
+					{% endfor %}
+					{% endif %}
 				</label>
 				<label for="abstract">
 					<span>Abstract</span>

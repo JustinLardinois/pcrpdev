@@ -33,9 +33,9 @@
 		<p>Edit User Roles</p>
 		<p>Administrator roles can only be edited on the App Engine
 			Admin Console.</p>
-		{%- if update_success %}
+		{% if update_success %}
 		<p>Users Updated Successfully</p>
-		{% endif -%}
+		{% endif %}
 		<form accept-charset="UTF-8" action="{{ request.path }}"
 			autocomplete="off" method="post">
 			{% for user in conference_users %}

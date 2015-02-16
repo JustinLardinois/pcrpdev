@@ -31,19 +31,19 @@
 			(<a href="{{ admin_panel_url }}">admin panel</a>)
 		</div>
 		<h2>Edit Conference Metadata</h2>
-		{%- if registration_deadline_invalid %}
+		{% if registration_deadline_invalid %}
 		<p class="error">Invalid Paper Registration Deadline</p>
-		{% endif -%}
-		{%- if submission_deadline_invalid %}
+		{% endif %}
+		{% if submission_deadline_invalid %}
 		<p class="error">Invalid Paper Submission Deadline</p>
-		{% endif -%}
-		{%- if mismatched_deadlines %}
+		{% endif %}
+		{% if mismatched_deadlines %}
 		<p class="error">Paper Registration Deadline Cannot
 			Be After Submission Deadline</p>
-		{% endif -%}
-		{%- if update_success %}
+		{% endif %}
+		{% if update_success %}
 		<p>Conference Metadata Updated Successfully</p>
-		{% endif -%}
+		{% endif %}
 		<form accept-charset="UTF-8" action="{{ request.path }}"
 			autocomplete="off" method="post">
 			<label for="conference_name">
