@@ -359,7 +359,7 @@ def paper_view_post():
 	title = request.form["title"]
 	if title != None and title.strip() != "":
 		paper.title = html_escape(request.form["title"].strip())
-	else: paper.title = None
+	else: paper.title = ""
 
 	additional_authors = []
 	for a in request.form.getlist("additional_authors"):
@@ -370,7 +370,7 @@ def paper_view_post():
 	abstract = request.form["abstract"]
 	if abstract != None and abstract.strip() != "":
 		paper.abstract = html_escape(abstract.strip())
-	else: paper.abstract = None
+	else: paper.abstract = ""
 	
 	paper.put()
 	
