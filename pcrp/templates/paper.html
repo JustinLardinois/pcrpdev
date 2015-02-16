@@ -43,13 +43,13 @@
 				<label for="additional_authors">
 					<span>Additional Authors</span>
 					{% for a in additional_authors %}
-					<input type="text" name="additional_authors"
-						value="{{ a }}">
-					{% endfor -%}
-					{% if (3 - additional_authors|length) > 0 %}
-					{% for n in range(3 - additional_authors|length) %}
-					<input type="text" name="additional_authors">
+						<input type="text" name="additional_authors"
+							value="{{ a }}">
 					{% endfor %}
+					{% if (3 - additional_authors|length) > 0 %}
+						{% for n in range(3 - additional_authors|length) %}
+							<input type="text" name="additional_authors">
+						{% endfor %}
 					{% endif %}
 				</label>
 				<label for="abstract">
