@@ -192,6 +192,8 @@ def admin_panel_metadata_view_get():
 		
 		submission_deadline_invalid=
 			request.args.get("submission_deadline") == "invalid",
+		mismatched_deadlines=
+			request.args.get("mismatched_deadlines") == "true",
 		paper_submission_month=submission_deadline.strftime("%m"),
 		paper_submission_day=submission_deadline.strftime("%d"),
 		paper_submission_year=submission_deadline.strftime("%Y"),
@@ -215,11 +217,6 @@ def admin_panel_metadata_view_post():
 		request.form["paper_registration_hour"],
 		request.form["paper_registration_minute"]
 	)
-	
-	if paper_registration_deadline == None:
-		errors.append("registration_deadline=invalid")
-	else:
-		metadata.registration_deadline = paper_registration_deadline
 
 	paper_submission_deadline = parse_datetime(
 		request.form["paper_submission_month"],
@@ -228,13 +225,21 @@ def admin_panel_metadata_view_post():
 		request.form["paper_submission_hour"],
 		request.form["paper_submission_minute"]
 	)
-	
-	if paper_submission_deadline == None:
-		errors.append("submission_deadline=invalid")
+
+	if paper_registration_deadline:
+		metadata.registration_deadline = paper_registration_deadline
+		if paper_submission_deadline:
+			if paper_registration_deadline <= paper_submission_deadline:
+				metadata.submission_deadline = paper_submission_deadline
+			else:
+				errors.append("mismatched_deadlines=true")
+		else:
+			errors.append("submission_deadline=invalid")
 	else:
-		metadata.submission_deadline = paper_submission_deadline
+		errors.append("registration_deadline=invalid")
 
 	metadata.put()
+
 	try:
 		arg_string = "?" + reduce((lambda x,y: x + "&" + y),errors)
 	except TypeError:
