@@ -23,6 +23,12 @@
 		<title>{% if id == "new" %}New{% else %}Edit{% endif %} Paper —{{ " "
 			}}{{ conference_name }}</title>
 		<meta charset="UTF-8">
+		
+		<script type="text/javascript" src="/js/additional_authors.js"
+			charset="UTF-8"></script>
+		<script type="text/javascript">
+			insert_add_button(document)
+		</script>
 	</head>
 	<body>
 		<h1>{% if id == "new" %}New{% else %}Edit{% endif %} Paper —{{ " "
@@ -40,7 +46,7 @@
 					<span>Title</span>
 					<input type="text" name="title" value="{{ title }}">
 				</label>
-				<fieldset>
+				<fieldset id="additional_authors">
 					<legend>Additional Authors</legend>
 					{% for a in additional_authors %}
 						<input type="text" name="additional_authors"
