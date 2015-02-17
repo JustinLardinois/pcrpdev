@@ -17,22 +17,22 @@
 
 "use strict";
 
-function add_author_field(d)
+function add_author_field(document)
 {
-	var field = d.createElement("input")
-	field.setAttribute("type","text")
-	field.setAttribute("name","additional_authors")
+	var field = document.createElement("input");
+	field.setAttribute("type","text");
+	field.setAttribute("name","additional_authors");
 	
-	d.getElementById("additional_authors").appendChild(field)
+	document.getElementById("authors").appendChild(field);
 }
 
-function insert_add_button(d)
+function insert_add_button(document)
 {
-	var button = d.createElement("button")
-	button.setAttribute("type","button")
-	button.setAttribute("onclick","add_author_field(" + d + ")")
-	button.textContent="More Authors"
+	var button = document.createElement("button");
+	button.setAttribute("type","button");
+	button.setAttribute("onclick","add_author_field(document)");
+	button.textContent="More Authors";
 	
-	var fieldset = d.getElementById("additional_authors")
-	fieldset.insertBefore(button,fieldset.childNodes[1])
+	var fieldset = document.getElementById("authors");
+	fieldset.insertBefore(button,fieldset.childNodes[1]);
 }

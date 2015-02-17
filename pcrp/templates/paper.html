@@ -27,7 +27,9 @@
 		<script type="text/javascript" src="/js/additional_authors.js"
 			charset="UTF-8"></script>
 		<script type="text/javascript">
-			insert_add_button(document)
+			window.onload = function() {
+				insert_add_button(document);
+			};
 		</script>
 	</head>
 	<body>
@@ -46,8 +48,9 @@
 					<span>Title</span>
 					<input type="text" name="title" value="{{ title }}">
 				</label>
-				<fieldset id="additional_authors">
+				<fieldset id="authors">
 					<legend>Additional Authors</legend>
+					{# always at least three author fields #}
 					{% for a in additional_authors %}
 						<input type="text" name="additional_authors"
 							value="{{ a }}">
