@@ -15,7 +15,8 @@
 // static/js/additional_authors.js
 // script for adding more author fields on paper registration form
 
-"use strict";
+// document is passed as an argument to both functions because
+// they would otherwise lack the context for manipulating the DOM
 
 function add_author_field(document)
 {
@@ -31,8 +32,16 @@ function insert_add_button(document)
 	var button = document.createElement("button");
 	button.setAttribute("type","button");
 	button.setAttribute("onclick","add_author_field(document)");
+		// hacky; relies on the document object being called document,
+		// which it should, but you never know
 	button.textContent="More Authors";
+		// why isn't textContent a function?
 	
 	var fieldset = document.getElementById("authors");
 	fieldset.insertBefore(button,fieldset.childNodes[1]);
+		// The aim is to insert the button after the <legend>;
+		// I would use insertAfter if such a function existed.
+		// It doesn't, so this grabs the second child
+		// (which should be the first <input> element
+		// and inserts before it.
 }
