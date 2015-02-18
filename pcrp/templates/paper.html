@@ -35,6 +35,15 @@
 	<body>
 		<h1>{% if id == "new" %}New{% else %}Edit{% endif %} Paper —{{ " "
 			}}{{ conference_name }}</h1>
+
+		<div id="logout">
+			Logged in as {{ real_name }}
+			(<a href="{{ logout_url }}">log out</a>)
+			{% if admin %}
+				(<a href="{{ admin_panel_url }}">admin panel</a>)
+			{% endif %}
+		</div>
+
 		<p>Paper Registration Deadline:
 			{{ registration_deadline }} (UTC)</p>
 		<p>Paper Submission Deadline:

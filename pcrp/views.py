@@ -324,12 +324,16 @@ def paper_view_get():
 	return render_template(
 		"paper.html",
 		conference_name=metadata.name,
+		admin_panel_url=admin_panel_url,
+		logout_url=users.create_logout_url(home_url),
+		real_name=user.real_name,
 		title=title,
 		abstract=abstract,
 		id=id,
 		additional_authors=additional_authors,
 		registration_deadline=registration_deadline,
 		submission_deadline=submission_deadline,
+		admin=users.is_current_user_admin(),
 		update_success=request.args.get("update") == "success"
 	)
 
