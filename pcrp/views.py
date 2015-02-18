@@ -160,6 +160,7 @@ def admin_panel_view():
 		admin_panel_url=admin_panel_url,
 		admin_panel_metadata_url=admin_panel_metadata_url,
 		admin_panel_users_url=admin_panel_users_url,
+		hub_url=hub_url,
 		real_name=user.real_name,
 		logout_url=users.create_logout_url(home_url)
 		)
@@ -178,6 +179,7 @@ def admin_panel_metadata_view_get():
 		"admin_panel/metadata.html",
 		conference_name=metadata.name,
 		admin_panel_url=admin_panel_url,
+		hub_url=hub_url,
 		logout_url=users.create_logout_url(home_url),
 		real_name=user.real_name,
 		update_success=request.args.get("update") == "success",
@@ -259,6 +261,7 @@ def admin_panel_users_view_get():
 		"admin_panel/users.html",
 		conference_name=metadata.name,
 		admin_panel_url=admin_panel_url,
+		hub_url=hub_url,
 		logout_url=users.create_logout_url(home_url),
 		real_name=user.real_name,
 		conference_users=conference_users,
@@ -335,6 +338,7 @@ def paper_view_get():
 		conference_name=metadata.name,
 		admin_panel_url=admin_panel_url,
 		logout_url=users.create_logout_url(home_url),
+		hub_url=hub_url,
 		real_name=user.real_name,
 		title=title,
 		abstract=abstract,

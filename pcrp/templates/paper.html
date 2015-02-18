@@ -38,10 +38,11 @@
 
 		<div id="logout">
 			Logged in as {{ real_name }}
-			(<a href="{{ logout_url }}">log out</a>)
+			(<a href="{{ hub_url }}">hub</a>)
 			{% if admin %}
 				(<a href="{{ admin_panel_url }}">admin panel</a>)
 			{% endif %}
+			(<a href="{{ logout_url }}">log out</a>)
 		</div>
 
 		<p>Paper Registration Deadline:
