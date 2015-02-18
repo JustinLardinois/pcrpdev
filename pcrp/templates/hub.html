@@ -25,13 +25,17 @@
 	</head>
 	<body>
 		<h1>Hub — {{ conference_name }}</h1>
-		<div id="logout">
+		<nav>
 			Logged in as {{ real_name }}
 			(<a href="{{ hub_url }}">hub</a>)
 			{% if admin %}
 				(<a href="{{ admin_panel_url }}">admin panel</a>)
 			{% endif %}
 			(<a href="{{ logout_url }}">log out</a>)
+		</nav>
+		<div id="deadlines">
+			<p>Paper registration deadline: {{ registration_deadline }} (UTC)</p>
+			<p>Paper submission deadline: {{ submission_deadline }} (UTC)</p>
 		</div>
 	</body>
 </html>

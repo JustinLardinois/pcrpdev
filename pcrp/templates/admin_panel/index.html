@@ -25,12 +25,12 @@
 	</head>
 	<body>
 		<h1>Admin Panel — {{ conference_name }}</h1>
-		<div id="logout">
+		<nav>
 			Logged in as {{ real_name }}
 			(<a href="{{ hub_url }}">hub</a>)
 			(<a href="{{ admin_panel_url }}">admin panel</a>)
 			(<a href="{{ logout_url }}">log out</a>)
-		</div>
+		</nav>
 		<ul>
 			<li><a href="{{ admin_panel_metadata_url }}">Conference
 				Metadata</a></li>
