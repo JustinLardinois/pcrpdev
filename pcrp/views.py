@@ -290,8 +290,17 @@ def admin_panel_users_view_post():
 @login_required
 @registration_required
 def hub_view():
-	return ("<a href=\"" + users.create_logout_url(home_url)
-		+ "\">hub hub hub</a>")
+	metadata=metadata_key.get()
+	user = lookup_user(users.get_current_user().user_id())
+	return render_template(
+		"hub.html",
+		conference_name=metadata.name,
+		registration_deadline=metadata.registration_deadline,
+		submission_deadline=metadata.submission_deadline,
+		real_name=user.real_name,
+		admin=users.is_current_user_admin(),
+		logout_url=users.create_logout_url(home_url)
+	)
 
 @app.route(paper_url,methods=["GET"])
 @login_required
