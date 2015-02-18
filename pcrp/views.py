@@ -239,6 +239,13 @@ def admin_panel_metadata_view_post():
 			errors.append("submission_deadline=invalid")
 	else:
 		errors.append("registration_deadline=invalid")
+		if paper_submission_deadline:
+			if metadata.registration_deadline <= paper_submission_deadline:
+				metadata.submission_deadline = paper_submission_deadline
+			else:
+				errors.append("mismatched_deadlines=true")
+		else:
+			errors.append("submission_deadline=invalid")
 
 	metadata.put()
 
