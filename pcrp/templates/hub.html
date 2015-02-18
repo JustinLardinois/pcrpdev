@@ -37,5 +37,18 @@
 			<p>Paper registration deadline: {{ registration_deadline }} (UTC)</p>
 			<p>Paper submission deadline: {{ submission_deadline }} (UTC)</p>
 		</div>
+		<div id="program_committee">
+			<h2>Program Committee</h2>
+			<ul>
+				{% for member in program_committee %}
+					<li><a href="mailto:{{ member.email }}">{{ member.real_name
+					}}</a>, {{ member.affiliation }}
+					{% if member.pc_chair %}(Chair){% endif %}</li>
+				{% endfor %}
+				{% if (program_committee|length) == 0 %}
+					<li>No one (yet)</li>
+				{% endif %}
+			</ul>
+		</div>
 	</body>
 </html>

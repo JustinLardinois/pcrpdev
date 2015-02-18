@@ -302,6 +302,9 @@ def admin_panel_users_view_post():
 def hub_view():
 	metadata=metadata_key.get()
 	user = lookup_user(users.get_current_user().user_id())
+	program_committee=ConferenceUser.query(
+		ConferenceUser.program_committee == True).fetch()
+	
 	return render_template(
 		"hub.html",
 		conference_name=metadata.name,
@@ -309,7 +312,9 @@ def hub_view():
 		submission_deadline=metadata.submission_deadline,
 		real_name=user.real_name,
 		admin=users.is_current_user_admin(),
-		logout_url=users.create_logout_url(home_url)
+		logout_url=users.create_logout_url(home_url),
+		admin_panel_url=admin_panel_url,
+		program_committee=program_committee
 	)
 
 @app.route(paper_url,methods=["GET"])
