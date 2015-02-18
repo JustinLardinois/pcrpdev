@@ -35,41 +35,42 @@
 	<body>
 		<h1>{% if id == "new" %}New{% else %}Edit{% endif %} Paper —{{ " "
 			}}{{ conference_name }}</h1>
-			<p>Paper Registration Deadline:
-				{{ registration_deadline }} (UTC)</p>
-			<p>Paper Submission Deadline:
-				{{ submission_deadline }} (UTC)</p>
-			{% if update_success %}
+		<p>Paper Registration Deadline:
+			{{ registration_deadline }} (UTC)</p>
+		<p>Paper Submission Deadline:
+			{{ submission_deadline }} (UTC)</p>
+		{% if update_success %}
 			<p>Paper Updated Successfully</p>
-			{% endif %}
-			<noscript>Please Enable Javascript</noscript>
-			<form accept-charset="UTF-8" action="{{ request.path }}"
+		{% endif %}
+		<noscript>Please Enable Javascript</noscript>
+		<form accept-charset="UTF-8" action="{{ request.path }}"
 			autocomplete="off" method="post">
-				<label for="title">
-					<span>Title</span>
-					<input type="text" name="title" value="{{ title }}">
-				</label>
-				<fieldset id="authors">
-					<legend>Additional Authors</legend>
-					{# always at least three author fields #}
-					{% for a in additional_authors %}
-						<input type="text" name="additional_authors"
-							value="{{ a }}">
+			
+			<label for="title">
+				<span>Title</span>
+				<input type="text" name="title" value="{{ title }}">
+			</label>
+			<fieldset id="authors">
+				<legend>Additional Authors</legend>
+				{# always at least three author fields #}
+				{% for a in additional_authors %}
+					<input type="text" name="additional_authors"
+						value="{{ a }}">
+				{% endfor %}
+				{% if (3 - additional_authors|length) > 0 %}
+					{% for n in range(3 - additional_authors|length) %}
+						<input type="text" name="additional_authors">
 					{% endfor %}
-					{% if (3 - additional_authors|length) > 0 %}
-						{% for n in range(3 - additional_authors|length) %}
-							<input type="text" name="additional_authors">
-						{% endfor %}
-					{% endif %}
-				</fieldset>
-				<label for="abstract">
-					<span>Abstract</span>
-					<textarea name="abstract" cols="90" rows="20">
-						{{- abstract -}}
-					</textarea>
-				</label>
-				<input type="hidden" name="id" value="{{ id }}">
-				<button type="submit">Save Changes</button>
-			</form>
+				{% endif %}
+			</fieldset>
+			<label for="abstract">
+				<span>Abstract</span>
+				<textarea name="abstract" cols="90" rows="20">
+					{{- abstract -}}
+				</textarea>
+			</label>
+			<input type="hidden" name="id" value="{{ id }}">
+			<button type="submit">Save Changes</button>
+		</form>
 	</body>
 </html>
