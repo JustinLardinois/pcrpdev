@@ -304,6 +304,8 @@ def hub_view():
 	user = lookup_user(users.get_current_user().user_id())
 	program_committee=ConferenceUser.query(
 		ConferenceUser.program_committee == True).fetch()
+	before_registration_deadline = \
+		metadata.registration_deadline > datetime.datetime.utcnow()
 	
 	return render_template(
 		"hub.html",
@@ -314,7 +316,9 @@ def hub_view():
 		admin=users.is_current_user_admin(),
 		logout_url=users.create_logout_url(home_url),
 		admin_panel_url=admin_panel_url,
-		program_committee=program_committee
+		program_committee=program_committee,
+		before_registration_deadline=before_registration_deadline,
+		paper_url=paper_url
 	)
 
 @app.route(paper_url,methods=["GET"])

@@ -50,5 +50,11 @@
 				{% endif %}
 			</ul>
 		</div>
+		<div id="your_papers">
+			<h2>Your Papers</h2>
+			{% if before_registration_deadline %}
+				<a href="{{ paper_url + "?id=new" }}">New Paper</a>
+			{% endif %}
+		</div>
 	</body>
 </html>
