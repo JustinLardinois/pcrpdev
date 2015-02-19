@@ -300,12 +300,13 @@ def admin_panel_users_view_post():
 @login_required
 @registration_required
 def hub_view():
-	metadata=metadata_key.get()
+	metadata = metadata_key.get()
 	user = lookup_user(users.get_current_user().user_id())
-	program_committee=ConferenceUser.query(
+	program_committee = ConferenceUser.query(
 		ConferenceUser.program_committee == True).fetch()
 	before_registration_deadline = \
 		metadata.registration_deadline > datetime.datetime.utcnow()
+	your_papers = Paper.query(Paper.author == user).fetch()
 	
 	return render_template(
 		"hub.html",
@@ -318,7 +319,8 @@ def hub_view():
 		admin_panel_url=admin_panel_url,
 		program_committee=program_committee,
 		before_registration_deadline=before_registration_deadline,
-		paper_url=paper_url
+		paper_url=paper_url,
+		your_papers=your_papers
 	)
 
 @app.route(paper_url,methods=["GET"])

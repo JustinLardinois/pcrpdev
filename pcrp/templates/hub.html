@@ -55,6 +55,16 @@
 			{% if before_registration_deadline %}
 				<a href="{{ paper_url + "?id=new" }}">New Paper</a>
 			{% endif %}
+			<ul>
+				{% for paper in your_papers %}
+					<li><a href="{{ paper_url + "?id="
+						+ paper.key.urlsafe() }}">{{ paper.title }}</a></li>
+				{% endfor %}
+				{% if (your_papers|length) == 0 %}
+					<li>None{% if before_registration_deadline %} (yet){%
+						endif %}</li>
+				{% endif %}
+			</ul>
 		</div>
 	</body>
 </html>
