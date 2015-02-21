@@ -42,4 +42,4 @@ class Paper(ndb.Model):
 	author = ndb.StructuredProperty(ConferenceUser)
 	additional_authors = ndb.StringProperty(repeated=True)
 	abstract = ndb.StringProperty()
-	file = ndb.BlobProperty()
+	file = ndb.BlobKeyProperty()
