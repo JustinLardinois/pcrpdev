@@ -38,6 +38,8 @@ def lookup_user(id):
 # date; returns None otherwise
 def parse_datetime(month , day , year , hour , minute):
 	try:
+		if int(year) < 1900: # datetime.strftime doesn't like pre-1900 years
+			return None
 		return datetime.datetime(int(year),int(month),int(day),
 				int(hour),int(minute))
 	except ValueError:
