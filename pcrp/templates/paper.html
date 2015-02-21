@@ -24,14 +24,16 @@
 			}}{{ conference_name }}</title>
 		<meta charset="UTF-8">
 		
-		<script type="text/javascript" src="/js/additional_authors.js"
-			charset="UTF-8"></script>
-		<script type="text/javascript">
-			window.onload = function()
-			{
-				insert_add_button(document);
-			};
-		</script>
+		{% if before_registration_deadline %}
+			<script type="text/javascript" src="/js/additional_authors.js"
+				charset="UTF-8"></script>
+			<script type="text/javascript">
+				window.onload = function()
+				{
+					insert_add_button(document);
+				};
+			</script>
+		{% endif %}
 	</head>
 	<body>
 		<h1>{% if id == "new" %}New{% else %}Edit{% endif %} Paper —{{ " "
@@ -54,35 +56,47 @@
 		{% if update_success %}
 			<p>Paper Updated Successfully</p>
 		{% endif %}
-		<noscript>Please Enable Javascript</noscript>
-		<form accept-charset="UTF-8" action="{{ request.path }}"
-			autocomplete="off" method="post">
+		{% if before_registration_deadline %}
+			<noscript>Please Enable Javascript</noscript>
+			<form accept-charset="UTF-8" action="{{ request.path }}"
+				autocomplete="off" method="post">
 			
-			<label for="title">
-				<span>Title</span>
-				<input type="text" name="title" value="{{ title }}">
-			</label>
-			<fieldset id="authors">
-				<legend>Additional Authors</legend>
-				{# always at least three author fields #}
-				{% for a in additional_authors %}
-					<input type="text" name="additional_authors"
-						value="{{ a }}">
-				{% endfor %}
-				{% if (3 - additional_authors|length) > 0 %}
-					{% for n in range(3 - additional_authors|length) %}
-						<input type="text" name="additional_authors">
+				<label for="title">
+					<span>Title</span>
+					<input type="text" name="title" value="{{ title }}">
+				</label>
+				<fieldset id="authors">
+					<legend>Additional Authors</legend>
+					{# always at least three author fields #}
+					{% for a in additional_authors %}
+						<input type="text" name="additional_authors"
+							value="{{ a }}">
 					{% endfor %}
-				{% endif %}
-			</fieldset>
-			<label for="abstract">
-				<span>Abstract</span>
-				<textarea name="abstract" cols="90" rows="20">
-					{{- abstract -}}
-				</textarea>
-			</label>
-			<input type="hidden" name="id" value="{{ id }}">
-			<button type="submit">Save Changes</button>
-		</form>
+					{% if (3 - additional_authors|length) > 0 %}
+						{% for n in range(3 - additional_authors|length) %}
+							<input type="text" name="additional_authors">
+						{% endfor %}
+					{% endif %}
+				</fieldset>
+				<label for="abstract">
+					<span>Abstract</span>
+					<textarea name="abstract" cols="90" rows="20">
+						{{- abstract -}}
+					</textarea>
+				</label>
+				<input type="hidden" name="id" value="{{ id }}">
+				<button type="submit">Save Changes</button>
+			</form>
+		{% else %}
+			<p>Title: {{ title }}</p>
+			<p>Authors</p>
+			<ul>
+				<li>{{ real_name }}</li>
+				{% for a in additional_authors %}
+					<li>{{ a }}</li>
+				{% endfor %}
+			</ul>
+			<p>Abstract: {{ abstract }}</p>
+		{% endif %}
 	</body>
 </html>

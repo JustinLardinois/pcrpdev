@@ -364,6 +364,8 @@ def paper_view_get():
 		additional_authors=additional_authors,
 		registration_deadline=registration_deadline,
 		submission_deadline=submission_deadline,
+		before_registration_deadline=(registration_deadline >
+			datetime.datetime.utcnow()),
 		admin=users.is_current_user_admin(),
 		update_success=request.args.get("update") == "success"
 	)
