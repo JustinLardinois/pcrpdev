@@ -28,6 +28,8 @@ from flask import redirect
 from flask import render_template
 from flask import request
 
+from werkzeug import parse_options_header
+
 from validate_email import validate_email
 
 # Yes, a circular import is necessary:
@@ -427,4 +429,10 @@ def paper_view_post():
 @login_required
 @registration_required
 def paper_upload_view():
-	return "foo"
+	# big thanks to Stack Overflow user Koffee for explaining how this works
+	# http://stackoverflow.com/a/18073466/2752467
+	f = request.files['file']
+	header = f.headers['Content-Type']
+	parsed_header = parse_options_header(header)
+	blob_key = parsed_header[1]['blob-key']
+	return blob_key
