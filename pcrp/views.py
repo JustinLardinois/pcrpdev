@@ -21,6 +21,7 @@ import datetime
 from time import sleep
 
 from google.appengine.api import users
+from google.appengine.ext import blobstore
 from google.appengine.ext import ndb
 
 from flask import redirect
@@ -351,6 +352,11 @@ def paper_view_get():
 			else: return ("You do not own this paper",403)
 		else: return ("Invalid paper ID",400)
 
+	if submission_deadline > datetime.datetime.utcnow():
+		upload_url = blobstore.create_upload_url(paper_upload_url)
+	else:
+		upload_url = None
+
 	return render_template(
 		"paper.html",
 		conference_name=metadata.name,
@@ -366,7 +372,10 @@ def paper_view_get():
 		submission_deadline=submission_deadline,
 		before_registration_deadline=(registration_deadline >
 			datetime.datetime.utcnow()),
+		before_submission_deadline=(submission_deadline >
+			datetime.datetime.utcnow()),
 		admin=users.is_current_user_admin(),
+		upload_url=upload_url,
 		update_success=request.args.get("update") == "success"
 	)
 

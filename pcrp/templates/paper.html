@@ -97,6 +97,18 @@
 				{% endfor %}
 			</ul>
 			<p>Abstract: {{ abstract }}</p>
+			{% if before_submission_deadline %}
+				<form accept-charset="UTF-8" action="{{ upload_url }}"
+					method="post" enctype="multipart/form-data">
+					
+					<label for="file">
+						<span>Upload Paper (PDF only) (Old versions
+							will be discarded)</span>
+						<input type="file" name="file">
+						<button type="submit">Upload</button>
+					</label>
+				</form>
+			{% endif %}
 		{% endif %}
 	</body>
 </html>
