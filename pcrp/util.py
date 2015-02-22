@@ -29,6 +29,14 @@ def is_registered_user(id):
 	if lookup_user(id): return True
 	else: return False
 
+# simple sanity check if file is a PDF
+# obviously easy to subvert; intended to catch accidental uploads
+# of other file types
+# assumes that the file's current position is the beginning of the file
+def is_pdf(file):
+	magic_number = "%PDF"
+	return file.read(len(magic_number)) == magic_number
+
 # returns the ConferenceUser object representing the user with
 # the supplied id
 def lookup_user(id):

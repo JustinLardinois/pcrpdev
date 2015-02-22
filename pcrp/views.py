@@ -380,7 +380,8 @@ def paper_view_get():
 			datetime.datetime.utcnow()),
 		admin=users.is_current_user_admin(),
 		upload_url=upload_url,
-		update_success=request.args.get("update") == "success"
+		update_success=request.args.get("update") == "success",
+		not_pdf=request.args.get("ispdf") == "false"
 	)
 
 @app.route(paper_url,methods=["POST"])
@@ -441,9 +442,21 @@ def paper_upload_view():
 	
 	paper_key = request.args.get("id")
 	paper = ndb.Key(urlsafe=paper_key).get()
+
+	blob_stream = blobstore.BlobReader(blob_key)
+	if not is_pdf(blob_stream):
+		blob_stream.close()
+		blobstore.delete(blob_key)
+		return redirect(paper_url + "?id=" + paper_key + "&ispdf=false")
+	blob_stream.close()
+
+	# sanity check: file is associated with a paper owned by the current user
 	if paper and paper.author.id == users.get_current_user().user_id():
+		if paper.file != None:
+			# prevent old versions of file from being orphaned
+			blobstore.delete(paper.file)
 		paper.file = blob_key
 		paper.put()
 	
-	# paper_view_get() will handle error scenarios
-	return redirect(paper_url + "?id=" + paper_key)
+	# paper_view_get() will handle most error scenarios
+	return redirect(paper_url + "?id=" + paper_key + "&update=success")
