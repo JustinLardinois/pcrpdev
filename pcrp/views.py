@@ -460,3 +460,9 @@ def paper_upload_view():
 	
 	# paper_view_get() will handle most error scenarios
 	return redirect(paper_url + "?id=" + paper_key + "&update=success")
+
+@app.route(paper_view_url)
+@login_required
+@registration_required
+def paper_view_view():
+	return "foo"
