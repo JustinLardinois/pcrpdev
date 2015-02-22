@@ -355,7 +355,9 @@ def paper_view_get():
 		else: return ("Invalid paper ID",400)
 
 	if submission_deadline > datetime.datetime.utcnow():
-		upload_url = blobstore.create_upload_url(paper_upload_url)
+		upload_url = blobstore.create_upload_url(paper_upload_url
+			+ "?id=" + paper.key.urlsafe())
+		# pass key so upload view knows which paper to associate file with
 	else:
 		upload_url = None
 
@@ -398,6 +400,7 @@ def paper_view_post():
 		paper = Paper()
 		paper.parent = papers_key
 		paper.author = user
+		paper.file = None
 	else:
 		paper = ndb.Key(urlsafe=id).get()
 		if not paper or not paper.author.id == user.id:
@@ -434,5 +437,13 @@ def paper_upload_view():
 	f = request.files['file']
 	header = f.headers['Content-Type']
 	parsed_header = parse_options_header(header)
-	blob_key = parsed_header[1]['blob-key']
-	return blob_key
+	blob_key = blobstore.BlobKey(parsed_header[1]['blob-key'])
+	
+	paper_key = request.args.get("id")
+	paper = ndb.Key(urlsafe=paper_key).get()
+	if paper and paper.author.id == users.get_current_user().user_id():
+		paper.file = blob_key
+		paper.put()
+	
+	# paper_view_get() will handle error scenarios
+	return redirect(paper_url + "?id=" + paper_key)
