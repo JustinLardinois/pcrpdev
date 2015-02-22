@@ -24,6 +24,7 @@ from google.appengine.api import users
 from google.appengine.ext import blobstore
 from google.appengine.ext import ndb
 
+from flask import make_response
 from flask import redirect
 from flask import render_template
 from flask import request
@@ -465,4 +466,7 @@ def paper_upload_view():
 @login_required
 @registration_required
 def paper_view_view():
-	return "foo"
+	blob_info = blobstore.get(request.args.get("id"))
+	response = make_response(blob_info.open().read())
+	response.headers['Content-Type'] = blob_info.content_type
+	return response
