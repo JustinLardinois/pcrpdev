@@ -43,6 +43,8 @@ from pcrp.models import *
 from pcrp.url_rules import *
 from pcrp.util import *
 
+# TODO: split these up into smaller files
+# TODO: find a cleaner way to pass variables to templates
 @app.route(home_url)
 def home_view():
 	metadata = metadata_key.get()
