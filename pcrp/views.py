@@ -466,7 +466,14 @@ def paper_upload_view():
 @login_required
 @registration_required
 def paper_view_view():
-	paper = ndb.Key(urlsafe=request.args.get("id")).get()
+	paper_id = request.args.get("id")
+	if not paper_id:
+		return redirect(paper_url)
+	paper = ndb.Key(urlsafe=paper_id).get()
+	if not paper or paper.author.id != users.get_current_user().user_id():
+		return redirect(paper_url + "?id=" + paper_id)
+		# delegate errors to paper_view_get()
+	
 	blob_info = blobstore.BlobInfo.get(paper.file)
 	response = make_response(blob_info.open().read())
 	response.headers['Content-Type'] = blob_info.content_type
