@@ -337,7 +337,8 @@ def paper_view_get():
 	registration_deadline = metadata.registration_deadline
 	submission_deadline = metadata.submission_deadline
 	user = lookup_user(users.get_current_user().user_id())
-	
+
+	paper = None
 	filename = None
 	id = request.args.get("id")
 	if id == None or id == "":
@@ -360,7 +361,7 @@ def paper_view_get():
 			else: return ("You do not own this paper",403)
 		else: return ("Invalid paper ID",400)
 
-	if submission_deadline > datetime.datetime.utcnow():
+	if paper and submission_deadline > datetime.datetime.utcnow():
 		upload_url = blobstore.create_upload_url(paper_upload_url
 			+ "?id=" + paper.key.urlsafe())
 		# pass key so upload view knows which paper to associate file with
