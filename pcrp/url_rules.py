@@ -16,6 +16,7 @@
 # pcrp/url_rules.py - a component of pCRP
 # contains URL rules that are used for routing and request handling
 
+# TODO: turn this into a dict
 home_url                 = "/"
 user_reg_url             = "/user-reg/"
 admin_panel_url          = "/admin/"
