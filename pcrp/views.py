@@ -336,6 +336,7 @@ def paper_view_get():
 	submission_deadline = metadata.submission_deadline
 	user = lookup_user(users.get_current_user().user_id())
 	
+	filename = None
 	id = request.args.get("id")
 	if id == None or id == "":
 		return ("No paper ID specified",400)
@@ -352,6 +353,8 @@ def paper_view_get():
 				title = paper.title
 				abstract = paper.abstract
 				additional_authors = paper.additional_authors
+				if paper.file:
+					filename = blobstore.BlobInfo.get(paper.file).filename
 			else: return ("You do not own this paper",403)
 		else: return ("Invalid paper ID",400)
 
@@ -368,11 +371,13 @@ def paper_view_get():
 		admin_panel_url=admin_panel_url,
 		logout_url=users.create_logout_url(home_url),
 		hub_url=hub_url,
+		paper_view_url=paper_view_url,
 		real_name=user.real_name,
 		title=title,
 		abstract=abstract,
 		id=id,
 		additional_authors=additional_authors,
+		filename=filename,
 		registration_deadline=registration_deadline,
 		submission_deadline=submission_deadline,
 		before_registration_deadline=(registration_deadline >
