@@ -20,7 +20,6 @@ from google.appengine.ext import ndb
 
 # class that contains conference metadata; initalized
 # once in appengine_config.py
-
 class Conference(ndb.Model):
 	name = ndb.StringProperty()
 	registration_deadline = ndb.DateTimeProperty()
