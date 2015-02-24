@@ -489,3 +489,9 @@ def paper_view_view():
 	# upload a non-PDF, viewers will get an error instead of a non-PDF
 	response.headers['Content-Type'] = "application/pdf"
 	return response
+
+@app.route(conflicts_url)
+@login_required
+@registration_required
+def conflicts_view():
+	return "foo"
