@@ -484,5 +484,8 @@ def paper_view_view():
 	
 	blob_info = blobstore.BlobInfo.get(paper.file)
 	response = make_response(blob_info.open().read())
-	response.headers['Content-Type'] = blob_info.content_type
+	
+	# force MIME type to PDF, so that even if a user somehow manages to
+	# upload a non-PDF, viewers will get an error instead of a non-PDF
+	response.headers['Content-Type'] = "application/pdf"
 	return response
