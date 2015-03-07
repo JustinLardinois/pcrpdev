@@ -491,13 +491,13 @@ def paper_view_view():
 	response.headers['Content-Type'] = "application/pdf"
 	return response
 
-@app.route(conflicts_url)
+@app.route(conflicts_url,methods=["GET"])
 @login_required
 @registration_required
-def conflicts_view():
+def conflicts_view_get():
 	metadata = metadata_key.get()
 	user = lookup_user(users.get_current_user().user_id())
-	other_users = ConferenceUser.query(ConferenceUser.id != user.id)
+	other_users = ConferenceUser.query(ConferenceUser.id != user.id).fetch()
 	conflicts = conflict_key.get()
 
 	return render_template(
@@ -512,3 +512,31 @@ def conflicts_view():
 		real_name=user.real_name,
 		admin=users.is_current_user_admin()
 	)
+
+@app.route(conflicts_url,methods=["POST"])
+@login_required
+@registration_required
+def conflicts_view_post():
+	user_id = users.get_current_user().user_id()
+	stored_conflicts = conflict_key.get()
+
+	submitted_conflicts = set()
+	# all conflicts that were indicated in submitted form
+	for email in request.form.getlist("conflicts"):
+		submitted_id = ConferenceUser.query(
+			ConferenceUser.email == email).get().id
+		submitted_conflicts.add(submitted_id)
+		stored_conflicts.add(user_id,submitted_id)
+
+	all_users = set()
+	# all users that are not the current user
+	for user in ConferenceUser.query(ConferenceUser.id != user_id).fetch():
+		all_users.add(user.id)
+
+	unconflicted = all_users - submitted_conflicts
+	# users who were not marked in the form
+	for user in unconflicted:
+		stored_conflicts.delete(user_id,user)
+	
+	stored_conflicts.put()
+	return redirect(conflicts_url)
