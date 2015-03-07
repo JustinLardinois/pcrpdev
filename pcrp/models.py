@@ -34,6 +34,7 @@ class ConflictSet(ndb.Model):
 	conflicts = ndb.JsonProperty()
 
 	def __init__(self):
+		ndb.Model.__init__(self)
 		self.conflicts = set()
 
 	def add(self,a,b):
