@@ -25,6 +25,8 @@
 	</head>
 	<body>
 		<h1>Conflicts of Interest — {{ conference_name }}</h1>
+		<p>Please indicate all conference participants that you may have a
+		potential conflict of interest with.</p>
 		<form accept-charset="UTF-8" action="{{ request.path }}"
 			autocomplete="off" method="post">
 			{% for u in users %}
