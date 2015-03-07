@@ -108,6 +108,8 @@ def user_reg_view_post():
 			email_blank = True
 		elif not validate_email(email):
 			email_invalid = True
+		elif ConferenceUser.query(ConferenceUser.email == email).get():
+			email_in_use = True
 	
 	affiliation = request.form["affiliation"]
 	if affiliation == None: affiliation_blank = True
@@ -118,7 +120,8 @@ def user_reg_view_post():
 			affiliation_blank = True
 
 	if((not real_name_blank) and (not email_blank) 
-		and (not email_invalid) and (not affiliation_blank)):
+		and (not email_invalid) and (not affiliation_blank)
+		and (not email_in_use)):
 		pcrp_user = ConferenceUser()
 		pcrp_user.parent = users_key
 		pcrp_user.nickname = google_user.nickname()
@@ -145,6 +148,7 @@ def user_reg_view_post():
 			real_name_blank=real_name_blank,
 			email_blank=email_blank,
 			email_invalid=email_invalid,
+			email_in_use=email_in_use,
 			affiliation_blank=affiliation_blank,
 			real_name=real_name,
 			email=email,

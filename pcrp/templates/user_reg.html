@@ -37,6 +37,9 @@
 		{% if email_invalid %}
 			<p class="error">Invalid email</p>
 		{% endif -%}
+		{% if email_in_use %}
+			<p class="error">Email already in use</p>
+		{% endif -%}
 		{% if affiliation_blank %}
 			<p class="error">Affiliation was left blank</p>
 		{% endif -%}
