@@ -27,8 +27,10 @@ import datetime
 
 from google.appengine.ext import ndb
 
+from pcrp.keys import conflict_key
 from pcrp.keys import metadata_key
 from pcrp.models import Conference
+from pcrp.models import ConflictSet
 
 # default time value; should be changed in administrator panel
 end_of_time = datetime.datetime(datetime.MAXYEAR,12,12,23,59,59,0)
@@ -43,3 +45,9 @@ if not conference:
 	conference.registration_deadline=end_of_time
 	conference.submission_deadline=end_of_time
 	conference.put()
+
+conflicts = conflict_key.get()
+if not conflicts:
+	conflicts = ConflictSet()
+	conflicts.key = conflict_key
+	conflicts.put()
