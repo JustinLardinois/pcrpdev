@@ -47,6 +47,9 @@ class ConflictSet(ndb.Model):
 		y = tuple([b,a])
 		return x in self.conflicts or y in self.conflicts
 
+	def is_directed_conflict(self,a,b):
+		return tuple([a,b]) in self.conflicts
+
 # class for keeping track of users, since App Engine's native Users class
 # is not reliable for long term storage and additional information is needed
 class ConferenceUser(ndb.Model):
