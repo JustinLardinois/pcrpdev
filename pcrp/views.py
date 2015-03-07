@@ -330,7 +330,8 @@ def hub_view():
 		program_committee=program_committee,
 		before_registration_deadline=before_registration_deadline,
 		paper_url=paper_url,
-		your_papers=your_papers
+		your_papers=your_papers,
+		conflicts_url=conflicts_url
 	)
 
 @app.route(paper_url,methods=["GET"])
