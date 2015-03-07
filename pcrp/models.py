@@ -18,7 +18,7 @@
 
 from google.appengine.ext import ndb
 
-# class that contains conference metadata; initalized
+# class that contains conference metadata; initialized
 # once in appengine_config.py
 class Conference(ndb.Model):
 	name = ndb.StringProperty()
