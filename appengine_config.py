@@ -40,10 +40,10 @@ end_of_time = datetime.datetime(datetime.MAXYEAR,12,12,23,59,59,0)
 conference = metadata_key.get()
 if not conference:
 	conference = Conference()
-	conference.key=metadata_key
-	conference.name="undefinedCon 2014"
-	conference.registration_deadline=end_of_time
-	conference.submission_deadline=end_of_time
+	conference.key = metadata_key
+	conference.name = "undefinedCon 2014"
+	conference.registration_deadline = end_of_time
+	conference.submission_deadline = end_of_time
 	conference.put()
 
 conflicts = conflict_key.get()
