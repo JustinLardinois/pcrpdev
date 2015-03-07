@@ -30,8 +30,11 @@
 			{% for u in users %}
 				<label>
 					<input type="checkbox" name="conflicts"
-						value="{{ u.email }}">
-					<span>{{ u.real_name}}, {{ u.affiliation }}</span>
+						value="{{ u.email }}"
+						{%- if conflicts.is_directed_conflict(user_id,u.id) -%}
+							{{ " checked" }}
+						{%- endif %}>
+					<span>{{ u.real_name }}, {{ u.affiliation }}</span>
 				</label>
 			{% endfor %}
 			<button type="submit">Submit</button>

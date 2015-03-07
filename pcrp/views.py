@@ -494,11 +494,16 @@ def paper_view_view():
 @login_required
 @registration_required
 def conflicts_view():
-	metadata=metadata_key.get()
+	metadata = metadata_key.get()
 	other_users = ConferenceUser.query(ConferenceUser.id
 		!= users.get_current_user().user_id())
+	conflicts = conflict_key.get()
+	user_id = users.get_current_user().user_id()
+
 	return render_template(
 		"conflicts.html",
 		conference_name=metadata.name,
-		users=other_users
+		users=other_users,
+		conflicts=conflicts,
+		user_id=user_id
 	)
