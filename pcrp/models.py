@@ -31,7 +31,7 @@ class Conference(ndb.Model):
 # issue.
 # This model represents indicated conflicts as a set of pairs of user IDs.
 class ConflictSet(ndb.Model):
-	conflicts = ndb.JsonProperty()
+	conflicts = ndb.PickleProperty()
 
 	def __init__(self):
 		ndb.Model.__init__(self)
