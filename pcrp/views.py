@@ -486,7 +486,8 @@ def paper_view_view():
 	response = make_response(blob_info.open().read())
 	
 	# force MIME type to PDF, so that even if a user somehow manages to
-	# upload a non-PDF, viewers will get an error instead of a non-PDF
+	# upload a non-PDF, viewers will get garbage rather than a
+	# correctly-rendered non-PDF
 	response.headers['Content-Type'] = "application/pdf"
 	return response
 
