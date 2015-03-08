@@ -624,6 +624,7 @@ def preferences_view_post():
 	for p in papers:
 		try:
 			pref = int(request.form[p.key.urlsafe()])
+			if pref < 1 or pref > 10: pref = 5
 			p.set_preference(user.id,pref)
 			p.put()
 		except (KeyError,ValueError): pass
