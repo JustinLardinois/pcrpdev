@@ -66,7 +66,7 @@ class ConferenceUser(ndb.Model):
 
 class Paper(ndb.Model):
 	title = ndb.StringProperty()
-	author = ndb.StructuredProperty(ConferenceUser)
+	author = ndb.KeyProperty()
 	additional_authors = ndb.StringProperty(repeated=True)
 	abstract = ndb.StringProperty()
 	file = ndb.BlobKeyProperty()

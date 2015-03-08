@@ -328,7 +328,7 @@ def hub_view():
 		ConferenceUser.program_committee == True).fetch()
 	before_registration_deadline = \
 		metadata.registration_deadline > datetime.datetime.utcnow()
-	your_papers = Paper.query(Paper.author == user).fetch()
+	your_papers = Paper.query(Paper.author == user.key).fetch()
 	
 	return render_template(
 		"hub.html",
@@ -370,7 +370,7 @@ def paper_view_get():
 	else:
 		paper = ndb.Key(urlsafe=id).get()
 		if paper:
-			if paper.author.id == user.id:
+			if paper.author.get().id == user.id:
 				title = paper.title
 				abstract = paper.abstract
 				additional_authors = paper.additional_authors
@@ -427,7 +427,7 @@ def paper_view_post():
 			# delegate errors to GET view
 		paper = Paper()
 		paper.parent = papers_key
-		paper.author = user
+		paper.author = user.key
 		paper.file = None
 	else:
 		paper = ndb.Key(urlsafe=id).get()
