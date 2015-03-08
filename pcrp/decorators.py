@@ -24,6 +24,7 @@ from flask import redirect
 
 from pcrp.url_rules import *
 from pcrp.util import is_registered_user
+from pcrp.util import lookup_user
 
 # To be prepended to view functions. Redirects user to home page
 # if not logged in. Thanks to the Flask documentation for help:
@@ -49,6 +50,16 @@ def admin_only(f):
 	def decorated_function(*args, **kwargs):
 		if not users.is_current_user_admin():
 			return ("Administrator privilege is required to access this page",
+					403)
+		return f(*args, **kwargs)
+	return decorated_function
+
+def program_committee_only(f):
+@wraps(f)
+	def decorated_function(*args, **kwargs):
+		if not (lookup_user(users.get_current_user().user_id())
+			.program_committee):
+			return ("Only members of the program committee may view this page",
 					403)
 		return f(*args, **kwargs)
 	return decorated_function
