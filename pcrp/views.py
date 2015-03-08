@@ -586,17 +586,15 @@ def preferences_view_get():
 	conflicts = conflict_key.get()
 	
 	papers = Paper.query(Paper.author != user.key).fetch()
+	papers = [p for p in papers if not conflicts.is_conflict(user.id,p.author.get().id)]
 	prefs = {}
 	for p in papers:
-		if conflicts.is_conflict(user.id,p.author.get().id):
-			papers.remove(p)
-		else:
-			key = p.key.urlsafe()
-			try:
-				pref = p.get_preference(user.id)
-				prefs[key] = pref
-			except KeyError:
-				prefs[key] = 5
+		key = p.key.urlsafe()
+		try:
+			pref = p.get_preference(user.id)
+			prefs[key] = pref
+		except KeyError:
+			prefs[key] = 5
 
 	return render_template(
 		"review/preferences.html",
