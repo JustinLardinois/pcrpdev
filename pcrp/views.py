@@ -239,25 +239,26 @@ def admin_panel_metadata_view_post():
 		request.form["paper_submission_hour"],
 		request.form["paper_submission_minute"]
 	)
-
-	if paper_registration_deadline:
-		metadata.registration_deadline = paper_registration_deadline
-		if paper_submission_deadline:
-			if paper_registration_deadline <= paper_submission_deadline:
-				metadata.submission_deadline = paper_submission_deadline
-			else:
-				errors.append("mismatched_deadlines=true")
-		else:
-			errors.append("submission_deadline=invalid")
+	
+	paper_review_deadline = parse_datetime(
+		request.form["paper_review_month"],
+		request.form["paper_review_day"],
+		request.form["paper_review_year"],
+		request.form["paper_review_hour"],
+		request.form["paper_review_minute"]
+	)
+	
+	if not (paper_registration_deadline and paper_submission_deadline 
+		and paper_review_deadline):
+		errors.append("deadlines=invalid")
 	else:
-		errors.append("registration_deadline=invalid")
-		if paper_submission_deadline:
-			if metadata.registration_deadline <= paper_submission_deadline:
-				metadata.submission_deadline = paper_submission_deadline
-			else:
-				errors.append("mismatched_deadlines=true")
+		if paper_registration_deadline < paper_submission_deadline \
+			and paper_submission_deadline < paper_review_deadline:
+			metadata.registration_deadline = paper_registration_deadline
+			metadata.submission_deadline = paper_submission_deadline
+			metadata.review_deadline = paper_review_deadline
 		else:
-			errors.append("submission_deadline=invalid")
+			errors.append("mismatched_deadlines=true")
 
 	if request.form["home_message"]:
 		metadata.home_message = request.form["home_message"].strip()
