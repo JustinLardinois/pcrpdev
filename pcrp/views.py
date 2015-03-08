@@ -91,6 +91,7 @@ def user_reg_view_post():
 	email_blank = False
 	email_invalid = False
 	affiliation_blank = False
+	email_in_use = False
 	
 	real_name = request.form["real_name"]
 	if real_name == None: real_name_blank = True
