@@ -39,26 +39,28 @@
 		<form accept-charset="UTF-8" action="{{ request.path }}"
 			autocomplete="off" method="post">
 			{% for p in papers %}
-				<p>Title: {{ p.title }}</p>
-				<p>Authors:</p>
-				<ul>
-					<li><a href="mailto:{{ p.author.get().email }}">{{
-						p.author.get().real_name }}</a>,
-						{{ p.author.get().affiliation }}</li>
-					{% for a in p.additional_authors %}
-						<li>{{ a }}</li>
-					{% endfor %}
-				</ul>
-				<p>Abstract: {{ p.abstract }}</p>
-				<select name="{{ p.key.urlsafe() }}">
-					{% for n in range(1,10) %}
-						<option value="{{ n }}"
-							{%- if n == prefs[p.key.urlsafe()] -%}
-								selected
-							{%- endif -%}
-						>{{ n }}</option>
-					{% endfor %}
-				</select>
+				<fieldset>
+					<p>Title: {{ p.title }}</p>
+					<p>Authors:</p>
+					<ul>
+						<li><a href="mailto:{{ p.author.get().email }}">{{
+							p.author.get().real_name }}</a>,
+							{{ p.author.get().affiliation }}</li>
+						{% for a in p.additional_authors %}
+							<li>{{ a }}</li>
+						{% endfor %}
+					</ul>
+					<p>Abstract: {{ p.abstract }}</p>
+					<select name="{{ p.key.urlsafe() }}">
+						{% for n in range(1,10) %}
+							<option value="{{ n }}"
+								{%- if n == prefs[p.key.urlsafe()] -%}
+									{{ " " }}selected
+								{%- endif -%}
+							>{{ n }}</option>
+						{% endfor %}
+					</select>
+				</fieldset>
 			{% endfor %}
 			<button type="submit">Submit</button>
 		</form>
