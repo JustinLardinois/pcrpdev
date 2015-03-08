@@ -606,7 +606,8 @@ def preferences_view_get():
 		admin_panel_url=admin_panel_url,
 		logout_url=users.create_logout_url(home_url),
 		papers=papers,
-		prefs=prefs
+		prefs=prefs,
+		update_success=request.args.get("update") == "success"
 	)
 
 @app.route(preferences_url,methods=["POST"])
