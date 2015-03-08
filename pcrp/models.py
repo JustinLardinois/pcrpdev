@@ -70,3 +70,11 @@ class Paper(ndb.Model):
 	additional_authors = ndb.StringProperty(repeated=True)
 	abstract = ndb.StringProperty()
 	file = ndb.BlobKeyProperty()
+	preferences = ndb.PickleProperty()
+	
+	def __init__(self):
+		ndb.Model.__init__(self)
+		self.preferences = {}
+
+	def set_preference(self,user_id,preference):
+		self.preferences[user_id] = preference
