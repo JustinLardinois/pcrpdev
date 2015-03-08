@@ -52,7 +52,7 @@
 					</ul>
 					<p>Abstract: {{ p.abstract }}</p>
 					<select name="{{ p.key.urlsafe() }}">
-						{% for n in range(1,10) %}
+						{% for n in range(1,11) %}
 							<option value="{{ n }}"
 								{%- if n == prefs[p.key.urlsafe()] -%}
 									{{ " " }}selected
