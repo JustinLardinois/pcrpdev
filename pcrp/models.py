@@ -24,6 +24,7 @@ class Conference(ndb.Model):
 	name = ndb.StringProperty()
 	registration_deadline = ndb.DateTimeProperty()
 	submission_deadline = ndb.DateTimeProperty()
+	review_deadline = ndb.DateTimeProperty()
 	home_message = ndb.StringProperty()
 	hub_message = ndb.StringProperty()
 
