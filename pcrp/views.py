@@ -515,7 +515,8 @@ def conflicts_view_get():
 		admin_panel_url=admin_panel_url,
 		logout_url=users.create_logout_url(home_url),
 		real_name=user.real_name,
-		admin=users.is_current_user_admin()
+		admin=users.is_current_user_admin(),
+		update_success=request.args.get("update") == "success"
 	)
 
 @app.route(conflicts_url,methods=["POST"])
@@ -544,4 +545,4 @@ def conflicts_view_post():
 		stored_conflicts.delete(user_id,user)
 	
 	stored_conflicts.put()
-	return redirect(conflicts_url)
+	return redirect(conflicts_url + "?update=success")

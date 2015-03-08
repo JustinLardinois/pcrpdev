@@ -35,6 +35,9 @@
 			(<a href="{{ logout_url }}">log out</a>)
 		</nav>
 		
+		{% if update_success %}
+			<p>Conflicts Updated Successfully</p>
+		{% endif %}
 		<p>Please indicate all conference participants that you have a
 		potential conflict of interest with.</p>
 		<form accept-charset="UTF-8" action="{{ request.path }}"
