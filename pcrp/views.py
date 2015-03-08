@@ -586,7 +586,8 @@ def preferences_view_get():
 	conflicts = conflict_key.get()
 	
 	papers = Paper.query(Paper.author != user.key).fetch()
-	papers = [p for p in papers if not conflicts.is_conflict(user.id,p.author.get().id)]
+	papers = [p for p in papers if not conflicts.is_conflict(user.id,
+		p.author.get().id)]
 	prefs = {}
 	for p in papers:
 		key = p.key.urlsafe()
@@ -607,3 +608,23 @@ def preferences_view_get():
 		papers=papers,
 		prefs=prefs
 	)
+
+@app.route(preferences_url,methods=["POST"])
+@login_required
+@registration_required
+@program_committee_only
+def preferences_view_post():
+	user = lookup_user(users.get_current_user().user_id())
+	conflicts = conflict_key.get()
+	papers = Paper.query(Paper.author != user.key).fetch()
+	papers = [p for p in papers if not conflicts.is_conflict(user.id,
+		p.author.get().id)]
+	
+	for p in papers:
+		try:
+			pref = int(request.form[p.key.urlsafe()])
+			p.set_preference(user.id,pref)
+			p.put()
+		except (KeyError,ValueError): pass
+
+	return redirect(preferences_url + "?update=success")
