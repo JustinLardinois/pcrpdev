@@ -56,6 +56,7 @@ def home_view():
 		conference_name=metadata.name,
 		registration_deadline=metadata.registration_deadline,
 		submission_deadline=metadata.submission_deadline,
+		review_deadline=metadata.review_deadline,
 		login_url=users.create_login_url(user_reg_url),
 		home_message=metadata.home_message
 		)
@@ -340,6 +341,7 @@ def hub_view():
 		conference_name=metadata.name,
 		registration_deadline=metadata.registration_deadline,
 		submission_deadline=metadata.submission_deadline,
+		review_deadline=metadata.review_deadline,
 		real_name=user.real_name,
 		admin=users.is_current_user_admin(),
 		logout_url=users.create_logout_url(home_url),
@@ -359,6 +361,7 @@ def paper_view_get():
 	metadata=metadata_key.get()
 	registration_deadline = metadata.registration_deadline
 	submission_deadline = metadata.submission_deadline
+	review_deadline = metadata.review_deadline
 	user = lookup_user(users.get_current_user().user_id())
 
 	paper = None
@@ -406,6 +409,7 @@ def paper_view_get():
 		filename=filename,
 		registration_deadline=registration_deadline,
 		submission_deadline=submission_deadline,
+		review_deadline=review_deadline,
 		before_registration_deadline=(registration_deadline >
 			datetime.datetime.utcnow()),
 		before_submission_deadline=(submission_deadline >
