@@ -57,7 +57,7 @@
 				<span>Email</span>
 				<input type="email" name="email"
 					{%- if email -%}
-						{{ " " }}value="{{ html_escape(email) }}"
+						{{ " " }}value="{{ email }}"
 					{%- endif -%}
 				{{ " " }}required>
 			</label>

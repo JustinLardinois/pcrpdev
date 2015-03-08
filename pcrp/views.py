@@ -73,7 +73,6 @@ def user_reg_view_get():
 		"user_reg.html",
 		conference_name=metadata.name,
 		email=user.email(),
-		html_escape=html_escape,
 		logout_url = users.create_logout_url(home_url)
 		)
 
@@ -95,7 +94,7 @@ def user_reg_view_post():
 	real_name = request.form["real_name"]
 	if real_name == None: real_name_blank = True
 	else:
-		real_name = html_escape(real_name).strip()
+		real_name = real_name.strip()
 		if real_name == "":
 			real_name = None
 			real_name_blank = True
@@ -115,7 +114,7 @@ def user_reg_view_post():
 	affiliation = request.form["affiliation"]
 	if affiliation == None: affiliation_blank = True
 	else:
-		affiliation = html_escape(affiliation).strip()
+		affiliation = affiliation.strip()
 		if affiliation == "":
 			affiliation = None
 			affiliation_blank = True
@@ -154,7 +153,6 @@ def user_reg_view_post():
 			real_name=real_name,
 			email=email,
 			affiliation=affiliation,
-			html_escape=html_escape,
 			logout_url = users.create_logout_url(home_url)
 			)
 
@@ -439,18 +437,18 @@ def paper_view_post():
 
 	title = request.form["title"]
 	if title != None and title.strip() != "":
-		paper.title = html_escape(request.form["title"].strip())
+		paper.title = request.form["title"].strip()
 	else: paper.title = "Untitled Paper"
 
 	additional_authors = []
 	for a in request.form.getlist("additional_authors"):
 		if a != None and a.strip() != "":
-			additional_authors.append(html_escape(a.strip()))
+			additional_authors.append(a.strip())
 	paper.additional_authors = additional_authors
 
 	abstract = request.form["abstract"]
 	if abstract != None and abstract.strip() != "":
-		paper.abstract = html_escape(abstract.strip())
+		paper.abstract = abstract.strip()
 	else: paper.abstract = ""
 	
 	paper.put()
