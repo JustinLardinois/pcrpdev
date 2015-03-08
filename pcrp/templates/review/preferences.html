@@ -33,5 +33,34 @@
 			{% endif %}
 			(<a href="{{ logout_url }}">log out</a>)
 		</nav>
+		<p>Indicate your preference to review each paper, where 1 is
+			least interested and 10 is most interested.</p>
+		
+		<form accept-charset="UTF-8" action="{{ request.path }}"
+			autocomplete="off" method="post">
+			{% for p in papers %}
+				<p>Title: {{ p.title }}</p>
+				<p>Authors:</p>
+				<ul>
+					<li><a href="mailto:{{ p.author.get().email }}">{{
+						p.author.get().real_name }}</a>,
+						{{ p.author.get().affiliation }}</li>
+					{% for a in p.additional_authors %}
+						<li>{{ a }}</li>
+					{% endfor %}
+				</ul>
+				<p>Abstract: {{ p.abstract }}</p>
+				<select name="{{ p.key.urlsafe() }}">
+					{% for n in range(1,4) %}
+						<option value="{{ n }}">{{ n }}</option>
+					{% endfor %}
+					<option value="5" selected>5</option>
+					{% for n in range(6,10) %}
+						<option value="{{ n }}">{{ n }}</option>
+					{% endfor %}
+				</select>
+			{% endfor %}
+			<button type="submit">Submit</button>
+		</form>
 	</body>
 </html>
