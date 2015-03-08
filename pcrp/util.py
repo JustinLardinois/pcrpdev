@@ -21,10 +21,6 @@ from xml.sax.saxutils import escape
 
 from pcrp.models import ConferenceUser
 
-# function for preventing cross site scripting
-html_escape = lambda x: escape(x,
-				{'"':"&quot;","'":"&#x27;","/":"&#x2F;","\\":"&92;"})
-
 def is_registered_user(id):
 	if lookup_user(id): return True
 	else: return False
