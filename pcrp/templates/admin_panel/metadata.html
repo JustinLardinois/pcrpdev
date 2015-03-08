@@ -32,11 +32,8 @@
 			(<a href="{{ logout_url }}">log out</a>)
 		</nav>
 		<h2>Edit Conference Metadata</h2>
-		{% if registration_deadline_invalid %}
-			<p class="error">Invalid Paper Registration Deadline</p>
-		{% endif %}
-		{% if submission_deadline_invalid %}
-			<p class="error">Invalid Paper Submission Deadline</p>
+		{% if deadlines_invalid %}
+			<p class="error">Invalid Deadlines</p>
 		{% endif %}
 		{% if mismatched_deadlines %}
 			<p class="error">Mismatched Deadlines</p>
