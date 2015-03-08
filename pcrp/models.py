@@ -24,6 +24,8 @@ class Conference(ndb.Model):
 	name = ndb.StringProperty()
 	registration_deadline = ndb.DateTimeProperty()
 	submission_deadline = ndb.DateTimeProperty()
+	home_message = ndb.StringProperty()
+	hub_message = ndb.StringProperty()
 
 # Conflicts of interest need only be one-way for there to be an issue.
 # For example, while A indicating a conflict with B is different from

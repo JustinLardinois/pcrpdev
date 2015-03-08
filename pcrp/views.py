@@ -210,7 +210,10 @@ def admin_panel_metadata_view_get():
 		paper_submission_day=submission_deadline.strftime("%d"),
 		paper_submission_year=submission_deadline.strftime("%Y"),
 		paper_submission_hour=submission_deadline.strftime("%H"),
-		paper_submission_minute=submission_deadline.strftime("%M")
+		paper_submission_minute=submission_deadline.strftime("%M"),
+		
+		home_message=metadata.home_message,
+		hub_message=metadata.hub_message
 		)
 
 @app.route(admin_panel_metadata_url,methods=["POST"])
@@ -256,6 +259,16 @@ def admin_panel_metadata_view_post():
 				errors.append("mismatched_deadlines=true")
 		else:
 			errors.append("submission_deadline=invalid")
+
+	if request.form["home_message"]:
+		metadata.home_message = request.form["home_message"].strip()
+	else:
+		metadata.home_message = ""
+	
+	if request.form["hub_message"]:
+		metadata.hub_message = request.form["hub_message"].strip()
+	else:
+		metadata.hub_message = ""
 
 	metadata.put()
 

@@ -109,6 +109,18 @@
 						value="{{ paper_submission_minute }}">
 				</label>
 			</fieldset>
+			<label for="home_message">
+				<span>Home Page Message</span>
+				<textarea name="home_message" cols="90" rows="10">
+					{{- home_message -}}
+				</textarea>
+			</label>
+			<label for="hub_message">
+				<span>Hub Message</span>
+				<textarea name="hub_message" cols="90" rows="10">
+					{{- hub_message -}}
+				</textarea>
+			</label>
 			<button type="submit">Save Changes</button>
 		</form>
 	</body>
