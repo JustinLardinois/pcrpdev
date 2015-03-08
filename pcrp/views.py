@@ -43,7 +43,7 @@ from pcrp.models import *
 from pcrp.url_rules import *
 from pcrp.util import *
 
-MAX_PREFERENCE = 10
+MAX_PREFERENCE = 10 # for paper review preferences; do not change programmatically
 
 # TODO: split these up into smaller files
 # TODO: find a cleaner way to pass variables to templates
