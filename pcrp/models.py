@@ -77,5 +77,8 @@ class Paper(ndb.Model):
 		ndb.Model.__init__(self)
 		self.preferences = {}
 
+	def get_preference(self,user_id):
+		return self.preferences[user_id]
+
 	def set_preference(self,user_id,preference):
 		self.preferences[user_id] = preference
