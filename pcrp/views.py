@@ -57,6 +57,7 @@ def home_view():
 		registration_deadline=metadata.registration_deadline,
 		submission_deadline=metadata.submission_deadline,
 		login_url=users.create_login_url(user_reg_url),
+		home_message=metadata.home_message
 		)
 
 # handles when the user requests a "clean" form
