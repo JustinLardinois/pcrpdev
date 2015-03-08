@@ -345,7 +345,8 @@ def hub_view():
 		before_registration_deadline=before_registration_deadline,
 		paper_url=paper_url,
 		your_papers=your_papers,
-		conflicts_url=conflicts_url
+		conflicts_url=conflicts_url,
+		hub_message=metadata.hub_message
 	)
 
 @app.route(paper_url,methods=["GET"])
