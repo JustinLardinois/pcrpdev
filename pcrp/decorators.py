@@ -55,7 +55,7 @@ def admin_only(f):
 	return decorated_function
 
 def program_committee_only(f):
-@wraps(f)
+	@wraps(f)
 	def decorated_function(*args, **kwargs):
 		if not (lookup_user(users.get_current_user().user_id())
 			.program_committee):
