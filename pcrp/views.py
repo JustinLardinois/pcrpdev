@@ -574,4 +574,37 @@ def conflicts_view_post():
 @registration_required
 @program_committee_only
 def preferences_view_get():
-	return "blah"
+	metadata = metadata_key.get()
+	if datetime.datetime.utcnow() < metadata.registration_deadline \
+		or datetime.datetime.utcnow() > metadata.submission_deadline:
+		return ("Review preferences can only be entered after the "
+			"paper registration deadline and before the paper submission "
+			"deadline",403)
+	
+	user = lookup_user(users.get_current_user().user_id())
+	conflicts = conflict_key.get()
+	
+	papers = Paper.query(Paper.author != user.key).fetch()
+	prefs = {}
+	for p in papers:
+		if conflicts.is_conflict(user.id,p.author.get().id):
+			papers.remove(p)
+		else:
+			key = p.key.urlsafe()
+			try:
+				pref = p.get_preference(user.id)
+				prefs[key] = pref
+			except KeyError:
+				prefs[key] = 5
+
+	return render_template(
+		"review/preferences.html",
+		conference_name=metadata.name,
+		real_name=user.real_name,
+		hub_url=hub_url,
+		admin=users.is_current_user_admin(),
+		admin_panel_url=admin_panel_url,
+		logout_url=users.create_logout_url(home_url),
+		papers=papers,
+		prefs=prefs
+	)
