@@ -43,6 +43,8 @@ from pcrp.models import *
 from pcrp.url_rules import *
 from pcrp.util import *
 
+MAX_PREFERENCE = 10
+
 # TODO: split these up into smaller files
 # TODO: find a cleaner way to pass variables to templates
 @app.route(home_url)
@@ -595,7 +597,7 @@ def preferences_view_get():
 			pref = p.get_preference(user.id)
 			prefs[key] = pref
 		except KeyError:
-			prefs[key] = 5
+			prefs[key] = MAX_PREFERENCE // 2
 
 	return render_template(
 		"review/preferences.html",
@@ -607,6 +609,7 @@ def preferences_view_get():
 		logout_url=users.create_logout_url(home_url),
 		papers=papers,
 		prefs=prefs,
+		max_preference=MAX_PREFERENCE + 1,
 		update_success=request.args.get("update") == "success"
 	)
 
@@ -624,7 +627,7 @@ def preferences_view_post():
 	for p in papers:
 		try:
 			pref = int(request.form[p.key.urlsafe()])
-			if pref < 1 or pref > 10: pref = 5
+			if pref < 1 or pref > MAX_PREFERENCE: pref = MAX_PREFERENCE // 2
 			p.set_preference(user.id,pref)
 			p.put()
 		except (KeyError,ValueError): pass
