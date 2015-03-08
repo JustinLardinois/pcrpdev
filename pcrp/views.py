@@ -568,3 +568,10 @@ def conflicts_view_post():
 	
 	stored_conflicts.put()
 	return redirect(conflicts_url + "?update=success")
+
+@app.route(preferences_url,methods=["GET"])
+@login_required
+@registration_required
+@program_committee_only
+def preferences_view_get():
+	return "blah"
