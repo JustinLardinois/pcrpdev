@@ -632,4 +632,6 @@ def preferences_view_post():
 			p.put()
 		except (KeyError,ValueError): pass
 
+	sleep(1)
+	# hacky solution to prevent page from rendering before datastore update
 	return redirect(preferences_url + "?update=success")
