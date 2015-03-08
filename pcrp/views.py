@@ -183,6 +183,7 @@ def admin_panel_metadata_view_get():
 	user = lookup_user(users.get_current_user().user_id())
 	registration_deadline = metadata.registration_deadline
 	submission_deadline = metadata.submission_deadline
+	review_deadline = metadata.review_deadline
 	
 	return render_template(
 		"admin_panel/metadata.html",
@@ -192,24 +193,27 @@ def admin_panel_metadata_view_get():
 		logout_url=users.create_logout_url(home_url),
 		real_name=user.real_name,
 		update_success=request.args.get("update") == "success",
-		
-		registration_deadline_invalid=
-			request.args.get("registration_deadline") == "invalid",
+		deadlines_invalid=request.args.get("deadlines") == "invalid",
+		mismatched_deadlines=
+			request.args.get("mismatched_deadlines") == "true",
+
 		paper_registration_month=registration_deadline.strftime("%m"),
 		paper_registration_day=registration_deadline.strftime("%d"),
 		paper_registration_year=registration_deadline.strftime("%Y"),
 		paper_registration_hour=registration_deadline.strftime("%H"),
 		paper_registration_minute=registration_deadline.strftime("%M"),
 		
-		submission_deadline_invalid=
-			request.args.get("submission_deadline") == "invalid",
-		mismatched_deadlines=
-			request.args.get("mismatched_deadlines") == "true",
 		paper_submission_month=submission_deadline.strftime("%m"),
 		paper_submission_day=submission_deadline.strftime("%d"),
 		paper_submission_year=submission_deadline.strftime("%Y"),
 		paper_submission_hour=submission_deadline.strftime("%H"),
 		paper_submission_minute=submission_deadline.strftime("%M"),
+		
+		paper_review_month=review_deadline.strftime("%m"),
+		paper_review_day=review_deadline.strftime("%d"),
+		paper_review_year=review_deadline.strftime("%Y"),
+		paper_review_hour=review_deadline.strftime("%H"),
+		paper_review_minute=review_deadline.strftime("%M"),
 		
 		home_message=metadata.home_message,
 		hub_message=metadata.hub_message
