@@ -357,8 +357,10 @@ def hub_view():
 		your_papers=your_papers,
 		conflicts_url=conflicts_url,
 		preferences_url=preferences_url,
+		assign_url=assign_url,
 		hub_message=metadata.hub_message,
-		on_pc=user.program_committee
+		on_pc=user.program_committee,
+		pc_chair=user.pc_chair
 	)
 
 @app.route(paper_url,methods=["GET"])
