@@ -640,3 +640,31 @@ def preferences_view_post():
 	sleep(1)
 	# hacky solution to prevent page from rendering before datastore update
 	return redirect(preferences_url + "?update=success")
+
+@app.route(assign_url,methods=["GET"])
+@login_required
+@registration_required
+@pc_chair_only
+def assign_view_get():
+	metadata = metadata_key.get()
+	if datetime.datetime.utcnow() < metadata.submission_deadline \
+		or metadata.review_deadline < datetime.datetime.utcnow():
+		return ("Reviews can only be assigned after the submission deadline "
+			"and before the review deadline",403)
+	
+	user = lookup_user(users.get_current_user().user_id())
+	
+	return render_template(
+		"review/assign.html",
+		conference_name=metadata.name,
+		real_name=user.real_name,
+		hub_url=hub_url,
+		admin=users.is_current_user_admin(),
+		admin_panel_url=admin_panel_url,
+		logout_url=users.create_logout_url(home_url),
+		papers=Paper.query().fetch(),
+		reviewers=ConferenceUser.query(
+			ConferenceUser.program_committee == True).fetch(),
+		user_id=user.id,
+		conflicts=conflict_key.get()
+	)
