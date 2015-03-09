@@ -678,4 +678,5 @@ def assign_view_post():
 					ConferenceUser.email == email).get().key)
 			p.reviewers = reviewers
 			p.put()
+	sleep(1) # same hacky bullshit
 	return redirect(assign_url + "?update=success")
