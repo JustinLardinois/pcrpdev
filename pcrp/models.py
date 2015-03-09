@@ -72,10 +72,12 @@ class Paper(ndb.Model):
 	abstract = ndb.StringProperty()
 	file = ndb.BlobKeyProperty()
 	preferences = ndb.PickleProperty()
+	reviewers = ndb.KeyProperty(repeated=True)
 	
 	def __init__(self):
 		ndb.Model.__init__(self)
 		self.preferences = {}
+		self.reviewers = []
 
 	def get_preference(self,user_id):
 		try: 
