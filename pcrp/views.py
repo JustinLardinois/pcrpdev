@@ -782,4 +782,13 @@ def review_view_get():
 			if not (user.key in paper.reviewers):
 				return ("You have not been assigned to review this paper",403)
 			else:
-				return "Success"
+				return render_template(
+					"review/review.html",
+					conference_name=metadata.name,
+					real_name=user.real_name,
+					hub_url=hub_url,
+					admin=users.is_current_user_admin(),
+					admin_panel_url=admin_panel_url,
+					logout_url=users.create_logout_url(home_url),
+					questions=review_question_list_key.get().questions
+				)
