@@ -749,4 +749,4 @@ def questions_view_post():
 	review_questions = review_question_list_key.get()
 	review_questions.questions = questions
 	review_questions.put()
-	return "foo"
+	return redirect(questions_url + "?update=success")
