@@ -350,6 +350,7 @@ def hub_view():
 		real_name=user.real_name,
 		admin=users.is_current_user_admin(),
 		logout_url=users.create_logout_url(home_url),
+		user_id = user.id,
 		admin_panel_url=admin_panel_url,
 		program_committee=program_committee,
 		before_registration_deadline=before_registration_deadline,

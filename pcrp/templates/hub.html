@@ -51,8 +51,13 @@
 			<h2>Program Committee</h2>
 			<ul>
 				{% for member in program_committee %}
-					<li><a href="mailto:{{ member.email }}">{{ member.real_name
-					}}</a>, {{ member.affiliation }}
+					<li>
+						{% if member.id == user_id %}
+							<strong>You</strong>
+						{% else %}
+							<a href="mailto:{{ member.email }}">{{
+							member.real_name }}</a>, {{ member.affiliation }}
+						{% endif %}
 					{% if member.pc_chair %}(Chair){% endif %}</li>
 				{% endfor %}
 				{% if (program_committee|length) == 0 %}
