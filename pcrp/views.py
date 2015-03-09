@@ -790,5 +790,6 @@ def review_view_get():
 					admin=users.is_current_user_admin(),
 					admin_panel_url=admin_panel_url,
 					logout_url=users.create_logout_url(home_url),
-					questions=review_question_list_key.get().questions
+					questions=review_question_list_key.get().questions,
+					paper=paper
 				)

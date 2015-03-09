@@ -33,6 +33,20 @@
 			{% endif %}
 			(<a href="{{ logout_url }}">log out</a>)
 		</nav>
+		<p>Title: {{ paper.title }}</p>
+		<p>Authors:</p>
+		<ul>
+			<li>
+				<a href="mailto:{{ paper.author.get().email }}">
+					{{ paper.author.get().real_name }}
+				</a>
+			</li>
+			{% for a in paper.additional_authors %}
+				<li>{{ a }}</li>
+			{% endfor %}
+		</ul>
+		<p>Abstract: {{ paper.abstract }}</p>
+		<p>Uploaded file:</p>
 		<form accept-charset="UTF-8" action="{{ request.path }}"
 			autocomplete="off" method="post">
 			<ul>
