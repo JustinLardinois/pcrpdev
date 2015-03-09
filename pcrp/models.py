@@ -92,3 +92,9 @@ class Paper(ndb.Model):
 
 MAX_PREFERENCE = 10
 # for paper review preferences; do not change programmatically
+
+class ReviewQuestionList(ndb.Model):
+	questions = ndb.StructuredProperty(ReviewQuestion,repeated=True)
+
+class ReviewQuestion(ndb.Model):
+	question = ndb.StringProperty()
