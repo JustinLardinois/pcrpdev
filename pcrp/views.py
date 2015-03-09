@@ -721,6 +721,7 @@ def assign_view_post():
 def questions_view_get():
 	metadata = metadata_key.get()
 	user = lookup_user(users.get_current_user().user_id())
+	questions=review_question_list_key.get()
 
 	return render_template(
 		"review/questions.html",
@@ -729,5 +730,23 @@ def questions_view_get():
 		admin=users.is_current_user_admin(),
 		hub_url=hub_url,
 		admin_panel_url=admin_panel_url,
-		logout_url=users.create_logout_url(home_url)
+		logout_url=users.create_logout_url(home_url),
+		questions=review_question_list_key.get().questions
 	)
+
+@app.route(questions_url,methods=["POST"])
+@login_required
+@registration_required
+@pc_chair_only
+def questions_view_post():
+	questions = []
+	for q in request.form.getlist("question"):
+		q = q.strip()
+		if q != "":
+			question = ReviewQuestion()
+			question.question = q
+			questions.append(question)
+	review_questions = review_question_list_key.get()
+	review_questions.questions = questions
+	review_questions.put()
+	return "foo"

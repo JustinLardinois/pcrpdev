@@ -45,9 +45,15 @@
 		<form accept-charset="UTF-8" action="{{ request.path }}"
 			autocomplete="off" method="post">
 			<fieldset id="questions">
-				{% for n in range(10) %}
-					<input type="text" name="question">
+				{% for q in questions %}
+					<input type="text" name="question"
+						value="{{ q.question }}">
 				{% endfor %}
+				{% if (10 - questions|length) > 0 %}
+					{% for n in range(10-questions|length) %}
+						<input type="text" name="question">
+					{% endfor %}
+				{% endif %}
 			</fieldset>
 			<button type="submit">Submit</button>
 		</form>
