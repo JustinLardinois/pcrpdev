@@ -726,7 +726,7 @@ def questions_view_get():
 	
 	if datetime.datetime.utcnow() > metadata.submission_deadline:
 		return ("Review questions can only be edited before "
-			"the paper submission deadline",403)
+			"the paper submission deadline",400)
 
 	return render_template(
 		"review/questions.html",
