@@ -650,12 +650,6 @@ def assign_view_get():
 	
 	user = lookup_user(users.get_current_user().user_id())
 	
-	def lookup_preference(paper,user_id): # prevent exceptions in template
-		try:
-			return paper.get_preference(user_id)
-		except KeyError:
-			return MAX_PREFERENCE // 2
-	
 	return render_template(
 		"review/assign.html",
 		conference_name=metadata.name,
@@ -667,6 +661,5 @@ def assign_view_get():
 		papers=Paper.query().fetch(),
 		reviewers=ConferenceUser.query(
 			ConferenceUser.program_committee == True).fetch(),
-		conflicts=conflict_key.get(),
-		lookup_preference=lookup_preference
+		conflicts=conflict_key.get()
 	)
