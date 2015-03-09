@@ -36,7 +36,9 @@
 		<p>Questions entered here will be used for all paper reviews.</p>
 		<form accept-charset="UTF-8" action="{{ request.path }}"
 			autocomplete="off" method="post">
-			<input type="text" name="question">
+			{% for n in range(10) %}
+				<input type="text" name="question">
+			{% endfor %}
 			<button type="submit">Submit</button>
 		</form>
 	</body>
