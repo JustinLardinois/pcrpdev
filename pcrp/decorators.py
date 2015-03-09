@@ -63,3 +63,11 @@ def program_committee_only(f):
 					403)
 		return f(*args, **kwargs)
 	return decorated_function
+
+def pc_chair_only(f):
+	@wraps(f)
+	def decorated_function(*args, **kwargs):
+		if not (lookup_user(users.get_current_user().user_id()).pc_chair):
+			return ("Only program committee chairs may view this page",403)
+		return f(*args, **kwargs)
+	return decorated_function
