@@ -42,20 +42,25 @@
 		potential conflict of interest with.</p>
 		<form accept-charset="UTF-8" action="{{ request.path }}"
 			autocomplete="off" method="post">
+			<ul>
 			{% for u in users %}
-				<label>
-					<input type="checkbox" name="conflicts"
-						value="{{ u.email }}"
-						{#- user ID would be more convenient than email, but
-							exposing user IDs is a security issue:
-							https://cloud.google.com/appengine/docs/python/users/#Python_Accessing_account_information
-						-#}
-						{%- if conflicts.is_directed_conflict(user_id,u.id) -%}
-							{{ " checked" }}
-						{%- endif %}>
-					<span>{{ u.real_name }}, {{ u.affiliation }}</span>
-				</label>
+				<li>
+					<label>
+						<input type="checkbox" name="conflicts"
+							value="{{ u.email }}"
+							{#- user ID would be more convenient than email,
+								but exposing user IDs is a privacy issue:
+								https://cloud.google.com/appengine/docs/python/users/#Python_Accessing_account_information
+							-#}
+							{%- if conflicts.is_directed_conflict(
+								user_id,u.id)-%}
+								{{ " checked" }}
+							{%- endif %}>
+						<span>{{ u.real_name }}, {{ u.affiliation }}</span>
+					</label>
+				</li>
 			{% endfor %}
+			</ul>
 			<button type="submit">Submit</button>
 		</form>
 	</body>
