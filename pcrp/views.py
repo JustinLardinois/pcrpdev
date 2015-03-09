@@ -665,6 +665,5 @@ def assign_view_get():
 		papers=Paper.query().fetch(),
 		reviewers=ConferenceUser.query(
 			ConferenceUser.program_committee == True).fetch(),
-		user_id=user.id,
 		conflicts=conflict_key.get()
 	)
