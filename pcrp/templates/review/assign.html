@@ -38,13 +38,20 @@
 		<form accept-charset="UTF-8" action="{{ request.path }}"
 			autocomplete="off" method="post">
 			
-			<label>
+			<h2>Auto Assign</h2>
+			<fieldset>
+				<legend>(Will clobber all other assignments)</legend>
+				<label for="reviewer_count">
+					Attempt to assign
+					<input type="number" name="reviewer_count">
+					reviewers to each paper
+				</label>
 				<button type="submit" name="assignment_type" value="auto">
 					Auto-Assign
 				</button>
-				<span>(Will clobber all other assignments)</span>
-			</label>
-			
+			</fieldset>
+			<h2>Manual Assign</h2>
+			<p>Preferences are listed next to reviewer names in parentheses.</p>
 			{% for p in papers %}
 				<fieldset>
 					<p>Title: {{ p.title }}</p>
@@ -70,6 +77,7 @@
 											name="p.key.urlsafe()"
 											value="r.email">
 										<span>
+											({{ lookup_preference(p,r.id) }})
 											{{ r.real_name }},
 											{{ r.affiliation }}
 										</span>
