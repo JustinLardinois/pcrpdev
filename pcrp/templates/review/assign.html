@@ -74,8 +74,12 @@
 								<li>
 									<label>
 										<input type="checkbox"
-											name="p.key.urlsafe()"
-											value="r.email">
+											name="{{ p.key.urlsafe() }}"
+											value="{{ r.email }}"
+											{%- if r.key in p.reviewers -%}
+												{{ " " }}checked
+											{%- endif -%}
+											>
 										<span>
 											({{ p.get_preference(r.id) }})
 											{{ r.real_name }},
