@@ -497,11 +497,11 @@ def paper_upload_view():
 	blob_stream.close()
 
 	# sanity check: file is associated with a paper owned by the current user
-	if paper and paper.author.id == users.get_current_user().user_id():
+	if paper and paper.author == \
+		lookup_user(users.get_current_user().user_id()).key:
 		if paper.file != None:
 			# prevent old versions of file from being orphaned
 			blobstore.delete(paper.file)
-			paper.file = None
 		paper.file = blob_key
 		paper.put()
 	
