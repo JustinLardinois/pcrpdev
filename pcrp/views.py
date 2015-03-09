@@ -713,3 +713,21 @@ def assign_view_post():
 		ndb.put_multi(papers)
 	sleep(1) # same hacky bullshit
 	return redirect(assign_url + "?update=success")
+
+@app.route(questions_url,methods=["GET"])
+@login_required
+@registration_required
+@pc_chair_only
+def questions_view_get():
+	metadata = metadata_key.get()
+	user = lookup_user(users.get_current_user().user_id())
+
+	return render_template(
+		"review/questions.html",
+		conference_name=metadata.name,
+		real_name=user.real_name,
+		admin=users.is_current_user_admin(),
+		hub_url=hub_url,
+		admin_panel_url=admin_panel_url,
+		logout_url=users.create_logout_url(home_url)
+	)
