@@ -39,7 +39,7 @@
 		{% endif %}
 		<form accept-charset="UTF-8" action="{{ request.path }}"
 			autocomplete="off" method="post">
-			
+			{% if False %}
 			<h2>Auto Assign</h2>
 			<fieldset>
 				<legend>(Will clobber all other assignments)</legend>
@@ -52,6 +52,7 @@
 					Auto-Assign
 				</button>
 			</fieldset>
+			{% endif %}
 			<h2>Manual Assign</h2>
 			<p>Preferences are listed next to reviewer names in parentheses.</p>
 			{% for p in papers %}
