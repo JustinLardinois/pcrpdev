@@ -78,7 +78,10 @@ class Paper(ndb.Model):
 		self.preferences = {}
 
 	def get_preference(self,user_id):
-		return self.preferences[user_id]
+		try: 
+			return self.preferences[user_id]
+		except KeyError:
+			return MAX_PREFERENCE // 2
 
 	def set_preference(self,user_id,preference):
 		self.preferences[user_id] = preference
