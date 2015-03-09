@@ -501,6 +501,7 @@ def paper_upload_view():
 		if paper.file != None:
 			# prevent old versions of file from being orphaned
 			blobstore.delete(paper.file)
+			paper.file = None
 		paper.file = blob_key
 		paper.put()
 	
@@ -518,9 +519,11 @@ def paper_view_view():
 	paper = ndb.Key(urlsafe=paper_id).get()
 	if not paper:
 		return ("Invalid paper ID",400)
-	if paper.author != user,key and not (user.key in paper.reviewers):
+	if paper.author != user.key and not (user.key in paper.reviewers):
 		return ("You do not have permission to view this paper",403)
 	
+	if not paper.file:
+		return ("Author did not upload file",404)
 	blob_info = blobstore.BlobInfo.get(paper.file)
 	response = make_response(blob_info.open().read())
 	
@@ -784,6 +787,9 @@ def review_view_get():
 			if not (user.key in paper.reviewers):
 				return ("You have not been assigned to review this paper",403)
 			else:
+				filename = None
+				if paper.file:
+					filename = blobstore.BlobInfo.get(paper.file).filename
 				return render_template(
 					"review/review.html",
 					conference_name=metadata.name,
@@ -793,5 +799,7 @@ def review_view_get():
 					admin_panel_url=admin_panel_url,
 					logout_url=users.create_logout_url(home_url),
 					questions=review_question_list_key.get().questions,
-					paper=paper
+					paper=paper,
+					filename=filename,
+					paper_view_url=paper_view_url
 				)

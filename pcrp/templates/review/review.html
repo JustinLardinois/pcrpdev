@@ -46,7 +46,15 @@
 			{% endfor %}
 		</ul>
 		<p>Abstract: {{ paper.abstract }}</p>
-		<p>Uploaded file:</p>
+		{% if paper.file %}
+		<p>Uploaded file:
+			<a href="{{ paper_view_url + "?id=" + paper.key.urlsafe()}}">
+				{{ filename }}
+			</a>
+		</p>
+		{% else %}
+			<p>Author did not upload file.</p>
+		{% endif %}
 		<form accept-charset="UTF-8" action="{{ request.path }}"
 			autocomplete="off" method="post">
 			<ul>
