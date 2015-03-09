@@ -51,8 +51,8 @@
 					<p>Authors:</p>
 					<ul>
 						<li><a href="mailto:{{ p.author.get().email }}">
-							p.author.get().real_name</a>,
-							p.author.get().affiliation
+							{{ p.author.get().real_name }}</a>,
+							{{ p.author.get().affiliation }}
 						</li>
 						{% for a in p.additional_authors %}
 							<li>{{ a }}</li>
@@ -62,7 +62,7 @@
 					<p>Assign Reviewers:</p>
 					<ul>
 						{% for r in reviewers %}
-							{% if r.id != user_id and
+							{% if r.id != p.author.get().id and
 								not conflicts.is_conflict(r.id,user_id) %}
 								<li>
 									<label>
@@ -81,6 +81,8 @@
 				</fieldset>
 			{% endfor %}
 			<button type="submit" name="assignment_type" value="manual">
+				Assign
+			</button>
 		</form>
 	</body>
 </html>
