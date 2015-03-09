@@ -60,5 +60,6 @@ if not conflicts:
 review_questions = review_question_list_key.get()
 if not review_questions:
 	review_questions = ReviewQuestionList()
+	review_questions.key = review_question_list_key
 	review_questions.questions = []
 	review_questions.put()
