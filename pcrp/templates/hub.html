@@ -48,8 +48,13 @@
 		{% endif %}
 		{% if pc_chair and not before_submission_deadline %}
 			<p>Program committee chairs: make sure to
-			<a href="{{ assign_url}}">assign reviews</a> soon so the
+			<a href="{{ assign_url }}">assign reviews</a> soon so the
 			committee has ample time to review before the deadline.</p>
+		{% endif %}
+		{% if pc_chair and before_submission_deadline %}
+			<p>Program committee chairs: make sure to finalize
+			<a href="{{ questions_url }}">review questions</a> before
+			the paper submission deadline.</p>
 		{% endif %}
 		<p>{{ hub_message|safe }}</p>
 		<div id="program_committee">

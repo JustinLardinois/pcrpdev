@@ -360,7 +360,8 @@ def hub_view():
 		assign_url=assign_url,
 		hub_message=metadata.hub_message,
 		on_pc=user.program_committee,
-		pc_chair=user.pc_chair
+		pc_chair=user.pc_chair,
+		questions_url=questions_url
 	)
 
 @app.route(paper_url,methods=["GET"])
