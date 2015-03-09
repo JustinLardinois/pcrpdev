@@ -663,3 +663,19 @@ def assign_view_get():
 			ConferenceUser.program_committee == True).fetch(),
 		conflicts=conflict_key.get()
 	)
+
+@app.route(assign_url,methods=["POST"])
+@login_required
+@registration_required
+@pc_chair_only
+def assign_view_post():
+	if request.form["assignment_type"] == "manual":
+		papers = Paper.query().fetch()
+		for p in papers:
+			reviewers = []
+			for email in request.form.getlist(p.key.urlsafe()):
+				reviewers.append(ConferenceUser.query(
+					ConferenceUser.email == email).get().key)
+			p.reviewers = reviewers
+			p.put()
+	return redirect(assign_url + "?update=success")
