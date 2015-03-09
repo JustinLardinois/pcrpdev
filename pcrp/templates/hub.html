@@ -40,6 +40,12 @@
 		</div>
 		<p>Make sure to register your
 			<a href="{{ conflicts_url }}">conflicts of interest</a>.</p>
+		{% if not before_registration_deadline
+			and before_submission_deadline %}
+			<p>Program committee members: make sure to indicate your
+			<a href="{{ preferences_url }}">review preferences</a> before
+			the paper submission deadline.</p>
+		{% endif %}
 		<p>{{ hub_message|safe }}</p>
 		<div id="program_committee">
 			<h2>Program Committee</h2>

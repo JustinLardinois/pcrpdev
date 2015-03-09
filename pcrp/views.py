@@ -337,6 +337,8 @@ def hub_view():
 		ConferenceUser.program_committee == True).fetch()
 	before_registration_deadline = \
 		metadata.registration_deadline > datetime.datetime.utcnow()
+	before_submission_deadline = \
+		metadata.submission_deadline > datetime.datetime.utcnow()
 	your_papers = Paper.query(Paper.author == user.key).fetch()
 	
 	return render_template(
@@ -351,9 +353,11 @@ def hub_view():
 		admin_panel_url=admin_panel_url,
 		program_committee=program_committee,
 		before_registration_deadline=before_registration_deadline,
+		before_submission_deadline=before_submission_deadline,
 		paper_url=paper_url,
 		your_papers=your_papers,
 		conflicts_url=conflicts_url,
+		preferences_url=preferences_url,
 		hub_message=metadata.hub_message
 	)
 
