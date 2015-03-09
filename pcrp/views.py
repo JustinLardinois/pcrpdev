@@ -661,7 +661,8 @@ def assign_view_get():
 		papers=Paper.query().fetch(),
 		reviewers=ConferenceUser.query(
 			ConferenceUser.program_committee == True).fetch(),
-		conflicts=conflict_key.get()
+		conflicts=conflict_key.get(),
+		update_success=request.args.get("update") == "success"
 	)
 
 @app.route(assign_url,methods=["POST"])

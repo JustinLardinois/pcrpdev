@@ -34,7 +34,9 @@
 			{% endif %}
 			(<a href="{{ logout_url }}">log out</a>)
 		</nav>
-		
+		{% if update_success %}
+			<p>Reviews Successfully Assigned</p>
+		{% endif %}
 		<form accept-charset="UTF-8" action="{{ request.path }}"
 			autocomplete="off" method="post">
 			
