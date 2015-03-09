@@ -16,6 +16,7 @@
 # pcrp/util.py - a component of pCRP
 # utility functions
 
+from collections import defaultdict
 import datetime
 from xml.sax.saxutils import escape
 
@@ -23,7 +24,7 @@ from pcrp.models import ConferenceUser
 
 # returns number of users who have been assigned to review exactly m each
 # from papers
-def reviewer_list(papers,x):	
+def reviewer_list(papers,m):	
 	reviewers = ConferenceUser.query(
 		ConferenceUser.program_committee == True).fetch()
 	review_count = defaultdict(int)
@@ -31,7 +32,7 @@ def reviewer_list(papers,x):
 	for p in papers:
 		for r in p.reviewers:
 			review_count[r.id] += 1
-	return [x for x.id in review_count if review_count[x.id] == M]
+	return [x for x in review_count if review_count[x] == m]
 
 def is_registered_user(id):
 	if lookup_user(id): return True
