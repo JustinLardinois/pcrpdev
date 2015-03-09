@@ -47,11 +47,13 @@ class ConflictSet(ndb.Model):
 		self.conflicts.discard(tuple([a,b]))
 	
 	def is_conflict(self,a,b):
+		if a == b: return True # users have a conflict with themselves
 		x = tuple([a,b])
 		y = tuple([b,a])
 		return x in self.conflicts or y in self.conflicts
 
 	def is_directed_conflict(self,a,b):
+		if a == b: return True
 		return tuple([a,b]) in self.conflicts
 
 # class for keeping track of users, since App Engine's native Users class
