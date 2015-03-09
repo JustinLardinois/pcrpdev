@@ -756,3 +756,30 @@ def questions_view_post():
 	review_questions.questions = questions
 	review_questions.put()
 	return redirect(questions_url + "?update=success")
+
+@app.route(review_url,methods=["GET"])
+@login_required
+@registration_required
+@program_committee_only
+def review_view_get():
+	metadata = metadata_key.get()
+	user = lookup_user(users.get_current_user().user_id())
+
+	if metadata.submission_deadline > datetime.datetime.utcnow():
+		return ("Reviews can only be entered after the submission deadline",
+			400)
+	elif metadata.review_deadline < datetime.datetime.utcnow():
+		return ("Review deadline has passed",400)
+	id = request.args.get("id")
+	if not id or id.strip() == "":
+		return ("No paper ID specified",400)
+	else:
+		id = id.strip()
+		paper = ndb.Key(urlsafe=id).get()
+		if paper:
+			if user.key in paper.reviewers:
+				return "Success"
+			else:
+				return ("You have not been assigned to review this paper",403)
+		else:
+			return ("Invalid paper ID",400)
