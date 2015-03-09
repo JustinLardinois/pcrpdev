@@ -41,6 +41,9 @@
 			{% endif %}
 			(<a href="{{ logout_url }}">log out</a>)
 		</nav>
+		{% if update_success %}
+			<p>Review Questions Updated Successfully</p>
+		{% endif %}
 		<p>Questions entered here will be used for all paper reviews.</p>
 		<form accept-charset="UTF-8" action="{{ request.path }}"
 			autocomplete="off" method="post">

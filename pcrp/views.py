@@ -731,7 +731,8 @@ def questions_view_get():
 		hub_url=hub_url,
 		admin_panel_url=admin_panel_url,
 		logout_url=users.create_logout_url(home_url),
-		questions=review_question_list_key.get().questions
+		questions=review_question_list_key.get().questions,
+		update_success=request.args.get("update") == "success"
 	)
 
 @app.route(questions_url,methods=["POST"])
