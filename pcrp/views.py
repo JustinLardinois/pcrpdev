@@ -723,9 +723,9 @@ def questions_view_get():
 	user = lookup_user(users.get_current_user().user_id())
 	questions=review_question_list_key.get()
 	
-	if datetime.datetime.utcnow() > metadata.review_deadline:
+	if datetime.datetime.utcnow() > metadata.submission_deadline:
 		return ("Review questions can only be edited before "
-			"the review deadline",403)
+			"the paper submission deadline",403)
 
 	return render_template(
 		"review/questions.html",
