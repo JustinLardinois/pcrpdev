@@ -29,8 +29,10 @@ from google.appengine.ext import ndb
 
 from pcrp.keys import conflict_key
 from pcrp.keys import metadata_key
+from pcrp.keys import review_question_list_key
 from pcrp.models import Conference
 from pcrp.models import ConflictSet
+from pcrp.models import ReviewQuestionList
 
 # default time value; should be changed in administrator panel
 end_of_time = datetime.datetime(datetime.MAXYEAR,12,12,23,59,59,0)
