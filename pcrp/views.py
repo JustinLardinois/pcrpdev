@@ -511,13 +511,15 @@ def paper_upload_view():
 @login_required
 @registration_required
 def paper_view_view():
+	user = lookup_user(users.get_current_user().user_id())
 	paper_id = request.args.get("id")
 	if not paper_id:
-		return redirect(paper_url)
+		return ("No paper ID specified",400)
 	paper = ndb.Key(urlsafe=paper_id).get()
-	if not paper or paper.author.id != users.get_current_user().user_id():
-		return redirect(paper_url + "?id=" + paper_id)
-		# delegate errors to paper_view_get()
+	if not paper:
+		return ("Invalid paper ID",400)
+	if paper.author != user,key and not (user.key in paper.reviewers):
+		return ("You do not have permission to view this paper",403)
 	
 	blob_info = blobstore.BlobInfo.get(paper.file)
 	response = make_response(blob_info.open().read())
