@@ -54,3 +54,9 @@ if not conflicts:
 	conflicts = ConflictSet()
 	conflicts.key = conflict_key
 	conflicts.put()
+
+review_questions = review_question_list_key.get()
+if not review_questions:
+	review_questions = ReviewQuestionList()
+	review_questions.questions = []
+	review_questions.put()
