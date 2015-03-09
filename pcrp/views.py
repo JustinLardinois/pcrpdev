@@ -598,11 +598,7 @@ def preferences_view_get():
 	prefs = {} # dict of the user's review preferences
 	for p in papers:
 		key = p.key.urlsafe()
-		try:
-			pref = p.get_preference(user.id)
-			prefs[key] = pref
-		except KeyError:
-			prefs[key] = MAX_PREFERENCE // 2
+		prefs[key] = p.get_preference(user.id)
 
 	return render_template(
 		"review/preferences.html",

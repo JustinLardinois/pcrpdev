@@ -77,7 +77,7 @@
 											name="p.key.urlsafe()"
 											value="r.email">
 										<span>
-											({{ lookup_preference(p,r.id) }})
+											({{ p.get_preference(r.id) }})
 											{{ r.real_name }},
 											{{ r.affiliation }}
 										</span>
