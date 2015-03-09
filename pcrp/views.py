@@ -679,5 +679,34 @@ def assign_view_post():
 					ConferenceUser.email == email).get().key)
 			p.reviewers = reviewers
 			p.put()
+	elif request.form["assignment_type"] == "auto":
+		try:
+			reviewer_count = int(request.form["reviewer_count"])
+		except ValueError:
+			return redirect(assign_url)
+		
+		conflicts = conflict_key.get()
+		papers = Paper.query().fetch()
+		for p in papers:
+			p.reviewers = [] # clear old assignments to prevent weirdness
+
+		# Greedy algorithm that attempts to assign papers as evenly as
+		# possible to reviewers that prefer them the most.
+		
+		# Does not currently work, not sure why.
+		for n in range(reviewer_count):
+			for p in papers:
+				for m in range(len(papers) + 1): # ranges go from 0 to n-1
+					reviewers = reviewer_list(papers,m)
+					if len(reviewers) == 0: continue
+					likes_best = reduce(
+						lambda x,y:
+						y if p.get_preference[x] < p.get_preference[y]
+						else y,
+						reviewers)
+					if not conflicts.is_conflict(likes_best,p.author.get().id):
+						p.reviewers.append(lookup_user(likes_best).key)
+						break
+		ndb.put_multi(papers)
 	sleep(1) # same hacky bullshit
 	return redirect(assign_url + "?update=success")
