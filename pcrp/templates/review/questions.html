@@ -22,6 +22,14 @@
 	<head>
 		<title>Review Questions — {{ conference_name }}</title>
 		<meta charset="UTF-8">
+		<script type="text/javascript" src="/js/questions.js"
+			charset="UTF-8"></script>
+		<script type="text/javascript">
+			window.onload = function()
+			{
+				insert_add_button(document);
+			};
+		</script>
 	</head>
 	<body>
 		<h1>Review Questions — {{ conference_name }}</h1>
@@ -36,9 +44,11 @@
 		<p>Questions entered here will be used for all paper reviews.</p>
 		<form accept-charset="UTF-8" action="{{ request.path }}"
 			autocomplete="off" method="post">
-			{% for n in range(10) %}
-				<input type="text" name="question">
-			{% endfor %}
+			<fieldset id="questions">
+				{% for n in range(10) %}
+					<input type="text" name="question">
+				{% endfor %}
+			</fieldset>
 			<button type="submit">Submit</button>
 		</form>
 	</body>
