@@ -776,10 +776,10 @@ def review_view_get():
 	else:
 		id = id.strip()
 		paper = ndb.Key(urlsafe=id).get()
-		if paper:
-			if user.key in paper.reviewers:
-				return "Success"
-			else:
-				return ("You have not been assigned to review this paper",403)
-		else:
+		if not paper:
 			return ("Invalid paper ID",400)
+		else:
+			if not (user.key in paper.reviewers):
+				return ("You have not been assigned to review this paper",403)
+			else:
+				return "Success"
