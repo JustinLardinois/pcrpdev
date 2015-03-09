@@ -82,3 +82,6 @@ class Paper(ndb.Model):
 
 	def set_preference(self,user_id,preference):
 		self.preferences[user_id] = preference
+
+MAX_PREFERENCE = 10
+# for paper review preferences; do not change programmatically
