@@ -1,2 +1,5 @@
 *.pyc
 lib/
+*.aux
+*.log
+*.pdf
