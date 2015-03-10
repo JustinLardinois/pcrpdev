@@ -20,16 +20,16 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Review — {{ conference_name }}</title>
+		<title>Review — {{ metadata.name }}</title>
 		<meta charset="UTF-8">
 	</head>
 	<body>
-		<h1>Review — {{ conference_name }}</h1>
+		<h1>Review — {{ metadata.name }}</h1>
 		<nav>
-			Logged in as {{ real_name }}
-			(<a href="{{ hub_url }}">hub</a>)
+			Logged in as {{ current_user.real_name }}
+			(<a href="{{ url_rule["hub"] }}">hub</a>)
 			{% if admin %}
-				(<a href="{{ admin_panel_url }}">admin panel</a>)
+				(<a href="{{ url_rule["admin_panel"] }}">admin panel</a>)
 			{% endif %}
 			(<a href="{{ logout_url }}">log out</a>)
 		</nav>
@@ -51,7 +51,8 @@
 		<p>Abstract: {{ paper.abstract }}</p>
 		{% if paper.file %}
 		<p>Uploaded file:
-			<a href="{{ paper_view_url + "?id=" + paper.key.urlsafe()}}"
+			<a href="{{ url_rule["paper_view"]
+			+ "?id=" + paper.key.urlsafe()}}"
 			target="_blank">{{ filename }}</a></p>
 		{% else %}
 			<p>Author did not upload file.</p>

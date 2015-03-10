@@ -659,12 +659,12 @@ def questions_view_post():
 	review_questions.put()
 	return redirect(url_rule["questions"] + "?update=success")
 
-@app.route(review_url,methods=["GET"])
+@app.route(url_rule["review"],methods=["GET"])
 @login_required
 @registration_required
 @program_committee_only
 def review_view_get():
-	metadata = metadata_key.get()
+	metadata = keychain["metadata"].get()
 	user = lookup_user(users.get_current_user().user_id())
 
 	if metadata.submission_deadline > datetime.datetime.utcnow():
@@ -695,37 +695,32 @@ def review_view_get():
 						break
 				return render_template(
 					"review/review.html",
-					conference_name=metadata.name,
-					real_name=user.real_name,
-					hub_url=hub_url,
-					admin_panel_url=admin_panel_url,
 					questions=review_question_list_key.get().questions,
 					paper=paper,
 					filename=filename,
-					paper_view_url=paper_view_url,
 					answers=answers,
 					zip=zip,
 					update_success=request.args.get("update") == "success"
 				)
 
-@app.route(review_url,methods=["POST"])
+@app.route(url_rule["review"],methods=["POST"])
 @login_required
 @registration_required
 @program_committee_only
 def review_view_post():
-	metadata = metadata_key.get()
+	metadata = keychain["metadata"].get()
 	user = lookup_user(users.get_current_user().user_id())
 	
 	if metadata.submission_deadline > datetime.datetime.utcnow() \
 		or metadata.review_deadline < datetime.datetime.utcnow():
-		return redirect(review_url)
+		return redirect(url_rule["review"])
 	id = request.form["id"]
 	if not id or id.strip() == "":
-		return redirect(review_url)
+		return redirect(url_rule["review"])
 	id = id.strip()
 	paper = ndb.Key(urlsafe=id).get()
 	if not paper or not (user.key in paper.reviewers):
-		return redirect(review_url + "?id=" + id)
+		return redirect(url_rule["review"] + "?id=" + id)
 	# delegate error handling to GET view
 
 	review = None
@@ -745,4 +740,4 @@ def review_view_post():
 	if not key in paper.reviews:
 		paper.reviews.append(key)
 		paper.put()
-	return redirect(review_url + "?id=" + id + "&update=success")
+	return redirect(url_rule["review"] + "?id=" + id + "&update=success")
