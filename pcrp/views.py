@@ -473,7 +473,7 @@ def conflicts_view_get():
 		update_success=request.args.get("update") == "success"
 	)
 
-@app.route(conflicts_url,methods=["POST"])
+@app.route(url_rule["conflicts"],methods=["POST"])
 @login_required
 @registration_required
 def conflicts_view_post():
@@ -499,7 +499,7 @@ def conflicts_view_post():
 		stored_conflicts.delete(user_id,user)
 	
 	stored_conflicts.put()
-	return redirect(conflicts_url + "?update=success")
+	return redirect(url_rule["conflicts"] + "?update=success")
 
 @app.route(preferences_url,methods=["GET"])
 @login_required
