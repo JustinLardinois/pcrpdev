@@ -478,7 +478,7 @@ def conflicts_view_get():
 @registration_required
 def conflicts_view_post():
 	user_id = users.get_current_user().user_id()
-	stored_conflicts = conflict_key.get()
+	stored_conflicts = keychain["conflict"].get()
 
 	submitted_conflicts = set()
 	# all conflicts that were indicated in submitted form
@@ -501,12 +501,12 @@ def conflicts_view_post():
 	stored_conflicts.put()
 	return redirect(url_rule["conflicts"] + "?update=success")
 
-@app.route(preferences_url,methods=["GET"])
+@app.route(url_rule["preferences"],methods=["GET"])
 @login_required
 @registration_required
 @program_committee_only
 def preferences_view_get():
-	metadata = metadata_key.get()
+	metadata = keychain["metadata"].get()
 	if datetime.datetime.utcnow() < metadata.registration_deadline \
 		or datetime.datetime.utcnow() > metadata.submission_deadline:
 		return ("Review preferences can only be entered after the "
@@ -514,7 +514,7 @@ def preferences_view_get():
 			"deadline",403)
 	
 	user = lookup_user(users.get_current_user().user_id())
-	conflicts = conflict_key.get()
+	conflicts = keychain["conflict"].get()
 	
 	papers = Paper.query(Paper.author != user.key).fetch()
 	papers = [p for p in papers if not conflicts.is_conflict(user.id,
@@ -528,17 +528,13 @@ def preferences_view_get():
 
 	return render_template(
 		"review/preferences.html",
-		conference_name=metadata.name,
-		real_name=user.real_name,
-		hub_url=hub_url,
-		admin_panel_url=admin_panel_url,
 		papers=papers,
 		prefs=prefs,
 		max_preference=MAX_PREFERENCE + 1,
 		update_success=request.args.get("update") == "success"
 	)
 
-@app.route(preferences_url,methods=["POST"])
+@app.route(url_rule["preferences"],methods=["POST"])
 @login_required
 @registration_required
 @program_committee_only
@@ -559,7 +555,7 @@ def preferences_view_post():
 
 	sleep(1)
 	# hacky solution to prevent page from rendering before datastore update
-	return redirect(preferences_url + "?update=success")
+	return redirect(url_rule["preferences"] + "?update=success")
 
 @app.route(assign_url,methods=["GET"])
 @login_required
