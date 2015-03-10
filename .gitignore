@@ -2,4 +2,7 @@
 lib/
 *.aux
 *.log
+*.bbl
+*.blg
+*.out
 *.pdf
