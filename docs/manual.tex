@@ -21,7 +21,7 @@
 \usepackage{hyperref}
 \parindent 0pt
 
-\title{pCRP User Manual}
+\title{pCRP 1.0.0 User Manual}
 \author{Justin Lardinois}
 \date{}
 
@@ -29,10 +29,11 @@
 \maketitle
 
 \section{Introduction}
-	pCRP is a conference management app that runs on Google App Engine.
-	pCRP is inspired by Eddie Kohler's HotCRP \cite{kohler}, but easier
-	to set up and manage because there's no need to set up your own Linux
-	server, PHP runtime, and MySQL server.
+	pCRP is a web app for managing conference paper uploads and reviews.
+	pCRP is inspired by Eddie Kohler's HotCRP \cite{kohler}, but is easier
+	to set up and manage because it runs on Google App Engine, rather than
+	your own Linux server, PHP runtime, and MySQL server.
+
 \section{Setup}
 	You need Python 2.7.x (I recommend CPython) and the Google App Engine
 	SDK for Python \cite{gaesdk} installed on your local machine. You also
@@ -58,7 +59,23 @@
 	\\\\
 	From here, follow App Engine's documentation on app deployment
 	\cite{deploy}. After deploying, your installation of pCRP can
-	be accessed at \textit{application-identifer}.appspot.com.
+	be accessed at \textit{application-identifier}.appspot.com.
+
+\section{User Roles}
+	There are two types of roles in pCRP: administrator, and program
+	committee. By default, a user is not an administrator and not a member
+	of the program committee.
+	\\\\
+	The user that creates the pCRP installation will be made an
+	administrator by App Engine. Additional administrators can be added
+	on the \textbf{Permissions} tab of the App Engine Administration Console.
+	Administrators can access the in-app admin panel, which allows them to
+	manage program committee roles and change the conference name, deadlines,
+	and messages that appear on the home page and hub. Those messages are
+	\textbf{not} HTML escaped, so be careful.
+	\\\\
+	Program committee members can be assigned to review papers, and program
+	committee chairs assign reviews.
 
 \bibliographystyle{plain}
 \bibliography{manual}
