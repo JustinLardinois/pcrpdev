@@ -56,7 +56,7 @@
 			<a href="{{ url_rule["assign"] }}">assign reviews</a> soon so the
 			committee has ample time to review before the deadline.</p>
 		{% endif %}
-		{% if metadata.pc_chair and now < metadata.submission_deadline %}
+		{% if current_user.pc_chair and now < metadata.submission_deadline %}
 			<p>Program committee chairs: make sure to finalize
 			<a href="{{ url_rule["questions"] }}">review questions</a> before
 			the paper submission deadline.</p>
