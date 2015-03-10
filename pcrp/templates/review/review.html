@@ -33,6 +33,9 @@
 			{% endif %}
 			(<a href="{{ logout_url }}">log out</a>)
 		</nav>
+		{% if update_success %}
+			<p>Review Updated Successfully</p>
+		{% endif %}
 		<p>Title: {{ paper.title }}</p>
 		<p>Authors:</p>
 		<ul>

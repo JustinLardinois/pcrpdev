@@ -809,7 +809,8 @@ def review_view_get():
 					filename=filename,
 					paper_view_url=paper_view_url,
 					answers=answers,
-					zip=zip
+					zip=zip,
+					update_success=request.args.get("update") == "success"
 				)
 
 @app.route(review_url,methods=["POST"])
