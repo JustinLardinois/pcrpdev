@@ -46,9 +46,14 @@ from pcrp.util import *
 # variables that will be available in all templates
 @app.context_processor
 def inject_context():
+	google_user = users.get_current_user()
+	if google_user:
+		current_user = lookup_user(google_user.user_id())
+	else:
+		current_user = None
 	return dict(
 		admin        = users.is_current_user_admin(),
-		current_user = lookup_user(users.get_current_user().user_id()),
+		current_user = current_user,
 		logout_url   = users.create_logout_url(url_rule["home"]),
 		metadata     = keychain["metadata"].get(),
 		url_rule     = url_rule
