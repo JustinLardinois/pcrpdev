@@ -623,14 +623,14 @@ def assign_view_post():
 	sleep(1) # same hacky bullshit
 	return redirect(url_rule["assign"] + "?update=success")
 
-@app.route(questions_url,methods=["GET"])
+@app.route(url_rule["questions"],methods=["GET"])
 @login_required
 @registration_required
 @pc_chair_only
 def questions_view_get():
-	metadata = metadata_key.get()
+	metadata = keychain["metadata"].get()
 	user = lookup_user(users.get_current_user().user_id())
-	questions=review_question_list_key.get()
+	questions = keychain["review_question_list"].get()
 	
 	if datetime.datetime.utcnow() > metadata.submission_deadline:
 		return ("Review questions can only be edited before "
@@ -638,15 +638,11 @@ def questions_view_get():
 
 	return render_template(
 		"review/questions.html",
-		conference_name=metadata.name,
-		real_name=user.real_name,
-		hub_url=hub_url,
-		admin_panel_url=admin_panel_url,
-		questions=review_question_list_key.get().questions,
+		questions=keychain["review_question_list"].get().questions,
 		update_success=request.args.get("update") == "success"
 	)
 
-@app.route(questions_url,methods=["POST"])
+@app.route(url_rule["questions"],methods=["POST"])
 @login_required
 @registration_required
 @pc_chair_only
@@ -661,7 +657,7 @@ def questions_view_post():
 	review_questions = review_question_list_key.get()
 	review_questions.questions = questions
 	review_questions.put()
-	return redirect(questions_url + "?update=success")
+	return redirect(url_rule["questions"] + "?update=success")
 
 @app.route(review_url,methods=["GET"])
 @login_required

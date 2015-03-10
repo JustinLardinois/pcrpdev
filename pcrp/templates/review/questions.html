@@ -20,7 +20,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Review Questions — {{ conference_name }}</title>
+		<title>Review Questions — {{ metadata.name }}</title>
 		<meta charset="UTF-8">
 		<script type="text/javascript" src="/js/questions.js"
 			charset="UTF-8"></script>
@@ -32,12 +32,12 @@
 		</script>
 	</head>
 	<body>
-		<h1>Review Questions — {{ conference_name }}</h1>
+		<h1>Review Questions — {{ metadata.name }}</h1>
 		<nav>
-			Logged in as {{ real_name }}
-			(<a href="{{ hub_url }}">hub</a>)
+			Logged in as {{ current_user.real_name }}
+			(<a href="{{ url_rule["hub"] }}">hub</a>)
 			{% if admin %}
-				(<a href="{{ admin_panel_url }}">admin panel</a>)
+				(<a href="{{ url_rule["admin_panel"] }}">admin panel</a>)
 			{% endif %}
 			(<a href="{{ logout_url }}">log out</a>)
 		</nav>
