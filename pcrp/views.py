@@ -60,8 +60,6 @@ def inject_context():
 		url_rule     = url_rule
 		)
 
-# TODO: split these up into smaller files
-# TODO: find a cleaner way to pass variables to templates
 @app.route(url_rule["home"])
 def home_view():
 	user = users.get_current_user()
