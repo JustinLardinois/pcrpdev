@@ -23,7 +23,6 @@ from pcrp.models import *
 keychain = \
 {
 	"metadata"             : ndb.Key(Conference,"Metadata"),
-	"users"                : ndb.Key(ConferenceUser,"Users"),
 	"conflict"             : ndb.Key(ConflictSet,"Conflicts"),
 	"papers"               : ndb.Key(Paper,"Papers"),
 	"review_question_list" : ndb.Key(ReviewQuestionList,"Review Questions")

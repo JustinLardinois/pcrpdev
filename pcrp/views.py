@@ -132,7 +132,6 @@ def user_reg_view_post():
 		and (not email_invalid) and (not affiliation_blank)
 		and (not email_in_use)):
 		pcrp_user = ConferenceUser()
-		pcrp_user.parent = keychain["users"]
 		pcrp_user.nickname = google_user.nickname()
 		pcrp_user.email = email
 		pcrp_user.real_name = real_name
