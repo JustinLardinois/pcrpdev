@@ -33,7 +33,7 @@ def login_required(f):
 	@wraps(f)
 	def decorated_function(*args, **kwargs):
 		if not users.get_current_user():
-			return redirect(home_url)
+			return redirect(url_rule["home"])
 		return f(*args, **kwargs)
 	return decorated_function
 
@@ -41,7 +41,7 @@ def registration_required(f):
 	@wraps(f)
 	def decorated_function(*args, **kwargs):
 		if not is_registered_user(users.get_current_user().user_id()):
-			return redirect(user_reg_url)
+			return redirect(url_rule["user_reg"])
 		return f(*args, **kwargs)
 	return decorated_function
 
