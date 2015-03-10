@@ -129,5 +129,19 @@
 				</p>
 			{% endif %}
 		{% endif %}
+		{% if after_review_deadline %}
+			<h2>Reviews</h2>
+			{% for r in reviews %}
+				<h3>Review by <a href="mailto:{{ r.reviewer.get().email}}">
+					{{ r.reviewer.get().real_name }}</a>,
+					{{ r.reviewer.get().affiliation }}</h3>
+				<dl>
+					{% for (q,a) in zip(questions,r.answers) %}
+						<dt>{{ q.question }}</dt>
+						<dd>{{ a }}</dd>
+					{% endfor %}
+				</dl>
+			{% endfor %}
+		{% endif %}
 	</body>
 </html>

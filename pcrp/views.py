@@ -384,6 +384,7 @@ def paper_view_get():
 
 	paper = None
 	filename = None
+	reviews = None
 	id = request.args.get("id")
 	if id == None or id == "":
 		return ("No paper ID specified",400)
@@ -400,6 +401,7 @@ def paper_view_get():
 				title = paper.title
 				abstract = paper.abstract
 				additional_authors = paper.additional_authors
+				reviews = [r.get() for r in paper.reviews]
 				if paper.file:
 					filename = blobstore.BlobInfo.get(paper.file).filename
 			else: return ("You do not own this paper",403)
@@ -435,7 +437,12 @@ def paper_view_get():
 		admin=users.is_current_user_admin(),
 		upload_url=upload_url,
 		update_success=request.args.get("update") == "success",
-		not_pdf=request.args.get("ispdf") == "false"
+		not_pdf=request.args.get("ispdf") == "false",
+		after_review_deadline=metadata.review_deadline < \
+			datetime.datetime.utcnow(),
+		reviews=reviews,
+		questions=review_question_list_key.get().questions,
+		zip=zip
 	)
 
 @app.route(paper_url,methods=["POST"])
