@@ -91,5 +91,20 @@
 				{% endif %}
 			</ul>
 		</div>
+		{% if not before_submission_deadline and before_review_deadline
+			and on_pc %}
+			<div id="your_reviews">
+				<h2>Your Reviews</h2>
+				<ul>
+					{% for paper in reviews %}
+						<li><a href="{{ review_url + "?id="
+							+ paper.key.urlsafe() }}">{{ paper.title}}</a></li>
+					{% endfor %}
+					{% if reviews|length == 0 %}
+						<li>You have not been assigned any reviews yet</li>
+					{% endif %}
+				</ul>
+			</div>
+		{% endif %}
 	</body>
 </html>

@@ -337,7 +337,12 @@ def hub_view():
 		metadata.registration_deadline > datetime.datetime.utcnow()
 	before_submission_deadline = \
 		metadata.submission_deadline > datetime.datetime.utcnow()
+	before_review_deadline = \
+		metadata.review_deadline > datetime.datetime.utcnow()
 	your_papers = Paper.query(Paper.author == user.key).fetch()
+	
+	papers = Paper.query().fetch()
+	reviews = [p for p in papers if user.key in p.reviewers]
 	
 	return render_template(
 		"hub.html",
@@ -353,6 +358,7 @@ def hub_view():
 		program_committee=program_committee,
 		before_registration_deadline=before_registration_deadline,
 		before_submission_deadline=before_submission_deadline,
+		before_review_deadline=before_review_deadline,
 		paper_url=paper_url,
 		your_papers=your_papers,
 		conflicts_url=conflicts_url,
@@ -361,7 +367,9 @@ def hub_view():
 		hub_message=metadata.hub_message,
 		on_pc=user.program_committee,
 		pc_chair=user.pc_chair,
-		questions_url=questions_url
+		questions_url=questions_url,
+		reviews=reviews,
+		review_url=review_url
 	)
 
 @app.route(paper_url,methods=["GET"])
