@@ -59,7 +59,7 @@ def inject_context():
 @app.route(home_url)
 def home_view():
 	user = users.get_current_user()
-	if user: return redirect(user_reg_url)
+	if user: return redirect(url_rule["user_reg"])
 	
 	return render_template(
 		"index.html",
