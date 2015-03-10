@@ -557,33 +557,27 @@ def preferences_view_post():
 	# hacky solution to prevent page from rendering before datastore update
 	return redirect(url_rule["preferences"] + "?update=success")
 
-@app.route(assign_url,methods=["GET"])
+@app.route(url_rule["assign"],methods=["GET"])
 @login_required
 @registration_required
 @pc_chair_only
 def assign_view_get():
-	metadata = metadata_key.get()
+	metadata = keychain["metadata"].get()
 	if datetime.datetime.utcnow() < metadata.submission_deadline \
 		or metadata.review_deadline < datetime.datetime.utcnow():
 		return ("Reviews can only be assigned after the submission deadline "
 			"and before the review deadline",403)
 	
-	user = lookup_user(users.get_current_user().user_id())
-	
 	return render_template(
 		"review/assign.html",
-		conference_name=metadata.name,
-		real_name=user.real_name,
-		hub_url=hub_url,
-		admin_panel_url=admin_panel_url,
 		papers=Paper.query().fetch(),
 		reviewers=ConferenceUser.query(
 			ConferenceUser.program_committee == True).fetch(),
-		conflicts=conflict_key.get(),
+		conflicts=keychain["conflict"].get(),
 		update_success=request.args.get("update") == "success"
 	)
 
-@app.route(assign_url,methods=["POST"])
+@app.route(url_rule["assign"],methods=["POST"])
 @login_required
 @registration_required
 @pc_chair_only
@@ -603,7 +597,7 @@ def assign_view_post():
 		except ValueError:
 			return redirect(assign_url)
 		
-		conflicts = conflict_key.get()
+		conflicts = keychain["conflict"].get()
 		papers = Paper.query().fetch()
 		for p in papers:
 			p.reviewers = [] # clear old assignments to prevent weirdness
@@ -627,7 +621,7 @@ def assign_view_post():
 						break
 		ndb.put_multi(papers)
 	sleep(1) # same hacky bullshit
-	return redirect(assign_url + "?update=success")
+	return redirect(url_rule["assign"] + "?update=success")
 
 @app.route(questions_url,methods=["GET"])
 @login_required
