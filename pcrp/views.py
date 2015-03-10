@@ -252,7 +252,7 @@ def admin_panel_metadata_view_post():
 @registration_required
 @admin_only
 def admin_panel_users_view_get():
-	metadata=metadata_key.get()
+	metadata=keychain["metadata"].get()
 	user = lookup_user(users.get_current_user().user_id())
 	conference_users = ConferenceUser.query().fetch()
 	return render_template(
@@ -417,7 +417,8 @@ def paper_upload_view():
 	if not is_pdf(blob_stream):
 		blob_stream.close()
 		blobstore.delete(blob_key)
-		return redirect(paper_url + "?id=" + paper_key + "&ispdf=false")
+		return redirect(url_rule["paper"] + "?id=" + paper_key
+			+ "&ispdf=false")
 	blob_stream.close()
 
 	# sanity check: file is associated with a paper owned by the current user
@@ -540,7 +541,7 @@ def preferences_view_get():
 @program_committee_only
 def preferences_view_post():
 	user = lookup_user(users.get_current_user().user_id())
-	conflicts = conflict_key.get()
+	conflicts = keychain["conflict"].get()
 	papers = Paper.query(Paper.author != user.key).fetch()
 	papers = [p for p in papers if not conflicts.is_conflict(user.id,
 		p.author.get().id)]
@@ -595,7 +596,7 @@ def assign_view_post():
 		try:
 			reviewer_count = int(request.form["reviewer_count"])
 		except ValueError:
-			return redirect(assign_url)
+			return redirect(url_rule["assign"])
 		
 		conflicts = keychain["conflict"].get()
 		papers = Paper.query().fetch()
@@ -654,7 +655,7 @@ def questions_view_post():
 			question = ReviewQuestion()
 			question.question = q
 			questions.append(question)
-	review_questions = review_question_list_key.get()
+	review_questions = keychain["review_question_list"].get()
 	review_questions.questions = questions
 	review_questions.put()
 	return redirect(url_rule["questions"] + "?update=success")
@@ -695,7 +696,7 @@ def review_view_get():
 						break
 				return render_template(
 					"review/review.html",
-					questions=review_question_list_key.get().questions,
+					questions=keychain["review_question_list"].get().questions,
 					paper=paper,
 					filename=filename,
 					answers=answers,
@@ -732,7 +733,7 @@ def review_view_post():
 		review = Review()
 		review.reviewer = user.key
 	review.answers = map(lambda x: x.strip(),request.form.getlist("answer"))
-	question_count = len(review_question_list_key.get().questions)
+	question_count = len(keychain["review_question_list"].get().questions)
 	if len(review.answers) < question_count:
 		for n in range(question_count - len(review.answers)):
 			review.answers.append("")
