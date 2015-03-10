@@ -246,7 +246,7 @@ def admin_panel_metadata_view_post():
 	
 	return redirect(url_rule["admin_panel_metadata"] + arg_string)
 
-@app.route(admin_panel_users_url,methods=["GET"])
+@app.route(url_rule["admin_panel_users"],methods=["GET"])
 @login_required
 @registration_required
 @admin_only
@@ -256,15 +256,11 @@ def admin_panel_users_view_get():
 	conference_users = ConferenceUser.query().fetch()
 	return render_template(
 		"admin_panel/users.html",
-		conference_name=metadata.name,
-		admin_panel_url=admin_panel_url,
-		hub_url=hub_url,
-		real_name=user.real_name,
 		conference_users=conference_users,
 		update_success=request.args.get("update") == "success"
 		)
 
-@app.route(admin_panel_users_url,methods=["POST"])
+@app.route(url_rule["admin_panel_users"],methods=["POST"])
 @login_required
 @registration_required
 @admin_only

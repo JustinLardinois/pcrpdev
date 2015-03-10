@@ -20,22 +20,21 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Users — Admin Panel — {{ conference_name }}</title>
+		<title>Edit User Roles — Admin Panel — {{ metadata.name }}</title>
 		<meta charset="UTF-8">
 	</head>
 	<body>
-		<h1>Users — Admin Panel — {{ conference_name }}</h1>
+		<h1>Edit User Roles — Admin Panel — {{ metadata.name }}</h1>
 		<nav>
-			Logged in as {{ real_name }}
-			(<a href="{{ hub_url }}">hub</a>)
-			(<a href="{{ admin_panel_url }}">admin panel</a>)
+			Logged in as {{ current_user.real_name }}
+			(<a href="{{ url_rule["hub"] }}">hub</a>)
+			(<a href="{{ url_rule["admin_panel"] }}">admin panel</a>)
 			(<a href="{{ logout_url }}">log out</a>)
 		</nav>
-		<p>Edit User Roles</p>
 		<p>Administrator roles can only be edited on the App Engine
 			Admin Console.</p>
 		{% if update_success %}
-		<p>Users Updated Successfully</p>
+			<p>User Roles Updated Successfully</p>
 		{% endif %}
 		<form accept-charset="UTF-8" action="{{ request.path }}"
 			autocomplete="off" method="post">
