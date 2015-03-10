@@ -399,7 +399,7 @@ def paper_view_post():
 	return redirect(url_rule["paper"] + "?id=" + paper.key.urlsafe()
 		+ "&update=success")
 
-@app.route(paper_upload_url,methods=["POST"])
+@app.route(url_rule["paper_upload"],methods=["POST"])
 @login_required
 @registration_required
 def paper_upload_view():
