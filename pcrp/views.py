@@ -348,6 +348,7 @@ def paper_view_get():
 		id=id,
 		additional_authors=additional_authors,
 		filename=filename,
+		upload_url=upload_url,
 		update_success=request.args.get("update") == "success",
 		not_pdf=request.args.get("ispdf") == "false",
 		reviews=reviews,

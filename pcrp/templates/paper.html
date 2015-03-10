@@ -112,8 +112,8 @@
 							will be discarded)</span>
 						{% if filename %}
 							<p>Currently stored file:
-								<a href="{{ paper_view_url + "?id=" + id }}"
-									target="_blank">
+								<a href="{{ url_rule["paper_view"]
+									+ "?id=" + id }}" target="_blank">
 									{{- filename -}}
 								</a>
 							</p>
@@ -124,7 +124,7 @@
 				</form>
 			{% elif filename %}
 				<p>Uploaded file:
-					<a href="{{ paper_view_url + "?id=" + id }}"
+					<a href="{{ url_rule["paper_view"] + "?id=" + id }}"
 						target="_blank">
 									{{- filename -}}
 					</a>
