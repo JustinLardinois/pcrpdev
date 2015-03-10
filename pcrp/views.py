@@ -433,7 +433,7 @@ def paper_upload_view():
 	return redirect(url_rule["paper"] + "?id=" + paper_key
 		+ "&update=success")
 
-@app.route(paper_view_url)
+@app.route(url_rule["paper_view"])
 @login_required
 @registration_required
 def paper_view_view():
