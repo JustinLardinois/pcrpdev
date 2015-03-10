@@ -1,5 +1,5 @@
 % -*- coding: utf-8 -*-
-% Copyright 2014â€“2015 Justin Lardinois
+% Copyright 2014–2015 Justin Lardinois
 %
 % Licensed under the Apache License, Version 2.0 (the "License");
 % you may not use this file except in compliance with the License.
@@ -13,27 +13,11 @@
 % See the License for the specific language governing permissions and
 % limitations under the License.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% docs/manual.tex - a component of pCRP
-% instructions on how to use pCRP
+% docs/manual.bib - a component of pCRP
+% references for manual.tex
 
-\documentclass[12pt]{article}
-\usepackage{fullpage}
-\usepackage{hyperref}
-\parindent 0pt
-
-\title{pCRP User Manual}
-\author{Justin Lardinois}
-\date{}
-
-\begin{document}
-\maketitle
-
-\section{Introduction}
-	pCRP is a conference management app that runs on Google App Engine.
-	pCRP is inspired by Eddie Kohler's HotCRP, \cite{kohler} but easier
-	to set up and manage because there's no need to set up your own Linux
-	server, PHP runtime, and MySQL server.
-
-\bibliographystyle{plain}
-\bibliography{manual}
-\end{document}
+@misc{kohler,
+	author = {Eddie Kohler},
+	title  = {Hot{C}{R}{P}},
+	note   = {\url{http://www.read.seas.harvard.edu/~kohler/hotcrp/}},
+}

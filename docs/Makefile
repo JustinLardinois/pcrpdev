@@ -15,5 +15,8 @@
 # docs/Makefile - a component of pCRP
 # builds PDFs of .tex files in this directory
 
-manual.pdf: manual.tex
-	pdflatex $<
+manual.pdf: manual.tex manual.bib
+	pdflatex manual.tex
+	bibtex manual
+	pdflatex manual.tex
+	pdflatex manual.tex
