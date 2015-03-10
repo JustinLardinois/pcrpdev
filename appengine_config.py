@@ -35,7 +35,7 @@ end_of_time = datetime.datetime(datetime.MAXYEAR,12,12,23,59,59,0)
 
 # initializes conference metadata so the app initially has something
 # to work with
-conference = metadata_key.get()
+conference = keychain["metadata"].get()
 if not conference:
 	conference = Conference()
 	conference.key = keychain["metadata"]
@@ -47,13 +47,13 @@ if not conference:
 	conference.hub_messagge = ""
 	conference.put()
 
-conflicts = conflict_key.get()
+conflicts = keychain["conflict"].get()
 if not conflicts:
 	conflicts = ConflictSet()
-	conflicts.key = conflict_key
+	conflicts.key = keychain["conflict"]
 	conflicts.put()
 
-review_questions = review_question_list_key.get()
+review_questions = keychain["review_question_list"].get()
 if not review_questions:
 	review_questions = ReviewQuestionList()
 	review_questions.key = keychain["review_question_list"]
