@@ -15,7 +15,7 @@
 # app.yaml - a component of pCRP
 
 application: pcrpdev
-version: 0
+version: 1.0.0
 runtime: python27
 api_version: 1
 threadsafe: yes
