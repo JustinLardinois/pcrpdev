@@ -75,11 +75,13 @@ class Paper(ndb.Model):
 	file = ndb.BlobKeyProperty()
 	preferences = ndb.PickleProperty()
 	reviewers = ndb.KeyProperty(repeated=True)
+	reviews = ndb.KeyProperty(repeated=True)
 	
 	def __init__(self):
 		ndb.Model.__init__(self)
 		self.preferences = {}
 		self.reviewers = []
+		self.reviews = []
 
 	def get_preference(self,user_id):
 		try: 
@@ -92,6 +94,10 @@ class Paper(ndb.Model):
 
 MAX_PREFERENCE = 10
 # for paper review preferences; do not change programmatically
+
+class Review(ndb.Model):
+	reviewer = ndb.KeyProperty()
+	answers = ndb.StringProperty(repeated=True)
 
 class ReviewQuestion(ndb.Model):
 	question = ndb.StringProperty()
