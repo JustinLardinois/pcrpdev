@@ -47,10 +47,11 @@ from pcrp.util import *
 @app.context_processor
 def inject_context():
 	return dict(
-		admin      = users.is_current_user_admin(),
-		logout_url = users.create_logout_url(url_rule["home"]),
-		metadata   = keychain["metadata"].get(),
-		url_rule   = url_rule
+		admin        = users.is_current_user_admin(),
+		current_user = lookup_user(users.get_current_user().user_id()),
+		logout_url   = users.create_logout_url(url_rule["home"]),
+		metadata     = keychain["metadata"].get(),
+		url_rule     = url_rule
 		)
 
 # TODO: split these up into smaller files
