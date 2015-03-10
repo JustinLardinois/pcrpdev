@@ -282,20 +282,14 @@ def admin_panel_users_view_post():
 	sleep(1) # just in case it needs more time to update
 	return redirect(url_rule["admin_panel_users"] + "?update=success")
 
-@app.route(hub_url)
+@app.route(url_rule["hub"])
 @login_required
 @registration_required
 def hub_view():
-	metadata = metadata_key.get()
-	user = lookup_user(users.get_current_user().user_id())
 	program_committee = ConferenceUser.query(
 		ConferenceUser.program_committee == True).fetch()
-	before_registration_deadline = \
-		metadata.registration_deadline > datetime.datetime.utcnow()
-	before_submission_deadline = \
-		metadata.submission_deadline > datetime.datetime.utcnow()
-	before_review_deadline = \
-		metadata.review_deadline > datetime.datetime.utcnow()
+
+	user = lookup_user(users.get_current_user().user_id())
 	your_papers = Paper.query(Paper.author == user.key).fetch()
 	
 	papers = Paper.query().fetch()
@@ -303,28 +297,8 @@ def hub_view():
 	
 	return render_template(
 		"hub.html",
-		conference_name=metadata.name,
-		registration_deadline=metadata.registration_deadline,
-		submission_deadline=metadata.submission_deadline,
-		review_deadline=metadata.review_deadline,
-		real_name=user.real_name,
-		user_id = user.id,
-		admin_panel_url=admin_panel_url,
-		program_committee=program_committee,
-		before_registration_deadline=before_registration_deadline,
-		before_submission_deadline=before_submission_deadline,
-		before_review_deadline=before_review_deadline,
-		paper_url=paper_url,
 		your_papers=your_papers,
-		conflicts_url=conflicts_url,
-		preferences_url=preferences_url,
-		assign_url=assign_url,
-		hub_message=metadata.hub_message,
-		on_pc=user.program_committee,
-		pc_chair=user.pc_chair,
-		questions_url=questions_url,
-		reviews=reviews,
-		review_url=review_url
+		reviews=reviews
 	)
 
 @app.route(paper_url,methods=["GET"])

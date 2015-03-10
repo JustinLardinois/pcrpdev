@@ -20,49 +20,54 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Hub — {{ conference_name }}</title>
+		<title>Hub — {{ metadata.name }}</title>
 		<meta charset="UTF-8">
 	</head>
 	<body>
-		<h1>Hub — {{ conference_name }}</h1>
+		<h1>Hub — {{ metadata.name }}</h1>
 		<nav>
-			Logged in as {{ real_name }}
-			(<a href="{{ hub_url }}">hub</a>)
+			Logged in as {{ current_user.real_name }}
+			(<a href="{{ url_rule["hub"] }}">hub</a>)
 			{% if admin %}
-				(<a href="{{ admin_panel_url }}">admin panel</a>)
+				(<a href="{{ url_rule["admin_panel"] }}">admin panel</a>)
 			{% endif %}
 			(<a href="{{ logout_url }}">log out</a>)
 		</nav>
 		<div id="deadlines">
-			<p>Paper registration deadline: {{ registration_deadline }} (UTC)</p>
-			<p>Paper submission deadline: {{ submission_deadline }} (UTC)</p>
-			<p>Paper review deadline: {{ review_deadline }} (UTC)</p>
+			<p>Paper registration deadline:
+				{{ metadata.registration_deadline }} (UTC)</p>
+			<p>Paper submission deadline:
+				{{ metadata.submission_deadline }} (UTC)</p>
+			<p>Paper review deadline:
+				{{ metadata.review_deadline }} (UTC)</p>
 		</div>
 		<p>Make sure to register your
-			<a href="{{ conflicts_url }}">conflicts of interest</a>.</p>
-		{% if not before_registration_deadline
-			and before_submission_deadline and on_pc %}
+			<a href="{{ url_rule["conflicts"] }}">
+				conflicts of interest</a>.</p>
+		{% if now > metadata.registration_deadline
+			and now < metadata.submission_deadline
+			and current_user.program_committee %}
 			<p>Program committee members: make sure to indicate your
-			<a href="{{ preferences_url }}">review preferences</a> before
-			the paper submission deadline.</p>
+			<a href="{{ url_rule["preferences"] }}">review preferences</a>
+			before the paper submission deadline.</p>
 		{% endif %}
-		{% if pc_chair and not before_submission_deadline %}
+		{% if current_user.pc_chair and now > metadata.submission_deadline %}
 			<p>Program committee chairs: make sure to
-			<a href="{{ assign_url }}">assign reviews</a> soon so the
+			<a href="{{ url_rule["assign"] }}">assign reviews</a> soon so the
 			committee has ample time to review before the deadline.</p>
 		{% endif %}
-		{% if pc_chair and before_submission_deadline %}
+		{% if metadata.pc_chair and now < metadata.submission_deadline %}
 			<p>Program committee chairs: make sure to finalize
-			<a href="{{ questions_url }}">review questions</a> before
+			<a href="{{ url_rule["questions"] }}">review questions</a> before
 			the paper submission deadline.</p>
 		{% endif %}
-		<p>{{ hub_message|safe }}</p>
+		<p>{{ metadata.hub_message|safe }}</p>
 		<div id="program_committee">
 			<h2>Program Committee</h2>
 			<ul>
 				{% for member in program_committee %}
 					<li>
-						{% if member.id == user_id %}
+						{% if member.id == current_user.id %}
 							<strong>You</strong>
 						{% else %}
 							<a href="mailto:{{ member.email }}">{{
@@ -77,12 +82,12 @@
 		</div>
 		<div id="your_papers">
 			<h2>Your Papers</h2>
-			{% if before_registration_deadline %}
-				<a href="{{ paper_url + "?id=new" }}">New Paper</a>
+			{% if now < metadata.registration_deadline %}
+				<a href="{{ url_rule["paper"] + "?id=new" }}">New Paper</a>
 			{% endif %}
 			<ul>
 				{% for paper in your_papers %}
-					<li><a href="{{ paper_url + "?id="
+					<li><a href="{{ url_rule["paper"] + "?id="
 						+ paper.key.urlsafe() }}">{{ paper.title }}</a></li>
 				{% endfor %}
 				{% if (your_papers|length) == 0 %}
@@ -91,13 +96,14 @@
 				{% endif %}
 			</ul>
 		</div>
-		{% if not before_submission_deadline and before_review_deadline
-			and on_pc %}
+		{% if now > metadata.submission_deadline
+			and now < metadata.submission_deadline
+			and current_user.program_committee %}
 			<div id="your_reviews">
 				<h2>Your Reviews</h2>
 				<ul>
 					{% for paper in reviews %}
-						<li><a href="{{ review_url + "?id="
+						<li><a href="{{ url_rule["review"] + "?id="
 							+ paper.key.urlsafe() }}">{{ paper.title}}</a></li>
 					{% endfor %}
 					{% if reviews|length == 0 %}
