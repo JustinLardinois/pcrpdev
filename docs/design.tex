@@ -1,4 +1,3 @@
-% -*- coding: utf-8 -*-
 % Copyright 2014–2015 Justin Lardinois
 %
 % Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,4 +27,29 @@
 \begin{document}
 \maketitle
 
+\section{Architecture and Frameworks}
+	Google App Engine does not support versions of Python newer than 2.7, so
+	pCRP was written in Python 2.7. I did my best to avoid using constructs
+	that aren't forwards compatible with Python 3. However, the Web Server
+	Gateway Interface (WSGI) specification is not exactly compatible with
+	Python 3 anyways \cite{python3}, so it's likely that my code won't be
+	the main problem if there's ever an attempt to port pCRP to Python 3.
+	\\\\
+	At Professor Miller's suggestion, I built pCRP on the Flask
+	microframework. Though Google App Engine will work with almost any
+	framework that uses WSGI, only webapp and webapp2 are built in, and
+	the official documentation and tutorials, and most other published
+	materials about App Engine only cover those frameworks.
+	\\\\
+	Though Flask has been around for almost five years, it hasn't quite
+	caught on in the App Engine realm. I was able to find exactly one
+	tutorial that was specifically about the combination of App Engine
+	and Flask \cite{souza}, and it was barely helpful. The Flask API
+	documentation \cite{flask} is also less than stellar. I found my
+	way through Flask through a combination of reading Stack Overflow
+	and trial-and-error.
+	
+
+\bibliographystyle{plain}
+\bibliography{design}
 \end{document}
