@@ -27,9 +27,7 @@ import datetime
 
 from google.appengine.ext import ndb
 
-from pcrp.keys import conflict_key
-from pcrp.keys import metadata_key
-from pcrp.keys import review_question_list_key
+from pcrp.keys import *
 from pcrp.models import Conference
 from pcrp.models import ConflictSet
 from pcrp.models import ReviewQuestionList
@@ -42,7 +40,7 @@ end_of_time = datetime.datetime(datetime.MAXYEAR,12,12,23,59,59,0)
 conference = metadata_key.get()
 if not conference:
 	conference = Conference()
-	conference.key = metadata_key
+	conference.key = keychain["metadata"]
 	conference.name = "undefinedCon 2014"
 	conference.registration_deadline = end_of_time
 	conference.submission_deadline = end_of_time
@@ -60,6 +58,6 @@ if not conflicts:
 review_questions = review_question_list_key.get()
 if not review_questions:
 	review_questions = ReviewQuestionList()
-	review_questions.key = review_question_list_key
+	review_questions.key = keychain["review_question_list"]
 	review_questions.questions = []
 	review_questions.put()
