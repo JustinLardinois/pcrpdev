@@ -162,22 +162,12 @@ def user_reg_view_post():
 			affiliation=affiliation
 			)
 
-@app.route(admin_panel_url)
+@app.route(url_rule["admin_panel"])
 @login_required
 @registration_required
 @admin_only
 def admin_panel_view():
-	metadata = metadata_key.get()
-	user = lookup_user(users.get_current_user().user_id())
-	return render_template(
-		"admin_panel/index.html",
-		conference_name=metadata.name,
-		admin_panel_url=admin_panel_url,
-		admin_panel_metadata_url=admin_panel_metadata_url,
-		admin_panel_users_url=admin_panel_users_url,
-		hub_url=hub_url,
-		real_name=user.real_name
-		)
+	return render_template("admin_panel/index.html")
 
 @app.route(admin_panel_metadata_url,methods=["GET"])
 @login_required

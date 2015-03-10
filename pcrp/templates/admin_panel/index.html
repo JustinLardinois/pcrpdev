@@ -20,21 +20,21 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Admin Panel — {{ conference_name }}</title>
+		<title>Admin Panel — {{ metadata.name }}</title>
 		<meta charset="UTF-8">
 	</head>
 	<body>
-		<h1>Admin Panel — {{ conference_name }}</h1>
+		<h1>Admin Panel — {{ metadata.name }}</h1>
 		<nav>
-			Logged in as {{ real_name }}
-			(<a href="{{ hub_url }}">hub</a>)
-			(<a href="{{ admin_panel_url }}">admin panel</a>)
+			Logged in as {{ current_user.real_name }}
+			(<a href="{{ url_rule["hub"] }}">hub</a>)
+			(<a href="{{ url_rule["admin_panel"] }}">admin panel</a>)
 			(<a href="{{ logout_url }}">log out</a>)
 		</nav>
 		<ul>
-			<li><a href="{{ admin_panel_metadata_url }}">Conference
+			<li><a href="{{ url_rule["admin_panel_metadata"] }}">Conference
 				Metadata</a></li>
-			<li><a href="{{ admin_panel_users_url }}">Users</a></li>
+			<li><a href="{{ url_rule["admin_panel_users"] }}">Users</a></li>
 		</ul>
 	</body>
 </html>
