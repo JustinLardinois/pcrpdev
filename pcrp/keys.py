@@ -24,6 +24,5 @@ keychain = \
 {
 	"metadata"             : ndb.Key(Conference,"Metadata"),
 	"conflict"             : ndb.Key(ConflictSet,"Conflicts"),
-	"papers"               : ndb.Key(Paper,"Papers"),
 	"review_question_list" : ndb.Key(ReviewQuestionList,"Review Questions")
 }

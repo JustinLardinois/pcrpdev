@@ -368,7 +368,6 @@ def paper_view_post():
 			return redirect(url_rule["paper"] + "?id=new")
 			# delegate errors to GET view
 		paper = Paper()
-		paper.parent = keychain["papers"]
 		paper.author = user.key
 		paper.file = None
 	else:
