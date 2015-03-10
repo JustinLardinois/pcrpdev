@@ -30,15 +30,35 @@
 
 \section{Introduction}
 	pCRP is a conference management app that runs on Google App Engine.
-	pCRP is inspired by Eddie Kohler's HotCRP, \cite{kohler} but easier
+	pCRP is inspired by Eddie Kohler's HotCRP \cite{kohler}, but easier
 	to set up and manage because there's no need to set up your own Linux
 	server, PHP runtime, and MySQL server.
 \section{Setup}
 	You need Python 2.7.x (I recommend CPython) and the Google App Engine
 	SDK for Python \cite{gaesdk} installed on your local machine. You also
-	need pip, unless you prefer to install the dependencies manually. pip
+	need pip, unless you prefer to install the dependencies by hand. pip
 	is included with Python 2.7.9; you'll probably have to install it
 	yourself if you have an older version.
+	\\\\
+	Clone the pcrpdev repository from
+	\url{https://bitbucket.org/JustinLardinois/pcrpdev/}, then run
+	\texttt{deps.py} in the root of the repository to install the
+	necessary libraries.
+	\\\\
+	Now navigate to the Administration Console at
+	\url{http://appengine.google.com/} and click \textbf{Create Application}.
+	Under \textbf{Authentication Options (Advanced)}, \textit{make sure}
+	to select \textbf{Open to all Google Accounts users (default)}.
+	\textbf{Restricted to the following Google Apps domain} works,
+	but only makes sense if all of your conference attendees all use
+	the same Google Apps domain (which is unlikely).
+	\textbf{Open to all users with an OpenID Provider} is untested,
+	and will probably break the app; pCRP was not designed to
+	support OpenID.
+	\\\\
+	From here, follow App Engine's documentation on app deployment
+	\cite{deploy}. After deploying, your installation of pCRP can
+	be accessed at \textit{application-identifer}.appspot.com.
 
 \bibliographystyle{plain}
 \bibliography{manual}
