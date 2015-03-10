@@ -18,7 +18,6 @@
 
 from collections import defaultdict
 import datetime
-from xml.sax.saxutils import escape
 
 from pcrp.models import ConferenceUser
 
