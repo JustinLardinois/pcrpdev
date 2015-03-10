@@ -56,14 +56,26 @@
 		<form accept-charset="UTF-8" action="{{ request.path }}"
 			autocomplete="off" method="post">
 			<ul>
-				{% for q in questions %}
-					<li>
-						<label>
-							<span>{{ q.question }}</span>
-							<input type="text" name="answer">
-						</label>
-					</li>
-				{% endfor %}
+				{% if answers %}
+					{% for (q,a) in zip(questions,answers) %}
+						<li>
+							<label>
+								<span>{{ q.question }}</span>
+								<input type="text" name="answer"
+									value="{{ a }}">
+							</label>
+						</li>
+					{% endfor %}					
+				{% else %}
+					{% for q in questions %}
+						<li>
+							<label>
+								<span>{{ q.question }}</span>
+								<input type="text" name="answer">
+							</label>
+						</li>
+					{% endfor %}
+				{% endif %}
 			</ul>
 			<input type="hidden" name="id" value="{{ paper.key.urlsafe() }}">
 			<button type="submit">Update Review</button>

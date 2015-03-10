@@ -790,6 +790,12 @@ def review_view_get():
 				filename = None
 				if paper.file:
 					filename = blobstore.BlobInfo.get(paper.file).filename
+				
+				answers = None
+				for r in paper.reviews:
+					if r.get().reviewer == user.key:
+						answers = r.get().answers
+						break
 				return render_template(
 					"review/review.html",
 					conference_name=metadata.name,
@@ -801,7 +807,9 @@ def review_view_get():
 					questions=review_question_list_key.get().questions,
 					paper=paper,
 					filename=filename,
-					paper_view_url=paper_view_url
+					paper_view_url=paper_view_url,
+					answers=answers,
+					zip=zip
 				)
 
 @app.route(review_url,methods=["POST"])
@@ -833,6 +841,10 @@ def review_view_post():
 		review = Review()
 		review.reviewer = user.key
 	review.answers = map(lambda x: x.strip(),request.form.getlist("answer"))
+	question_count = len(review_question_list_key.get().questions)
+	if len(review.answers) < question_count:
+		for n in range(question_count - len(review.answers)):
+			review.answers.append("")
 	key = review.put()
 	if not key in paper.reviews:
 		paper.reviews.append(key)
