@@ -56,6 +56,7 @@ def inject_context():
 		current_user = current_user,
 		logout_url   = users.create_logout_url(url_rule["home"]),
 		metadata     = keychain["metadata"].get(),
+		now          = datetime.datetime.utcnow(),
 		url_rule     = url_rule
 		)
 
