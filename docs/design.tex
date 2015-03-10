@@ -48,7 +48,12 @@
 	documentation \cite{flask} is also less than stellar. I found my
 	way through Flask through a combination of reading Stack Overflow
 	and trial-and-error.
-	
+	\\\\
+	Flask uses Jinja2 by default for templating, so I used Jinja2. All
+	other dependencies with the exception of validate{\_}email are required
+	by Flask. I had to incorporate validate{\_}email because App Engine's
+	built in \texttt{is{\_}email{\_}valid} function returns \texttt{True} as
+	long as the passed string is not \texttt{None} \cite{email}.
 
 \bibliographystyle{plain}
 \bibliography{design}
