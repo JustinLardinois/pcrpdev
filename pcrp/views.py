@@ -803,3 +803,38 @@ def review_view_get():
 					filename=filename,
 					paper_view_url=paper_view_url
 				)
+
+@app.route(review_url,methods=["POST"])
+@login_required
+@registration_required
+@program_committee_only
+def review_view_post():
+	metadata = metadata_key.get()
+	user = lookup_user(users.get_current_user().user_id())
+	
+	if metadata.submission_deadline > datetime.datetime.utcnow() \
+		or metadata.review_deadline < datetime.datetime.utcnow():
+		return redirect(review_url)
+	id = request.form["id"]
+	if not id or id.strip() == "":
+		return redirect(review_url)
+	id = id.strip()
+	paper = ndb.Key(urlsafe=id).get()
+	if not paper or not (user.key in paper.reviewers):
+		return redirect(review_url + "?id=" + id)
+	# delegate error handling to GET view
+
+	review = None
+	for r in paper.reviews:
+		if r.get().reviewer == user.key:
+			review = r.get()
+			break
+	if not review:
+		review = Review()
+		review.reviewer = user.key
+	review.answers = map(lambda x: x.strip(),request.form.getlist("answer"))
+	key = review.put()
+	if not key in paper.reviews:
+		paper.reviews.append(key)
+		paper.put()
+	return redirect(review_url + "?id=" + id + "&update=success")

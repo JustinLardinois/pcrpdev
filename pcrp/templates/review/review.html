@@ -48,10 +48,8 @@
 		<p>Abstract: {{ paper.abstract }}</p>
 		{% if paper.file %}
 		<p>Uploaded file:
-			<a href="{{ paper_view_url + "?id=" + paper.key.urlsafe()}}">
-				{{ filename }}
-			</a>
-		</p>
+			<a href="{{ paper_view_url + "?id=" + paper.key.urlsafe()}}"
+			target="_blank">{{ filename }}</a></p>
 		{% else %}
 			<p>Author did not upload file.</p>
 		{% endif %}
@@ -67,6 +65,7 @@
 					</li>
 				{% endfor %}
 			</ul>
+			<input type="hidden" name="id" value="{{ paper.key.urlsafe() }}">
 			<button type="submit">Update Review</button>
 		</form>
 	</body>
