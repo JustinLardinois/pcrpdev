@@ -82,8 +82,7 @@ def user_reg_view_get():
 	return render_template(
 		"user_reg.html",
 		conference_name=metadata.name,
-		email=user.email(),
-		logout_url = users.create_logout_url(home_url)
+		email=user.email()
 		)
 
 # handles a processed form; stores data when submission is correct,
@@ -163,8 +162,7 @@ def user_reg_view_post():
 			affiliation_blank=affiliation_blank,
 			real_name=real_name,
 			email=email,
-			affiliation=affiliation,
-			logout_url = users.create_logout_url(home_url)
+			affiliation=affiliation
 			)
 
 @app.route(admin_panel_url)
@@ -181,8 +179,7 @@ def admin_panel_view():
 		admin_panel_metadata_url=admin_panel_metadata_url,
 		admin_panel_users_url=admin_panel_users_url,
 		hub_url=hub_url,
-		real_name=user.real_name,
-		logout_url=users.create_logout_url(home_url)
+		real_name=user.real_name
 		)
 
 @app.route(admin_panel_metadata_url,methods=["GET"])
@@ -201,7 +198,6 @@ def admin_panel_metadata_view_get():
 		conference_name=metadata.name,
 		admin_panel_url=admin_panel_url,
 		hub_url=hub_url,
-		logout_url=users.create_logout_url(home_url),
 		real_name=user.real_name,
 		update_success=request.args.get("update") == "success",
 		deadlines_invalid=request.args.get("deadlines") == "invalid",
@@ -307,7 +303,6 @@ def admin_panel_users_view_get():
 		conference_name=metadata.name,
 		admin_panel_url=admin_panel_url,
 		hub_url=hub_url,
-		logout_url=users.create_logout_url(home_url),
 		real_name=user.real_name,
 		conference_users=conference_users,
 		update_success=request.args.get("update") == "success"
@@ -360,7 +355,6 @@ def hub_view():
 		submission_deadline=metadata.submission_deadline,
 		review_deadline=metadata.review_deadline,
 		real_name=user.real_name,
-		logout_url=users.create_logout_url(home_url),
 		user_id = user.id,
 		admin_panel_url=admin_panel_url,
 		program_committee=program_committee,
@@ -426,7 +420,6 @@ def paper_view_get():
 		"paper.html",
 		conference_name=metadata.name,
 		admin_panel_url=admin_panel_url,
-		logout_url=users.create_logout_url(home_url),
 		hub_url=hub_url,
 		paper_view_url=paper_view_url,
 		real_name=user.real_name,
@@ -572,7 +565,6 @@ def conflicts_view_get():
 		user_id=user.id,
 		hub_url=hub_url,
 		admin_panel_url=admin_panel_url,
-		logout_url=users.create_logout_url(home_url),
 		real_name=user.real_name,
 		update_success=request.args.get("update") == "success"
 	)
@@ -636,7 +628,6 @@ def preferences_view_get():
 		real_name=user.real_name,
 		hub_url=hub_url,
 		admin_panel_url=admin_panel_url,
-		logout_url=users.create_logout_url(home_url),
 		papers=papers,
 		prefs=prefs,
 		max_preference=MAX_PREFERENCE + 1,
@@ -685,7 +676,6 @@ def assign_view_get():
 		real_name=user.real_name,
 		hub_url=hub_url,
 		admin_panel_url=admin_panel_url,
-		logout_url=users.create_logout_url(home_url),
 		papers=Paper.query().fetch(),
 		reviewers=ConferenceUser.query(
 			ConferenceUser.program_committee == True).fetch(),
@@ -758,7 +748,6 @@ def questions_view_get():
 		real_name=user.real_name,
 		hub_url=hub_url,
 		admin_panel_url=admin_panel_url,
-		logout_url=users.create_logout_url(home_url),
 		questions=review_question_list_key.get().questions,
 		update_success=request.args.get("update") == "success"
 	)
@@ -820,7 +809,6 @@ def review_view_get():
 					real_name=user.real_name,
 					hub_url=hub_url,
 					admin_panel_url=admin_panel_url,
-					logout_url=users.create_logout_url(home_url),
 					questions=review_question_list_key.get().questions,
 					paper=paper,
 					filename=filename,
