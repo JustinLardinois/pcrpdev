@@ -31,3 +31,21 @@ preferences_url          = "/review/preferences/"
 assign_url               = "/review/assign/"
 questions_url            = "/review/questions/"
 review_url               = "/review/"
+
+url_rule = \
+{
+	"home"                 : "/",
+	"user_reg"             : "/user-reg/",
+	"admin_panel"          : "/admin/",
+	"admin_panel_metadata" : "/admin/metadata/",
+	"admin_panel_users"    : "/admin/users/",
+	"hub"                  : "/hub/",
+	"paper"                : "/paper/",
+	"paper_upload"         : "/paper/upload/",
+	"paper_view"           : "/paper/view/",
+	"conflicts"            : "/conflicts/",
+	"preferences"          : "/review/preferences/",
+	"assign"               : "/review/assign/",
+	"questions"            : "/review/questions/",
+	"review"               : "/review/"
+}
