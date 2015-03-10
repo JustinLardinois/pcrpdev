@@ -42,7 +42,7 @@ if not conference:
 	conference.name = "undefinedCon 2014"
 	conference.registration_deadline = end_of_time
 	conference.submission_deadline = end_of_time
-	conference.registration_deadline = end_of_time
+	conference.review_deadline = end_of_time
 	conference.home_message = ""
 	conference.hub_messagge = ""
 	conference.put()
