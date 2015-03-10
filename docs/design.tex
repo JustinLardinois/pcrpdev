@@ -56,7 +56,11 @@
 	long as the passed string is not \texttt{None} \cite{email}.
 	\\\\
 	As the older DB API is deprecated, I chose to use the NDB API for
-	accessing the App Engine Datastore.
+	accessing the App Engine Datastore. NDB provides a few set data types
+	for model properties, and uses repeated properties to represent lists.
+	For other Python built in data structures, like sets and dicts,
+	serialization is necessary. NDB supports both JSON and pickle, but
+	since JSON does not play nice with sets and dicts, I use pickle.
 
 \section{Security}
 	One of the benefits of using App Engine and Flask is that the hardest
@@ -86,6 +90,24 @@
 	manage to upload a non-PDF, viewers will get an error message instead of
 	the file.
 
+\section{Structure}
+	The application design is best described as paper-centric. The majority
+	of operations that a user can perform directly relate to papers; the
+	rest of the operations impact which paper operations one can perform on
+	which papers. The \texttt{Paper} model contains all information relevant
+	to the paper: each program committee member's preference for that paper,
+	the list of assigned reviewers, and the reviews themselves. Though the
+	app does allow multiple authors to be listed for a paper, the user that
+	created a paper is considered its ``true'' author; the other author
+	fields are not associated with user accounts and are essentially just
+	metadata.
+	\\\\
+	pCRP considers conflicts of interest to be unilateral, in the sense that
+	it is only necessary for one person in a pair to indicate a conflict for
+	there to be a bidirectional conflict. Conflicts are stored as a set of
+	pairs of users, so for two users $A$ and $B$, there is a conflict if
+	at least one of $(A,B)$ or $(B,A)$ is in the set.
+	
 \bibliographystyle{plain}
 \bibliography{design}
 \end{document}
