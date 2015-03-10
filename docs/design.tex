@@ -58,6 +58,25 @@
 	As the older DB API is deprecated, I chose to use the NDB API for
 	accessing the App Engine Datastore.
 
+\section{Security}
+	One of the benefits of using App Engine and Flask is that the hardest
+	security problems were solved for me. Google's Users API does a
+	wonderful job of abstracting authentication away from the app, and
+	Flask sets up the Jinja2 environment so that all data echoed into
+	templates with .html extentions is HTML escaped.
+	\\\\
+	The Flask paradigm of using view functions to handle requests made
+	it possible to verify many permissions with decorators. I defined
+	\texttt{@login\_required}, \texttt{@registration\_required},
+	\texttt{@admin\_only}, \texttt{@program\_committee\_only}, and
+	\texttt{@pc\_chair\_only} for this purpose. This approach also
+	has the added benefit of self-documentation, as one doesn't have
+	to read the body of the view function to know who is allowed to
+	access the page. These decorators are, of course, not the only
+	verification used in the app; the views for editing, uploading, and
+	viewing papers make sure that the user is the author of the given paper
+	(or alternatively, in the case of viewing, a reviewer for the paper).
+	\\\\
 
 \bibliographystyle{plain}
 \bibliography{design}
