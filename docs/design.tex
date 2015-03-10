@@ -77,6 +77,14 @@
 	viewing papers make sure that the user is the author of the given paper
 	(or alternatively, in the case of viewing, a reviewer for the paper).
 	\\\\
+	pCRP only supports the upload of papers in PDF format, so it is of
+	course necessary to verify that uploaded files are indeed PDFs. There
+	are a few PDF processing libraries out there, but I felt that that was
+	overkill. Instead, the app rejects uploaded files that do not begin with
+	the \texttt{\%PDF} magic number, and serves the files back with a MIME
+	type of \texttt{application/pdf}. The goal is that even if a user does
+	manage to upload a non-PDF, viewers will get an error message instead of
+	the file.
 
 \bibliographystyle{plain}
 \bibliography{design}
