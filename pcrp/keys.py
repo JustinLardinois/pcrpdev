@@ -26,7 +26,7 @@ conflict_key             = ndb.Key(ConflictSet,"Conflicts")
 papers_key               = ndb.Key(Paper,"Papers")
 review_question_list_key = ndb.Key(ReviewQuestionList,"Review Questions")
 
-key = \
+keychain = \
 {
 	"metadata"             : ndb.Key(Conference,"Metadata")
 	"users"                : ndb.Key(ConferenceUser,"Users")
