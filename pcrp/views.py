@@ -43,6 +43,13 @@ from pcrp.models import *
 from pcrp.url_rules import *
 from pcrp.util import *
 
+# variables that will be available in all templates
+@app.context_processor
+def inject_context():
+	return dict(
+		admin=users.is_current_user_admin()
+		)
+
 # TODO: split these up into smaller files
 # TODO: find a cleaner way to pass variables to templates
 @app.route(home_url)
