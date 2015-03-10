@@ -358,7 +358,6 @@ def hub_view():
 		submission_deadline=metadata.submission_deadline,
 		review_deadline=metadata.review_deadline,
 		real_name=user.real_name,
-		admin=users.is_current_user_admin(),
 		logout_url=users.create_logout_url(home_url),
 		user_id = user.id,
 		admin_panel_url=admin_panel_url,
@@ -441,7 +440,6 @@ def paper_view_get():
 			datetime.datetime.utcnow()),
 		before_submission_deadline=(submission_deadline >
 			datetime.datetime.utcnow()),
-		admin=users.is_current_user_admin(),
 		upload_url=upload_url,
 		update_success=request.args.get("update") == "success",
 		not_pdf=request.args.get("ispdf") == "false",
@@ -574,7 +572,6 @@ def conflicts_view_get():
 		admin_panel_url=admin_panel_url,
 		logout_url=users.create_logout_url(home_url),
 		real_name=user.real_name,
-		admin=users.is_current_user_admin(),
 		update_success=request.args.get("update") == "success"
 	)
 
@@ -636,7 +633,6 @@ def preferences_view_get():
 		conference_name=metadata.name,
 		real_name=user.real_name,
 		hub_url=hub_url,
-		admin=users.is_current_user_admin(),
 		admin_panel_url=admin_panel_url,
 		logout_url=users.create_logout_url(home_url),
 		papers=papers,
@@ -686,7 +682,6 @@ def assign_view_get():
 		conference_name=metadata.name,
 		real_name=user.real_name,
 		hub_url=hub_url,
-		admin=users.is_current_user_admin(),
 		admin_panel_url=admin_panel_url,
 		logout_url=users.create_logout_url(home_url),
 		papers=Paper.query().fetch(),
@@ -759,7 +754,6 @@ def questions_view_get():
 		"review/questions.html",
 		conference_name=metadata.name,
 		real_name=user.real_name,
-		admin=users.is_current_user_admin(),
 		hub_url=hub_url,
 		admin_panel_url=admin_panel_url,
 		logout_url=users.create_logout_url(home_url),
@@ -823,7 +817,6 @@ def review_view_get():
 					conference_name=metadata.name,
 					real_name=user.real_name,
 					hub_url=hub_url,
-					admin=users.is_current_user_admin(),
 					admin_panel_url=admin_panel_url,
 					logout_url=users.create_logout_url(home_url),
 					questions=review_question_list_key.get().questions,
