@@ -73,10 +73,8 @@ def user_reg_view_get():
 	if is_registered_user(user.user_id()):
 		return redirect(hub_url)
 
-	metadata = metadata_key.get()
 	return render_template(
 		"user_reg.html",
-		conference_name=metadata.name,
 		email=user.email()
 		)
 
