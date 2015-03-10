@@ -15,8 +15,21 @@
 # docs/Makefile - a component of pCRP
 # builds PDFs of .tex files in this directory
 
+RM = del
+
+all: manual.pdf
+
 manual.pdf: manual.tex manual.bib
 	pdflatex manual.tex
 	bibtex manual
 	pdflatex manual.tex
 	pdflatex manual.tex
+
+spotless: clean
+	${RM} *.pdf
+
+clean:
+	${RM} *.aux
+	${RM} *.bbl
+	${RM} *.blg
+	${RM} *.log
