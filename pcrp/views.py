@@ -302,14 +302,11 @@ def hub_view():
 		reviews=reviews
 	)
 
-@app.route(paper_url,methods=["GET"])
+@app.route(url_rule["paper"],methods=["GET"])
 @login_required
 @registration_required
 def paper_view_get():
-	metadata=metadata_key.get()
-	registration_deadline = metadata.registration_deadline
-	submission_deadline = metadata.submission_deadline
-	review_deadline = metadata.review_deadline
+	metadata = keychain["metadata"].get()
 	user = lookup_user(users.get_current_user().user_id())
 
 	paper = None
@@ -319,7 +316,7 @@ def paper_view_get():
 	if id == None or id == "":
 		return ("No paper ID specified",400)
 	elif id == "new":
-		if registration_deadline < datetime.datetime.utcnow():
+		if metadata.registration_deadline < datetime.datetime.utcnow():
 			return ("Registration deadline has passed",400)
 		title = ""
 		abstract = ""
@@ -337,8 +334,8 @@ def paper_view_get():
 			else: return ("You do not own this paper",403)
 		else: return ("Invalid paper ID",400)
 
-	if paper and submission_deadline > datetime.datetime.utcnow():
-		upload_url = blobstore.create_upload_url(paper_upload_url
+	if paper and metadata.submission_deadline > datetime.datetime.utcnow():
+		upload_url = blobstore.create_upload_url(url_rule["paper_upload"]
 			+ "?id=" + paper.key.urlsafe())
 		# pass key so upload view knows which paper to associate file with
 	else:
@@ -346,55 +343,38 @@ def paper_view_get():
 
 	return render_template(
 		"paper.html",
-		conference_name=metadata.name,
-		admin_panel_url=admin_panel_url,
-		hub_url=hub_url,
-		paper_view_url=paper_view_url,
-		real_name=user.real_name,
 		title=title,
 		abstract=abstract,
 		id=id,
 		additional_authors=additional_authors,
 		filename=filename,
-		registration_deadline=registration_deadline,
-		submission_deadline=submission_deadline,
-		review_deadline=review_deadline,
-		before_registration_deadline=(registration_deadline >
-			datetime.datetime.utcnow()),
-		before_submission_deadline=(submission_deadline >
-			datetime.datetime.utcnow()),
-		upload_url=upload_url,
 		update_success=request.args.get("update") == "success",
 		not_pdf=request.args.get("ispdf") == "false",
-		after_review_deadline=metadata.review_deadline < \
-			datetime.datetime.utcnow(),
 		reviews=reviews,
-		questions=review_question_list_key.get().questions,
+		questions=keychain["review_question_list"].get().questions,
 		zip=zip
 	)
 
-@app.route(paper_url,methods=["POST"])
+@app.route(url_rule["paper"],methods=["POST"])
 @login_required
 @registration_required
 def paper_view_post():
-	metadata=metadata_key.get()
-	registration_deadline = metadata.registration_deadline
-	submission_deadline = metadata.submission_deadline
+	metadata = keychain["metadata"].get()
 	user = lookup_user(users.get_current_user().user_id())
 	
 	id = request.form["id"]
 	if id == "new":
-		if registration_deadline < datetime.datetime.utcnow():
-			return redirect(paper_url + "?id=new")
+		if metadata.registration_deadline < datetime.datetime.utcnow():
+			return redirect(url_rule["paper"] + "?id=new")
 			# delegate errors to GET view
 		paper = Paper()
-		paper.parent = papers_key
+		paper.parent = keychain["papers"]
 		paper.author = user.key
 		paper.file = None
 	else:
 		paper = ndb.Key(urlsafe=id).get()
-		if not paper or not paper.author.id == user.id:
-			return redirect(paper_url + "?id=" + id)
+		if not paper or not (paper.author == user.key):
+			return redirect(url_rule["paper"] + "?id=" + id)
 			# delegate errors to GET view
 
 	title = request.form["title"]
@@ -415,7 +395,7 @@ def paper_view_post():
 	
 	paper.put()
 	
-	return redirect(paper_url + "?id=" + paper.key.urlsafe()
+	return redirect(url_rule["paper"] + "?id=" + paper.key.urlsafe()
 		+ "&update=success")
 
 @app.route(paper_upload_url,methods=["POST"])
@@ -449,7 +429,8 @@ def paper_upload_view():
 		paper.put()
 	
 	# paper_view_get() will handle most error scenarios
-	return redirect(paper_url + "?id=" + paper_key + "&update=success")
+	return redirect(url_rule["paper"] + "?id=" + paper_key
+		+ "&update=success")
 
 @app.route(paper_view_url)
 @login_required
