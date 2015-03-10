@@ -48,6 +48,7 @@ from pcrp.util import *
 def inject_context():
 	return dict(
 		admin=users.is_current_user_admin(),
+		logout_url = users.create_logout_url(url_rule["home"]),
 		url_rule=url_rule
 		)
 
