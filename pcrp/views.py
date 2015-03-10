@@ -47,7 +47,8 @@ from pcrp.util import *
 @app.context_processor
 def inject_context():
 	return dict(
-		admin=users.is_current_user_admin()
+		admin=users.is_current_user_admin(),
+		url_rule=url_rule
 		)
 
 # TODO: split these up into smaller files
