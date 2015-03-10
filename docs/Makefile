@@ -19,7 +19,10 @@ RM = del
 
 all: design.pdf manual.pdf
 
-design.pdf: design.tex
+design.pdf: design.tex design.bib
+	pdflatex design.tex
+	bibtex design
+	pdflatex design.tex
 	pdflatex design.tex
 
 manual.pdf: manual.tex manual.bib
