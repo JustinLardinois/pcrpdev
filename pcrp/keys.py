@@ -25,3 +25,12 @@ users_key                = ndb.Key(ConferenceUser,"Users")
 conflict_key             = ndb.Key(ConflictSet,"Conflicts")
 papers_key               = ndb.Key(Paper,"Papers")
 review_question_list_key = ndb.Key(ReviewQuestionList,"Review Questions")
+
+key = \
+{
+	"metadata"             : ndb.Key(Conference,"Metadata")
+	"users"                : ndb.Key(ConferenceUser,"Users")
+	"conflict"             : ndb.Key(ConflictSet,"Conflicts")
+	"papers"               : ndb.Key(Paper,"Papers")
+	"review_question_list" : ndb.Key(ReviewQuestionList,"Review Questions")
+}
