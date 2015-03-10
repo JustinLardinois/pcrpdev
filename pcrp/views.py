@@ -217,8 +217,8 @@ def admin_panel_metadata_view_post():
 		and paper_review_deadline):
 		errors.append("deadlines=invalid")
 	else:
-		if paper_registration_deadline < paper_submission_deadline \
-			and paper_submission_deadline < paper_review_deadline:
+		if paper_registration_deadline <= paper_submission_deadline \
+			and paper_submission_deadline <= paper_review_deadline:
 			metadata.registration_deadline = paper_registration_deadline
 			metadata.submission_deadline = paper_submission_deadline
 			metadata.review_deadline = paper_review_deadline
