@@ -61,14 +61,14 @@ def inject_context():
 
 # TODO: split these up into smaller files
 # TODO: find a cleaner way to pass variables to templates
-@app.route(home_url)
+@app.route(url_rule["home"])
 def home_view():
 	user = users.get_current_user()
 	if user: return redirect(url_rule["user_reg"])
 	
 	return render_template(
 		"index.html",
-		login_url=users.create_login_url(user_reg_url)
+		login_url=users.create_login_url(url_rule["user_reg"])
 		)
 
 # handles when the user requests a "clean" form
