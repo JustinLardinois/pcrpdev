@@ -97,7 +97,7 @@
 			<p>Title: {{ title }}</p>
 			<p>Authors</p>
 			<ul>
-				<li>{{ real_name }}</li>
+				<li>{{ current_user.real_name }}</li>
 				{% for a in additional_authors %}
 					<li>{{ a }}</li>
 				{% endfor %}
