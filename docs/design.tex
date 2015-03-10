@@ -54,6 +54,10 @@
 	by Flask. I had to incorporate validate{\_}email because App Engine's
 	built in \texttt{is{\_}email{\_}valid} function returns \texttt{True} as
 	long as the passed string is not \texttt{None} \cite{email}.
+	\\\\
+	As the older DB API is deprecated, I chose to use the NDB API for
+	accessing the App Engine Datastore.
+
 
 \bibliographystyle{plain}
 \bibliography{design}
