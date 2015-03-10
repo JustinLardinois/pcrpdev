@@ -20,15 +20,15 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Conference Metadata — Admin Panel — {{ conference_name }}</title>
+		<title>Conference Metadata — Admin Panel — {{ metadata.name }}</title>
 		<meta charset="UTF-8">
 	</head>
 	<body>
-		<h1>Conference Metadata — Admin Panel — {{ conference_name }}</h1>
+		<h1>Conference Metadata — Admin Panel — {{ metadata.name }}</h1>
 		<nav>
-			Logged in as {{ real_name }}
-			(<a href="{{ hub_url }}">hub</a>)
-			(<a href="{{ admin_panel_url }}">admin panel</a>)
+			Logged in as {{ current_user.real_name }}
+			(<a href="{{ url_rule["hub"] }}">hub</a>)
+			(<a href="{{ url_rule["admin_panel"] }}">admin panel</a>)
 			(<a href="{{ logout_url }}">log out</a>)
 		</nav>
 		<h2>Edit Conference Metadata</h2>
@@ -54,27 +54,32 @@
 				<label for="paper_registration_month">
 					<span>Month</span>
 					<input type="number" name="paper_registration_month"
-						value="{{ paper_registration_month }}">
+						value="{{ metadata.registration_deadline
+						.strftime("%m") }}">
 				</label>
 				<label for="paper_registration_day">
 					<span>Day</span>
 					<input type="number" name="paper_registration_day"
-						value="{{ paper_registration_day }}">
+						value="{{ metadata.registration_deadline
+						.strftime("%d") }}">
 				</label>
 				<label for="paper_registration_year">
 					<span>Year</span>
 					<input type="number" name="paper_registration_year"
-						value="{{ paper_registration_year }}">
+						value="{{ metadata.registration_deadline
+						.strftime("%Y") }}">
 				</label>
 				<label for="paper_registration_hour">
 					<span>Hour (24 hour time)</span>
 					<input type="number" name="paper_registration_hour"
-						value="{{ paper_registration_hour }}">
+						value="{{ metadata.registration_deadline
+						.strftime("%H") }}">
 				</label>
 				<label for="paper_registration_minute">
 					<span>Minute</span>
 					<input type="number" name="paper_registration_minute"
-						value="{{ paper_registration_minute }}">
+						value="{{ metadata.registration_deadline
+						 .strftime("%M") }}">
 				</label>
 			</fieldset>
 			<fieldset>
@@ -82,27 +87,32 @@
 				<label for="paper_submission_month">
 					<span>Month</span>
 					<input type="number" name="paper_submission_month"
-						value="{{ paper_submission_month }}">
+						value="{{ metadata.submission_deadline
+						.strftime("%m") }}">
 				</label>
 				<label for="paper_submission_day">
 					<span>Day</span>
 					<input type="number" name="paper_submission_day"
-						value="{{ paper_submission_day }}">
+						value="{{ metadata.submission_deadline
+						.strftime("%d") }}">
 				</label>
 				<label for="paper_submission_year">
 					<span>Year</span>
 					<input type="number" name="paper_submission_year"
-						value="{{ paper_submission_year }}">
+						value="{{ metadata.submission_deadline
+						.strftime("%Y") }}">
 				</label>
 				<label for="paper_submission_hour">
 					<span>Hour (24 hour time)</span>
 					<input type="number" name="paper_submission_hour"
-						value="{{ paper_submission_hour }}">
+						value="{{ metadata.submission_deadline
+						.strftime("%H") }}">
 				</label>
 				<label for="paper_submission_minute">
 					<span>Minute</span>
 					<input type="number" name="paper_submission_minute"
-						value="{{ paper_submission_minute }}">
+						value="{{ metadata.submission_deadline
+						 .strftime("%M") }}">
 				</label>
 			</fieldset>
 			<fieldset>
@@ -110,39 +120,44 @@
 				<label for="paper_review_month">
 					<span>Month</span>
 					<input type="number" name="paper_review_month"
-						value="{{ paper_review_month }}">
+						value="{{ metadata.review_deadline
+						.strftime("%m") }}">
 				</label>
 				<label for="paper_review_day">
 					<span>Day</span>
 					<input type="number" name="paper_review_day"
-						value="{{ paper_review_day }}">
+						value="{{ metadata.review_deadline
+						.strftime("%d") }}">
 				</label>
 				<label for="paper_review_year">
 					<span>Year</span>
 					<input type="number" name="paper_review_year"
-						value="{{ paper_review_year }}">
+						value="{{ metadata.review_deadline
+						.strftime("%Y") }}">
 				</label>
 				<label for="paper_review_hour">
 					<span>Hour (24 hour time)</span>
 					<input type="number" name="paper_review_hour"
-						value="{{ paper_review_hour }}">
+						value="{{ metadata.review_deadline
+						.strftime("%H") }}">
 				</label>
 				<label for="paper_review_minute">
 					<span>Minute</span>
 					<input type="number" name="paper_review_minute"
-						value="{{ paper_review_minute }}">
+						value="{{ metadata.review_deadline
+						 .strftime("%M") }}">
 				</label>
 			</fieldset>
 			<label for="home_message">
 				<span>Home Page Message</span>
 				<textarea name="home_message" cols="90" rows="10">
-					{{- home_message|safe -}}
+					{{- metadata.home_message|safe -}}
 				</textarea>
 			</label>
 			<label for="hub_message">
 				<span>Hub Message</span>
 				<textarea name="hub_message" cols="90" rows="10">
-					{{- hub_message|safe -}}
+					{{- metadata.hub_message|safe -}}
 				</textarea>
 			</label>
 			<button type="submit">Save Changes</button>

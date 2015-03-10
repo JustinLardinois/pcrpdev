@@ -169,56 +169,25 @@ def user_reg_view_post():
 def admin_panel_view():
 	return render_template("admin_panel/index.html")
 
-@app.route(admin_panel_metadata_url,methods=["GET"])
+@app.route(url_rule["admin_panel_metadata"],methods=["GET"])
 @login_required
 @registration_required
 @admin_only
 def admin_panel_metadata_view_get():
-	metadata = metadata_key.get()
-	user = lookup_user(users.get_current_user().user_id())
-	registration_deadline = metadata.registration_deadline
-	submission_deadline = metadata.submission_deadline
-	review_deadline = metadata.review_deadline
-	
 	return render_template(
 		"admin_panel/metadata.html",
-		conference_name=metadata.name,
-		admin_panel_url=admin_panel_url,
-		hub_url=hub_url,
-		real_name=user.real_name,
 		update_success=request.args.get("update") == "success",
 		deadlines_invalid=request.args.get("deadlines") == "invalid",
 		mismatched_deadlines=
-			request.args.get("mismatched_deadlines") == "true",
-
-		paper_registration_month=registration_deadline.strftime("%m"),
-		paper_registration_day=registration_deadline.strftime("%d"),
-		paper_registration_year=registration_deadline.strftime("%Y"),
-		paper_registration_hour=registration_deadline.strftime("%H"),
-		paper_registration_minute=registration_deadline.strftime("%M"),
-		
-		paper_submission_month=submission_deadline.strftime("%m"),
-		paper_submission_day=submission_deadline.strftime("%d"),
-		paper_submission_year=submission_deadline.strftime("%Y"),
-		paper_submission_hour=submission_deadline.strftime("%H"),
-		paper_submission_minute=submission_deadline.strftime("%M"),
-		
-		paper_review_month=review_deadline.strftime("%m"),
-		paper_review_day=review_deadline.strftime("%d"),
-		paper_review_year=review_deadline.strftime("%Y"),
-		paper_review_hour=review_deadline.strftime("%H"),
-		paper_review_minute=review_deadline.strftime("%M"),
-		
-		home_message=metadata.home_message,
-		hub_message=metadata.hub_message
+			request.args.get("mismatched_deadlines") == "true"
 		)
 
-@app.route(admin_panel_metadata_url,methods=["POST"])
+@app.route(url_rule["admin_panel_metadata"],methods=["POST"])
 @login_required
 @registration_required
 @admin_only
 def admin_panel_metadata_view_post():
-	metadata = metadata_key.get()
+	metadata = keychain["metadata"].get()
 	metadata.name = request.form["conference_name"].strip()
 	
 	errors = []
@@ -275,7 +244,7 @@ def admin_panel_metadata_view_post():
 	except TypeError:
 		arg_string = "?update=success"
 	
-	return redirect(admin_panel_metadata_url + arg_string)
+	return redirect(url_rule["admin_panel_metadata"] + arg_string)
 
 @app.route(admin_panel_users_url,methods=["GET"])
 @login_required
