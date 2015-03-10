@@ -57,7 +57,6 @@ def inject_context():
 # TODO: find a cleaner way to pass variables to templates
 @app.route(home_url)
 def home_view():
-	metadata = metadata_key.get()
 	user = users.get_current_user()
 	if user: return redirect(user_reg_url)
 	
