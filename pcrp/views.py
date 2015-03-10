@@ -279,7 +279,7 @@ def admin_panel_users_view_post():
 			user.pc_chair = True
 		user.put()
 	sleep(1) # just in case it needs more time to update
-	return redirect(admin_panel_users_url + "?update=success")
+	return redirect(url_rule["admin_panel_users"] + "?update=success")
 
 @app.route(hub_url)
 @login_required
