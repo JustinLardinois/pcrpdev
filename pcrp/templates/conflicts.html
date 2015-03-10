@@ -20,17 +20,17 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Conflicts of Interest — {{ conference_name }}</title>
+		<title>Conflicts of Interest — {{ metadata.name }}</title>
 		<meta charset="UTF-8">
 	</head>
 	<body>
-		<h1>Conflicts of Interest — {{ conference_name }}</h1>
+		<h1>Conflicts of Interest — {{ metadata.name }}</h1>
 		
 		<nav>
-			Logged in as {{ real_name }}
-			(<a href="{{ hub_url }}">hub</a>)
+			Logged in as {{ current_user.real_name }}
+			(<a href="{{ url_rule["hub"] }}">hub</a>)
 			{% if admin %}
-				(<a href="{{ admin_panel_url }}">admin panel</a>)
+				(<a href="{{ url_rule["admin_panel"] }}">admin panel</a>)
 			{% endif %}
 			(<a href="{{ logout_url }}">log out</a>)
 		</nav>
@@ -53,7 +53,7 @@
 								https://cloud.google.com/appengine/docs/python/users/#Python_Accessing_account_information
 							-#}
 							{%- if conflicts.is_directed_conflict(
-								user_id,u.id)-%}
+								current_user.id,u.id)-%}
 								{{ " checked" }}
 							{%- endif %}>
 						<span>{{ u.real_name }}, {{ u.affiliation }}</span>
