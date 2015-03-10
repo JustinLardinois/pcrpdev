@@ -87,7 +87,6 @@ def user_reg_view_post():
 	if is_registered_user(google_user.user_id()):
 		return redirect(hub_url)
 
-	metadata = metadata_key.get()
 	real_name_blank = False
 	email_blank = False
 	email_invalid = False
@@ -147,7 +146,6 @@ def user_reg_view_post():
 	else:
 		return render_template(
 			"user_reg.html",
-			conference_name=metadata.name,
 			real_name_blank=real_name_blank,
 			email_blank=email_blank,
 			email_invalid=email_invalid,
