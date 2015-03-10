@@ -63,12 +63,7 @@ def home_view():
 	
 	return render_template(
 		"index.html",
-		conference_name=metadata.name,
-		registration_deadline=metadata.registration_deadline,
-		submission_deadline=metadata.submission_deadline,
-		review_deadline=metadata.review_deadline,
-		login_url=users.create_login_url(user_reg_url),
-		home_message=metadata.home_message
+		login_url=users.create_login_url(user_reg_url)
 		)
 
 # handles when the user requests a "clean" form
