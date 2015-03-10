@@ -297,6 +297,7 @@ def hub_view():
 	
 	return render_template(
 		"hub.html",
+		program_committee=program_committee,
 		your_papers=your_papers,
 		reviews=reviews
 	)
