@@ -72,12 +72,12 @@ def home_view():
 		)
 
 # handles when the user requests a "clean" form
-@app.route(user_reg_url,methods=["GET"])
+@app.route(url_rule["user_reg"],methods=["GET"])
 @login_required
 def user_reg_view_get():
 	user = users.get_current_user()
 	if is_registered_user(user.user_id()):
-		return redirect(hub_url)
+		return redirect(url_rule["hub"])
 
 	return render_template(
 		"user_reg.html",
@@ -86,12 +86,12 @@ def user_reg_view_get():
 
 # handles a processed form; stores data when submission is correct,
 # and redirects back to the form with errors when incorrect
-@app.route(user_reg_url,methods=["POST"])
+@app.route(url_rule["user_reg"],methods=["POST"])
 @login_required
 def user_reg_view_post():
 	google_user = users.get_current_user()
 	if is_registered_user(google_user.user_id()):
-		return redirect(hub_url)
+		return redirect(url_rule["hub"])
 
 	real_name_blank = False
 	email_blank = False
@@ -131,7 +131,7 @@ def user_reg_view_post():
 		and (not email_invalid) and (not affiliation_blank)
 		and (not email_in_use)):
 		pcrp_user = ConferenceUser()
-		pcrp_user.parent = users_key
+		pcrp_user.parent = keychain["users"]
 		pcrp_user.nickname = google_user.nickname()
 		pcrp_user.email = email
 		pcrp_user.real_name = real_name
@@ -147,7 +147,7 @@ def user_reg_view_post():
 		# registration check on hub_view() fails due to the write
 		# delay, so the one second sleep should alleviate the bug
 		# without annoying users.
-		return redirect(hub_url)
+		return redirect(url_rule["hub"])
 
 	else:
 		return render_template(
