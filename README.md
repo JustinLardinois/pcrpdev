@@ -7,7 +7,7 @@ because it runs on Google App Engine, rather than your own Linux server, PHP
 runtime, and MySQL server.
 
 All you have to do to set up is run [deps.py](deps.py) and then follow
-[Google's instructions for deploying a GAE app][2]. More details instructions
+[Google's instructions for deploying a GAE app][2]. More detailed instructions
 can be found in [docs/manual.tex] (docs/manual.tex).
 
 pCRP is licensed under [Version 2.0 of the Apache License](LICENSE).
